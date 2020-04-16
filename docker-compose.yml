@@ -16,7 +16,7 @@ services:
       - 5001:5000
     command: python manage.py run -h 0.0.0.0
     volumes:
-      - ./data:/usr/src/app/project/models/
+      - ./data/ml_hate_speech_classifier:/usr/src/app/project/models/ml_hate_speech_classifier
     env_file:
       - ./env.hatespeech
     depends_on:

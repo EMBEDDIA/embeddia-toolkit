@@ -18,20 +18,20 @@ class EMBEDDIABuilder:
             else:
                 print("\nERROR: No Dockerfile present for module {}\n".format(module_name))
 
+    @staticmethod
+    def _call_process(process):
+        while True:
+            output = process.stdout.readline()
+            if not output:
+                break
+            print(output.strip().decode())
+
     def build_module(self, dockerfile_path, module_name):
         build_context = os.path.dirname(dockerfile_path)
         build_command = "docker build -t {0} -f {1} {2}".format(module_name, dockerfile_path, build_context)
         print("Building {}...".format(module_name))
         process = subprocess.Popen(shlex.split(build_command), stdout=subprocess.PIPE)
-        while True:
-            output = process.stdout.readline()
-            
-            if not output:
-                break
-            # print progress
-            print(output.strip().decode())
-        rc = process.poll()
-
+        self._call_process(process)
         return True
 
         #built_id = built.communicate()[0].strip().split('\n')[-2].split()[-1]
