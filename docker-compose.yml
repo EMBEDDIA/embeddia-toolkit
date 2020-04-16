@@ -1,0 +1,40 @@
+version: '3'
+
+services:
+
+  embeddia-postgres:
+    image: postgres:12-alpine
+    volumes:
+      - ./data/postgres/:/var/lib/postgresql/data/
+    env_file:
+      - ./env.hatespeech
+
+  embeddia-hatespeech:
+    image: embeddia-hatespeech:latest
+    restart: on-failure
+    ports:
+      - 5001:5000
+    command: python manage.py run -h 0.0.0.0
+    volumes:
+      - ./data:/usr/src/app/project/models/
+    env_file:
+      - ./env.hatespeech
+    depends_on:
+      - embeddia-postgres
+
+  embeddia-nlg:
+    image: embeddia-nlg:latest
+    restart: on-failure
+    ports:
+      - 5002:8080
+    volumes:
+      - ./data:/app/data
+
+  embeddia-keyword:
+    image: embeddia-keyword:latest
+    restart: on-failure
+    ports:
+      - 5003:5000
+    env_file:
+      - ./env.keyword
+    command: python -u manage.py run -h 0.0.0.0
