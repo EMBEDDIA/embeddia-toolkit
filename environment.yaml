@@ -1,0 +1,17 @@
+name: embeddia-rest
+
+channels:
+  - conda-forge
+  - anaconda
+  - bioconda
+  - pytorch
+
+dependencies:
+  - python=3.6
+  - pip
+  - pip:
+    - django==2.1.*
+    - django-cors-headers
+    - djangorestframework==3.9.*
+    - requests
+

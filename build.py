@@ -33,10 +33,10 @@ class EMBEDDIABuilder:
         process = subprocess.Popen(shlex.split(build_command), stdout=subprocess.PIPE)
         self._call_process(process)
         return True
-
-        #built_id = built.communicate()[0].strip().split('\n')[-2].split()[-1]
-        #print("Built {0}.".format(built_id))
-        #return built_id
+    
+    def push(self):
+        # TODO: implement registry push
+        pass
 
 
 def main():

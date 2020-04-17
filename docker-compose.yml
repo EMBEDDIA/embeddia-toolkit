@@ -11,12 +11,11 @@ services:
 
   embeddia-hatespeech:
     image: embeddia-hatespeech:latest
-    restart: on-failure
     ports:
       - 5001:5000
     command: python manage.py run -h 0.0.0.0
     volumes:
-      - ./data/ml_hate_speech_classifier:/usr/src/app/project/models/ml_hate_speech_classifier
+      - ./data/:/data/
     env_file:
       - ./env.hatespeech
     depends_on:
@@ -24,7 +23,6 @@ services:
 
   embeddia-nlg:
     image: embeddia-nlg:latest
-    restart: on-failure
     ports:
       - 5002:8080
     volumes:
@@ -32,7 +30,6 @@ services:
 
   embeddia-keyword:
     image: embeddia-keyword:latest
-    restart: on-failure
     ports:
       - 5003:5000
     env_file:

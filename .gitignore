@@ -1,2 +1,4 @@
 modules
 data
+*.sqlite3
+*.pyc
