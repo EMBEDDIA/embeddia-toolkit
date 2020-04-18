@@ -13,10 +13,12 @@ class EMBEDDIABuilder:
         for dockerfile in self.dockerfiles:
             dockerfile_path = dockerfile[1]
             module_name = dockerfile[0]
+            print(dockerfile_path)
             if os.path.exists(dockerfile_path):
                 built = self.build_module(dockerfile_path, module_name)
             else:
                 print("\nERROR: No Dockerfile present for module {}\n".format(module_name))
+
 
     @staticmethod
     def _call_process(process):
@@ -44,7 +46,8 @@ def main():
         dockerfiles = [
             ("embeddia-keyword", "modules/keyword/services/web/Dockerfile"),
             ("embeddia-nlg", "modules/nlg/Dockerfile"),
-            ("embeddia-hatespeech", "modules/hatespeech/services/web/Dockerfile")
+            ("embeddia-hatespeech", "modules/hatespeech/services/web/Dockerfile"),
+            ("embeddia-rest", "src/Dockerfile")
         ]
         db = EMBEDDIABuilder(dockerfiles)
         built_id = db.build()
