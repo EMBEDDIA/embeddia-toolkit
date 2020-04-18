@@ -88,18 +88,21 @@ class TaggerGroupAnalyzer:
         pass
 
 
+
+EMBEDDIA_ANALYZERS = {
+    "KWE": KWEAnalyzer(),
+    "HSD": HSDAnalyzer()
+}
+
+
 class EMBEDDIAAnalyzer:
 
-    analyzers = (
-        {"name": "KWE", "analyzer": KWEAnalyzer()},
-        {"name": "HSD", "analyzer": HSDAnalyzer()},
-    )
+    def __init__(self):
+        self.embeddia_analyzers = EMBEDDIA_ANALYZERS
 
-    def __init__(self, analyzers=analyzers):
-        self.analyzers = analyzers
-
-    def process(self, text):
+    def process(self, text, analyzers=EMBEDDIA_ANALYZERS.keys()):
         output = {}
-        for analyzer in self.analyzers:
-            output[analyzer["name"]] = analyzer["analyzer"].process(text)
+        for analyzer in analyzers:
+            analyzer_obj = self.embeddia_analyzers[analyzer]
+            output[analyzer] = analyzer_obj.process(text)
         return output

@@ -1,4 +1,4 @@
-from .analyzers.analyzers import EMBEDDIAAnalyzer
+from .analyzers.analyzers import EMBEDDIA_ANALYZERS
 
 def get_analyzer_choices():
-    return [(a["name"], a["name"]) for a in EMBEDDIAAnalyzer.analyzers]
+    return [(a, a) for a in EMBEDDIA_ANALYZERS.keys()]

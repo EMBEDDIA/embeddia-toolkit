@@ -19,5 +19,5 @@ class EMBEDDIATextView(generics.GenericAPIView):
         text = serializer.validated_data["text"]
         analyzers = list(serializer.validated_data["analyzers"])
         embeddia_analyzer = EMBEDDIAAnalyzer()
-        processed = embeddia_analyzer.process(text)
+        processed = embeddia_analyzer.process(text, analyzers=analyzers)
         return Response(processed, status=status.HTTP_200_OK)
