@@ -79,26 +79,25 @@ class HSDAnalyzer:
         return self._process_output(response_json)
 
 
-class TaggerGroupAnalyzer:
+class HybridTaggerAnalyzer:
 
-    def __init__(self):
-        pass
+    def __init__(self, host="http://rest-dev.texta.ee:8000/api/v1/"):
+        self.host = host
 
     def process(self, text):
-        pass
-
-
-
-EMBEDDIA_ANALYZERS = {
-    "KWE": KWEAnalyzer(),
-    "HSD": HSDAnalyzer()
-}
+        return []
 
 
 class EMBEDDIAAnalyzer:
 
-    def __init__(self):
-        self.embeddia_analyzers = EMBEDDIA_ANALYZERS
+    EMBEDDIA_ANALYZERS = {
+        "KWE": KWEAnalyzer(),
+        "HSD": HSDAnalyzer(),
+        "HT": HybridTaggerAnalyzer()
+    }
+
+    def __init__(self, embeddia_analyzers=EMBEDDIA_ANALYZERS):
+        self.embeddia_analyzers = embeddia_analyzers
 
     def process(self, text, analyzers=EMBEDDIA_ANALYZERS.keys()):
         output = {}

@@ -6,7 +6,6 @@ class EMBEDDIATextSerializer(serializers.Serializer):
     text = serializers.CharField()
     analyzers = serializers.MultipleChoiceField(choices=get_analyzer_choices(), required=False)
 
-
     def validate(self, data):
         analyzer = data["analyzers"]
         if not analyzer:

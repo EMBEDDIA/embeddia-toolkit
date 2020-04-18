@@ -9,12 +9,19 @@ https://docs.djangoproject.com/en/2.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.1/ref/settings/
 """
-
+from corsheaders.defaults import default_headers
+from utils import parse_list_env_headers
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+
+# EMBEDDIA SERVICE HOSTNAMES
+HSD_HOST = os.getenv("EMBEDDIA_HSD_HOST", "http://localhost:5001")
+KWE_HOST = os.getenv("EMBEDDIA_KWE_HOST", "http://localhost:5003")
+NLG_HOST = os.getenv("EMBEDDIA_NLG_HOST", "http://localhost:5002")
+HT_HOST = os.getenv("EMBEDDIA_HT_HOST", "https://rest.texta.ee/api/v1/")
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
@@ -38,6 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'corsheaders',
     'embeddia'
 ]
 
@@ -51,7 +59,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'embeddia-toolkit.urls'
+ROOT_URLCONF = 'embeddia_toolkit.urls'
 
 TEMPLATES = [
     {
@@ -69,7 +77,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'embeddia-toolkit.wsgi.application'
+WSGI_APPLICATION = 'embeddia_toolkit.wsgi.application'
 
 
 # Database
@@ -120,3 +128,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+
+# For corsheaders/external frontend
+CSRF_HEADER_NAME = "HTTP_X_XSRF_TOKEN"
+CSRF_COOKIE_NAME = "XSRF-TOKEN"
+# For accessing a live backend server locally.
+CORS_ORIGIN_WHITELIST = parse_list_env_headers("TEXTA_CORS_ORIGIN_WHITELIST", ["http://localhost:4200"])
+CORS_ALLOW_HEADERS = list(default_headers) + ["x-xsrf-token"]
