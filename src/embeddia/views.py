@@ -9,7 +9,7 @@ from embeddia.analyzers.analyzers import EMBEDDIAAnalyzer
 EMBEDDIA_ANALYZER_OBJECT = EMBEDDIAAnalyzer(embeddia_analyzers=EMBEDDIA_ANALYZERS)
 
 
-class EMBEDDIATextView(generics.GenericAPIView):
+class EMBEDDIAAnalyzersView(generics.GenericAPIView):
     """
     View for analyzing a single piece of text.
     """

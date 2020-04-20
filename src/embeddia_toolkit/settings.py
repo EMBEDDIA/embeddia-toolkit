@@ -13,7 +13,6 @@ from corsheaders.defaults import default_headers
 from utils import parse_list_env_headers
 import os
 
-
 from embeddia.analyzers.analyzers import (
     HSDAnalyzer,
     KWEAnalyzer,
@@ -42,7 +41,7 @@ SECRET_KEY = 'd064bgxe^08n5@ubx80azgo7paxzj&!p251(nzoxa6q%v_*ny4'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
