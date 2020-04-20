@@ -1,6 +1,6 @@
-EMBEDDIA Toolkit API
+EMBEDDIA Toolkit API wrapping EMBEDDIA API-based Services
 
-# Running
+# Running the Docker
 
 ```
 docker-compose pull
@@ -10,13 +10,13 @@ docker-compose up
 
 # Dev Setup
 
-## Clone with EMBEDDIA Submodules
+**Clone with EMBEDDIA Submodules**
 
 ```
 git clone --recursive https://git.texta.ee/texta/embeddia-toolkit.git
 ```
 
-## Building & Pushing Images
+**Building & Pushing Images**
 
 ```
 docker-compose build
