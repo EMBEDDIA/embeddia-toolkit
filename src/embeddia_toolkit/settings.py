@@ -154,13 +154,15 @@ CORS_ORIGIN_WHITELIST = parse_list_env_headers("TEXTA_CORS_ORIGIN_WHITELIST", ["
 CORS_ALLOW_HEADERS = list(default_headers) + ["x-xsrf-token"]
 
 
+
 # DECLARE EMBEDDIA ANALYZERS & GENERATORS
+MLP_LANGS = os.getenv("EMBEDDIA_MLP_LANGS", "et,en,ru").split(",")
 EMBEDDIA_ANALYZERS = {
     "Keyword Extractor": KWEAnalyzer(host=KWE_HOST),
     #"BERT Hatespeech Detector": HSDAnalyzer(host=HSD_HOST),
     "TEXTA Hybrid Tagger": HybridTaggerAnalyzer(host=TEXTA_HOST, auth_token=TEXTA_TOKEN, project=8, tagger_group=1, use_ner=True, lemmatize=True),
     "TEXTA Hatespeech Tagger": MultiTagAnalyzer(host=TEXTA_HOST, auth_token=TEXTA_TOKEN, project=6, lemmatize=True),
-    "TEXTA MLP": MLP(language_codes=["et", "en", "ru"], resource_dir=os.path.join(BASE_DIR, "data"))
+    "TEXTA MLP": MLP(language_codes=MLP_LANGS, resource_dir=os.path.join(BASE_DIR, "data"))
 }
 
 EMBEDDIA_EU_GENERATOR = NLGenerator(host=NLG_HOST)
