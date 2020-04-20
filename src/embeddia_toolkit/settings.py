@@ -155,7 +155,7 @@ CORS_ALLOW_HEADERS = list(default_headers) + ["x-xsrf-token"]
 
 EMBEDDIA_ANALYZERS = {
     "Keyword Extractor": KWEAnalyzer(host=KWE_HOST),
-    "BERT Hatespeech Detector": HSDAnalyzer(host=HSD_HOST),
+    #"BERT Hatespeech Detector": HSDAnalyzer(host=HSD_HOST),
     "TEXTA Hybrid Tagger": HybridTaggerAnalyzer(host=TEXTA_HOST, auth_token=TEXTA_TOKEN, project=1, tagger_group=5, use_ner=True, lemmatize=True),
     "TEXTA Hatespeech Tagger": MultiTagAnalyzer(host=TEXTA_HOST, auth_token=TEXTA_TOKEN, project=2, lemmatize=True)
 }
