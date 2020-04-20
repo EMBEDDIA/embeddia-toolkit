@@ -58,6 +58,8 @@ services:
       - "8080:80"
     env_file:
       - ./env.embeddia
+    volumes:
+      - ./data:/var/embeddia-rest/data
     depends_on:
       - embeddia-kwe
       - embeddia-nlg

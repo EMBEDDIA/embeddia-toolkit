@@ -17,3 +17,4 @@ dependencies:
     - djangorestframework==3.9.*
     - requests
     - whitenoise
+    - git+https://mlp:KdP4zzGu2dz9WMtKYozv@git.texta.ee/texta/texta-mlp-python

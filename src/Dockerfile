@@ -13,6 +13,9 @@ RUN set -x \
 # Copy project files
 COPY . /var/embeddia-rest
 
+# create data dir for MLP
+RUN mkdir /var/embeddia-rest/data
+
 # Ownership to www-data and entrypoint
 RUN chown -R www-data:www-data /var/embeddia-rest \
     && chmod 775 -R /var/embeddia-rest \

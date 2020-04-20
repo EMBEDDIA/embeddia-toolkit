@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 from corsheaders.defaults import default_headers
 from utils import parse_list_env_headers
+from texta_mlp.mlp import MLP
 import os
 
 from embeddia.analyzers.analyzers import (
@@ -158,7 +159,8 @@ EMBEDDIA_ANALYZERS = {
     "Keyword Extractor": KWEAnalyzer(host=KWE_HOST),
     #"BERT Hatespeech Detector": HSDAnalyzer(host=HSD_HOST),
     "TEXTA Hybrid Tagger": HybridTaggerAnalyzer(host=TEXTA_HOST, auth_token=TEXTA_TOKEN, project=8, tagger_group=1, use_ner=True, lemmatize=True),
-    "TEXTA Hatespeech Tagger": MultiTagAnalyzer(host=TEXTA_HOST, auth_token=TEXTA_TOKEN, project=6, lemmatize=True)
+    "TEXTA Hatespeech Tagger": MultiTagAnalyzer(host=TEXTA_HOST, auth_token=TEXTA_TOKEN, project=6, lemmatize=True),
+    "TEXTA MLP": MLP(language_codes=["et", "en", "ru"], resource_dir=os.path.join(BASE_DIR, "data"))
 }
 
 EMBEDDIA_EU_GENERATOR = NLGenerator(host=NLG_HOST)
