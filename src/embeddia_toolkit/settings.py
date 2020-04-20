@@ -30,8 +30,8 @@ HSD_HOST = os.getenv("EMBEDDIA_HSD_HOST", "http://localhost:5001")
 KWE_HOST = os.getenv("EMBEDDIA_KWE_HOST", "http://localhost:5003")
 NLG_HOST = os.getenv("EMBEDDIA_NLG_HOST", "http://localhost:5000")
 
-TEXTA_HOST = os.getenv("EMBEDDIA_TEXTA_HOST", "http://dev.texta.ee:8000")
-TEXTA_TOKEN = os.getenv("EMBEDDIA_TEXTA_TOKEN", "d44736b2d645eaeb8979b9aaff85c00ce90cd86b")
+TEXTA_HOST = os.getenv("EMBEDDIA_TEXTA_HOST", "https://rest.texta.ee")
+TEXTA_TOKEN = os.getenv("EMBEDDIA_TEXTA_TOKEN", "b33bd1dad422a3b9065f7c6704f8ca3083eafda4")
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
@@ -153,12 +153,12 @@ CORS_ORIGIN_WHITELIST = parse_list_env_headers("TEXTA_CORS_ORIGIN_WHITELIST", ["
 CORS_ALLOW_HEADERS = list(default_headers) + ["x-xsrf-token"]
 
 
-
+# DECLARE EMBEDDIA ANALYZERS & GENERATORS
 EMBEDDIA_ANALYZERS = {
     "Keyword Extractor": KWEAnalyzer(host=KWE_HOST),
     #"BERT Hatespeech Detector": HSDAnalyzer(host=HSD_HOST),
-    "TEXTA Hybrid Tagger": HybridTaggerAnalyzer(host=TEXTA_HOST, auth_token=TEXTA_TOKEN, project=1, tagger_group=5, use_ner=True, lemmatize=True),
-    "TEXTA Hatespeech Tagger": MultiTagAnalyzer(host=TEXTA_HOST, auth_token=TEXTA_TOKEN, project=2, lemmatize=True)
+    "TEXTA Hybrid Tagger": HybridTaggerAnalyzer(host=TEXTA_HOST, auth_token=TEXTA_TOKEN, project=8, tagger_group=1, use_ner=True, lemmatize=True),
+    "TEXTA Hatespeech Tagger": MultiTagAnalyzer(host=TEXTA_HOST, auth_token=TEXTA_TOKEN, project=6, lemmatize=True)
 }
 
 EMBEDDIA_EU_GENERATOR = NLGenerator(host=NLG_HOST)
