@@ -16,7 +16,7 @@ services:
       context: ./modules/hatespeech/services/web
       dockerfile: Dockerfile
     ports:
-      - 5001:5000
+      - "5000"
     command: python manage.py run -h 0.0.0.0
     volumes:
       - ./data/:/data/
@@ -29,7 +29,7 @@ services:
  #container_name: embeddia-nlg
  #   image: embeddia-nlg:latest
  #   ports:
- #     - 5002:8080
+ #     - "5000"
  #   volumes:
  #     - ./data:/app/data
 
@@ -40,7 +40,7 @@ services:
       context: ./modules/keyword/services/web
       dockerfile: Dockerfile
     ports:
-      - 5003:5000
+      - "5000"
     env_file:
       - ./env.keyword
     command: python -u manage.py run -h 0.0.0.0
@@ -52,7 +52,7 @@ services:
       context: ./src
       dockerfile: Dockerfile
     ports:
-      - 80:80
+      - "8080:80"
     env_file:
       - ./env.embeddia
     depends_on:
