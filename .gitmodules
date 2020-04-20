@@ -1,9 +1,9 @@
 [submodule "nlg"]
 	path = modules/nlg
-	url = https://version.helsinki.fi/leo.leppanen/eunlg
+	url = https://version.helsinki.fi/leo.leppanen/eunlg.git
 [submodule "keyword"]
 	path = modules/keyword
-	url = https://gitlab.com/matej.martinc/tnt_kid_app
+	url = https://gitlab.com/matej.martinc/tnt_kid_app.git
 [submodule "hatespeech"]
 	path = modules/hatespeech
-	url = https://github.com/shekharRavi/flask-rest-docker/
+	url = https://github.com/shekharRavi/flask-rest-docker.git
