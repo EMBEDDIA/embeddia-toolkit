@@ -13,7 +13,7 @@ services:
   #   container_name: embeddia-hsd
   #   image: docker.texta.ee/texta/embeddia-toolkit-hsd:latest
   #   build:
-  #     context: ./modules/hatespeech/services/web
+  #     context: ./modules/embeddia-hsd/services/web
   #     dockerfile: Dockerfile
   #   ports:
   #     - "5000"
@@ -37,7 +37,7 @@ services:
     container_name: embeddia-kwe
     image: docker.texta.ee/texta/embeddia-toolkit-kwe:latest
     build:
-      context: ./modules/keyword/services/web
+      context: ./modules/embeddia-kwe/services/web
       dockerfile: Dockerfile
     ports:
       - "5000"

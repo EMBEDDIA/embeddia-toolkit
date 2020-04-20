@@ -39,7 +39,7 @@ class NLGenerator:
         locations = []
         for dataset in self.get_datasets():
             payload = {"dataset": dataset}
-            response = requests.post(urljoin(self.host, "locations"), data=payload)
+            response = requests.post(urljoin(self.host, "locations"), json=payload)
             locations = locations + response.json()["locations"]
         return locations
 

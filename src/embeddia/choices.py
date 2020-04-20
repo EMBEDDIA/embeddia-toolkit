@@ -14,6 +14,5 @@ def get_generator_language_choices():
     return [(a, a) for a in EMBEDDIA_EU_GENERATOR.get_languages()]
 
 
-### THIS IS A TEMPORARY HACK
 def get_generator_location_choices():
-    return [(a, a) for a in ["EE", "FI", "LV", "LT"]]
+    return [(a, a) for a in EMBEDDIA_EU_GENERATOR.get_locations()]
