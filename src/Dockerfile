@@ -23,7 +23,7 @@ RUN chown -R www-data:www-data /var/embeddia-rest \
 
 # System configuration files
 COPY supervisord.conf /opt/conda/envs/embeddia-rest/etc/supervisord/conf.d/supervisord.conf
-ENV UWSGI_INI /var/embeddia-rest/texta-rest.ini
+ENV UWSGI_INI /var/embeddia-rest/embeddia-rest.ini
 
 # Set environment variables
 ENV PYTHONIOENCODING=UTF-8

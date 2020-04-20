@@ -44,9 +44,9 @@ class EMBEDDIABuilder:
 def main():
     try:
         dockerfiles = [
-            ("embeddia-keyword", "modules/keyword/services/web/Dockerfile"),
+            ("embeddia-kwe", "modules/keyword/services/web/Dockerfile"),
             ("embeddia-nlg", "modules/nlg/Dockerfile"),
-            ("embeddia-hatespeech", "modules/hatespeech/services/web/Dockerfile"),
+            ("embeddia-hsd", "modules/hatespeech/services/web/Dockerfile"),
             ("embeddia-rest", "src/Dockerfile")
         ]
         db = EMBEDDIABuilder(dockerfiles)

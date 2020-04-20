@@ -13,15 +13,25 @@ from corsheaders.defaults import default_headers
 from utils import parse_list_env_headers
 import os
 
+
+from embeddia.analyzers.analyzers import (
+    HSDAnalyzer,
+    KWEAnalyzer,
+    HybridTaggerAnalyzer,
+    MultiTagAnalyzer
+)
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
-# EMBEDDIA SERVICE HOSTNAMES
+# EMBEDDIA SERVICE HOSTNAMES & OTHER PARAMS
 HSD_HOST = os.getenv("EMBEDDIA_HSD_HOST", "http://localhost:5001")
 KWE_HOST = os.getenv("EMBEDDIA_KWE_HOST", "http://localhost:5003")
 NLG_HOST = os.getenv("EMBEDDIA_NLG_HOST", "http://localhost:5002")
-HT_HOST = os.getenv("EMBEDDIA_HT_HOST", "https://rest.texta.ee/api/v1/")
+
+TEXTA_HOST = os.getenv("EMBEDDIA_TEXTA_HOST", "http://dev.texta.ee:8000")
+TEXTA_TOKEN = os.getenv("EMBEDDIA_TEXTA_TOKEN", "d44736b2d645eaeb8979b9aaff85c00ce90cd86b")
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
@@ -51,6 +61,8 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -58,6 +70,8 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 ROOT_URLCONF = 'embeddia_toolkit.urls'
 
@@ -127,7 +141,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = "/static/"
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 
 # For corsheaders/external frontend
@@ -136,3 +151,12 @@ CSRF_COOKIE_NAME = "XSRF-TOKEN"
 # For accessing a live backend server locally.
 CORS_ORIGIN_WHITELIST = parse_list_env_headers("TEXTA_CORS_ORIGIN_WHITELIST", ["http://localhost:4200"])
 CORS_ALLOW_HEADERS = list(default_headers) + ["x-xsrf-token"]
+
+
+
+EMBEDDIA_ANALYZERS = {
+    "KeywordExtractor": KWEAnalyzer(host=KWE_HOST),
+    "BERTHatespeech": HSDAnalyzer(host=HSD_HOST),
+    "HybridTagger": HybridTaggerAnalyzer(host=TEXTA_HOST, auth_token=TEXTA_TOKEN, project=1, tagger_group=5, use_ner=True, lemmatize=True),
+    "HatespeechTagger": MultiTagAnalyzer(host=TEXTA_HOST, auth_token=TEXTA_TOKEN, project=2, lemmatize=True)
+}
