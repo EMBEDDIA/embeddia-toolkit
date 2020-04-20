@@ -1,6 +1,6 @@
 [submodule "nlg"]
 	path = modules/nlg
-	url = https://version.helsinki.fi/leo.leppanen/eunlg.git
+	url = https://github.com/ljleppan/eu-nlg-prod.git
 [submodule "keyword"]
 	path = modules/keyword
 	url = https://gitlab.com/matej.martinc/tnt_kid_app.git

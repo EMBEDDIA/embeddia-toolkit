@@ -2,11 +2,11 @@ EMBEDDIA Toolkit API
 
 # Submodules
 
-* https://version.helsinki.fi/leo.leppanen/eunlg
+* https://github.com/ljleppan/eu-nlg-prod.git
  
-* https://gitlab.com/matej.martinc/tnt_kid_app
+* https://gitlab.com/matej.martinc/tnt_kid_app.git
 
-* https://github.com/shekharRavi/flask-rest-docker/
+* https://github.com/shekharRavi/flask-rest-docker.git
 
 # Clone with EMBEDDIA Submodules
 
