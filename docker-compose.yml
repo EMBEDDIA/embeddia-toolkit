@@ -11,7 +11,7 @@ services:
 
   # embeddia-hsd:
   #   container_name: embeddia-hsd
-  #   image: docker.texta.ee/texta/embeddia-toolkit-hsd:latest
+  #   image: docker.texta.ee/texta/embeddia-toolkit/embeddia-hsd:latest
   #   build:
   #     context: ./modules/embeddia-hsd/services/web
   #     dockerfile: Dockerfile
@@ -27,7 +27,10 @@ services:
 
   embeddia-nlg:
     container_name: embeddia-nlg
-    image: docker.texta.ee/texta/embeddia-toolkit-nlg:latest
+    image: docker.texta.ee/texta/embeddia-toolkit/embeddia-nlg:latest
+    build:
+      context: ./modules/embeddia-nlg
+      dockerfile: Dockerfile
     ports:
       - "8080"
     volumes:
@@ -35,7 +38,7 @@ services:
 
   embeddia-kwe:
     container_name: embeddia-kwe
-    image: docker.texta.ee/texta/embeddia-toolkit-kwe:latest
+    image: docker.texta.ee/texta/embeddia-toolkit/embeddia-kwe:latest
     build:
       context: ./modules/embeddia-kwe/services/web
       dockerfile: Dockerfile
@@ -47,7 +50,7 @@ services:
 
   embeddia-rest:
     container_name: embeddia-rest
-    image: docker.texta.ee/texta/embeddia-toolkit-rest:latest
+    image: docker.texta.ee/texta/embeddia-toolkit/embeddia-rest:latest
     build:
       context: ./src
       dockerfile: Dockerfile

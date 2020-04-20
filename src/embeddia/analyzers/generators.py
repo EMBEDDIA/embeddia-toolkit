@@ -14,16 +14,6 @@ class NLGenerator:
         self.health = urljoin(host, "datasets")
         self.url = urljoin(host, "eunlg")
 
-    @staticmethod
-    def _process_input(text):
-        payload = {
-            "title": text,
-            "lead": text,
-            "bodyText": text,
-            "channelLanguage": text
-        }
-        return payload
-
     @check_connection
     def get_datasets(self):
         response = requests.get(urljoin(self.host, "datasets"))
