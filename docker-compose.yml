@@ -10,7 +10,10 @@ services:
       - ./env.hatespeech
 
   embeddia-hsd:
-    image: embeddia-hsd:latest
+    image: docker.texta.ee/texta/embeddia-toolkit-hsd:latest
+    build:
+      context: ./modules/hatespeech/services/web
+      dockerfile: Dockerfile
     ports:
       - 5001:5000
     command: python manage.py run -h 0.0.0.0
@@ -29,19 +32,25 @@ services:
  #     - ./data:/app/data
 
   embeddia-kwe:
-    image: embeddia-kwe:latest
+    image: docker.texta.ee/texta/embeddia-toolkit-kwe:latest
+    build:
+      context: ./modules/keyword/services/web
+      dockerfile: Dockerfile
     ports:
       - 5003:5000
     env_file:
       - ./env.keyword
     command: python -u manage.py run -h 0.0.0.0
 
-#  embeddia-rest:
-#    image: embeddia-rest:latest
-#    ports:
-#      - 80:80
-#    env_file:
-#      - ./env.embeddia
-#    depends_on:
-#      - embeddia-kwe
-#      - embeddia-hsd
+  embeddia-rest:
+    image: docker.texta.ee/texta/embeddia-toolkit-rest:latest
+    build:
+      context: ./src
+      dockerfile: Dockerfile
+    ports:
+      - 80:80
+    env_file:
+      - ./env.embeddia
+    depends_on:
+      - embeddia-kwe
+      - embeddia-hsd
