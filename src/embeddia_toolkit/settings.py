@@ -17,8 +17,9 @@ from embeddia.analyzers.analyzers import (
     HSDAnalyzer,
     KWEAnalyzer,
     HybridTaggerAnalyzer,
-    MultiTagAnalyzer
+    MultiTagAnalyzer,
 )
+from embeddia.analyzers.generators import NLGenerator
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -27,7 +28,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # EMBEDDIA SERVICE HOSTNAMES & OTHER PARAMS
 HSD_HOST = os.getenv("EMBEDDIA_HSD_HOST", "http://localhost:5001")
 KWE_HOST = os.getenv("EMBEDDIA_KWE_HOST", "http://localhost:5003")
-NLG_HOST = os.getenv("EMBEDDIA_NLG_HOST", "http://localhost:5002")
+NLG_HOST = os.getenv("EMBEDDIA_NLG_HOST", "http://localhost:5000")
 
 TEXTA_HOST = os.getenv("EMBEDDIA_TEXTA_HOST", "http://dev.texta.ee:8000")
 TEXTA_TOKEN = os.getenv("EMBEDDIA_TEXTA_TOKEN", "d44736b2d645eaeb8979b9aaff85c00ce90cd86b")
@@ -159,3 +160,5 @@ EMBEDDIA_ANALYZERS = {
     "TEXTA Hybrid Tagger": HybridTaggerAnalyzer(host=TEXTA_HOST, auth_token=TEXTA_TOKEN, project=1, tagger_group=5, use_ner=True, lemmatize=True),
     "TEXTA Hatespeech Tagger": MultiTagAnalyzer(host=TEXTA_HOST, auth_token=TEXTA_TOKEN, project=2, lemmatize=True)
 }
+
+EMBEDDIA_EU_GENERATOR = NLGenerator(host=NLG_HOST)

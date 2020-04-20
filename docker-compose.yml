@@ -25,13 +25,13 @@ services:
   #   depends_on:
   #     - embeddia-postgres
 
- # embeddia-nlg:
- #container_name: embeddia-nlg
- #   image: embeddia-nlg:latest
- #   ports:
- #     - "5000"
- #   volumes:
- #     - ./data:/app/data
+  embeddia-nlg:
+    container_name: embeddia-nlg
+    image: embeddia-nlg:latest
+    ports:
+      - "5000:8080"
+    volumes:
+      - ./data:/app/data
 
   embeddia-kwe:
     container_name: embeddia-kwe
@@ -57,4 +57,5 @@ services:
       - ./env.embeddia
     depends_on:
       - embeddia-kwe
-      - embeddia-hsd
+      - embeddia-nlg
+      #- embeddia-hsd
