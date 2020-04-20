@@ -12,16 +12,11 @@ class KWEAnalyzer:
     def __init__(self, host="http://localhost:5003"):
         self.host = host
         self.health = host
-        self.url = urljoin(host, "rest_api/extract_keywords")
+        self.url = urljoin(host, "rest_api/extract_keywords/")
 
     @staticmethod
     def _process_input(text):
-        payload = {
-            "title": text,
-            "lead": text,
-            "bodyText": text,
-            "channelLanguage": text
-        }
+        payload = {"text": text}
         return payload
 
     @staticmethod
