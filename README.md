@@ -8,6 +8,12 @@ EMBEDDIA Toolkit API
 
 * https://github.com/shekharRavi/flask-rest-docker/
 
+# Clone with EMBEDDIA Submodules
+
+```
+git clone --recursive https://git.texta.ee/texta/embeddia-toolkit.git
+```
+
 # Building & Running
 
 ```
