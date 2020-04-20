@@ -27,9 +27,9 @@ services:
 
   embeddia-nlg:
     container_name: embeddia-nlg
-    image: embeddia-nlg:latest
+    image: docker.texta.ee/texta/embeddia-toolkit-nlg:latest
     ports:
-      - "5000:8080"
+      - "8080"
     volumes:
       - ./data:/app/data
 
