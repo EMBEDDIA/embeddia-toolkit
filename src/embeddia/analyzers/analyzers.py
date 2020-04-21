@@ -1,11 +1,13 @@
 from urllib.parse import urljoin
+from celery import group
 import requests
 import json
 import os
 
 from .utils import check_connection
 from . import exceptions
-
+from .tasks import apply_analyzer
+from utils import apply_celery_task
 
 class KWEAnalyzer:
 
@@ -122,11 +124,22 @@ class EMBEDDIAAnalyzer:
     def __init__(self, embeddia_analyzers={}):
         self.embeddia_analyzers = embeddia_analyzers
 
+    @staticmethod
+    def apply_analyzers(analyzers, text):
+        group_task = group(apply_analyzer.s(analyzer, text) for analyzer in analyzers)
+        print('asd')
+        #group_results = apply_celery_task(group_task)
+        group_results = group_task.apply()
+        print('asdasd')
+        # retrieve results & remove non-hits
+        tags = [result for result in group_results.get() if result]
+        print(tags)
+        return tags
+
     def process(self, text, analyzers=[]):
-        output = {}
         if not analyzers:
             analyzers = self.embeddia_analyzers.keys()
-        for analyzer in analyzers:
-            analyzer_obj = self.embeddia_analyzers[analyzer]
-            output[analyzer] = analyzer_obj.process(text)
-        return output
+        results = self.apply_analyzers(analyzers, text)
+        return results
+
+

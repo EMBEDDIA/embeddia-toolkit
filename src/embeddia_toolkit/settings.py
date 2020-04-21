@@ -34,6 +34,13 @@ NLG_HOST = os.getenv("EMBEDDIA_NLG_HOST", "http://localhost:5000")
 TEXTA_HOST = os.getenv("EMBEDDIA_TEXTA_HOST", "https://rest.texta.ee")
 TEXTA_TOKEN = os.getenv("EMBEDDIA_TEXTA_TOKEN", "b33bd1dad422a3b9065f7c6704f8ca3083eafda4")
 
+# CELERY OPTIONS
+BROKER_URL = os.getenv("EMBEDDIA_REDIS_URL", "redis://localhost:6379")
+CELERY_RESULT_BACKEND = BROKER_URL
+CELERY_ACCEPT_CONTENT = ["application/json"]
+CELERY_TASK_SERIALIZER = "json"
+CELERY_RESULT_SERIALIZER = "json"
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
@@ -154,7 +161,6 @@ CORS_ORIGIN_WHITELIST = parse_list_env_headers("TEXTA_CORS_ORIGIN_WHITELIST", ["
 CORS_ALLOW_HEADERS = list(default_headers) + ["x-xsrf-token"]
 
 
-
 # DECLARE EMBEDDIA ANALYZERS & GENERATORS
 MLP_LANGS = os.getenv("EMBEDDIA_MLP_LANGS", "et,en,ru").split(",")
 EMBEDDIA_ANALYZERS = {
@@ -164,5 +170,4 @@ EMBEDDIA_ANALYZERS = {
     "TEXTA Hatespeech Tagger": MultiTagAnalyzer(host=TEXTA_HOST, auth_token=TEXTA_TOKEN, project=6, lemmatize=True),
     "TEXTA MLP": MLP(language_codes=MLP_LANGS, resource_dir=os.path.join(BASE_DIR, "data"))
 }
-
 EMBEDDIA_EU_GENERATOR = NLGenerator(host=NLG_HOST)
