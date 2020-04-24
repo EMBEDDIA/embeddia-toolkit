@@ -38,18 +38,12 @@ class HSDAnalyzer:
     def __init__(self, host="http://localhost:5001"):
         self.host = host
         self.health = host
-        self.url = urljoin(host, "ml_hate_speech/ml_bert")
+        self.url = urljoin(host, "comments_api/hate_speech/")
 
     @staticmethod
     def _process_input(text):
-        payload = {
-            "tweet": [text],
-        }
+        payload = {"text": text}
         return payload
-
-    @staticmethod
-    def _process_output(response_json):
-        return response_json[0]
 
     @check_connection
     def process(self, text):
@@ -58,7 +52,7 @@ class HSDAnalyzer:
         if response.status_code != 200:
             raise exceptions.ServiceFailedError(f"Service sent non-200 response. Please check service url and input. Exception: {response.text}")
         response_json = response.json()
-        return self._process_output(response_json)
+        return response_json
 
 
 class HybridTaggerAnalyzer:
