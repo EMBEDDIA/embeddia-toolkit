@@ -8,5 +8,5 @@
 	path = modules/embeddia-hsd
 	url = https://github.com/shekharRavi/flask-rest-docker.git
 [submodule "embeddia-ner"]
-	path = embeddia-ner
-	url = https://github.com/EMBEDDIA/ULR_NER_REST
+	path = modules/embeddia-ner
+	url = https://github.com/EMBEDDIA/ULR_NER_REST.git
