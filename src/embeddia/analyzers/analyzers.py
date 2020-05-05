@@ -6,13 +6,13 @@ import os
 from .utils import check_connection
 from . import exceptions
 
-
 class KWEAnalyzer:
 
-    def __init__(self, host="http://localhost:5003"):
+    def __init__(self, host="http://localhost:5003", ssl_verify=True):
         self.host = host
         self.health = host
         self.url = urljoin(host, "rest_api/extract_keywords/")
+        self.ssl_verify = ssl_verify
 
     @staticmethod
     def _process_input(text):
@@ -26,7 +26,7 @@ class KWEAnalyzer:
     @check_connection
     def process(self, text):
         payload = self._process_input(text)
-        response = requests.post(self.url, json=payload)
+        response = requests.post(self.url, json=payload, verify=self.ssl_verify)
         if response.status_code != 200:
             raise exceptions.ServiceFailedError(f"Service sent non-200 response. Please check service url and input. Exception: {response.text}")
         response_json = response.json()
@@ -35,10 +35,11 @@ class KWEAnalyzer:
 
 class HSDAnalyzer:
 
-    def __init__(self, host="http://localhost:5001"):
+    def __init__(self, host="http://localhost:5001", ssl_verify=True):
         self.host = host
         self.health = host
         self.url = urljoin(host, "comments_api/hate_speech/")
+        self.ssl_verify = ssl_verify
 
     @staticmethod
     def _process_input(text):
@@ -48,7 +49,7 @@ class HSDAnalyzer:
     @check_connection
     def process(self, text):
         payload = self._process_input(text)
-        response = requests.post(self.url, json=payload)
+        response = requests.post(self.url, json=payload, verify=self.ssl_verify)
         if response.status_code != 200:
             raise exceptions.ServiceFailedError(f"Service sent non-200 response. Please check service url and input. Exception: {response.text}")
         response_json = response.json()
@@ -57,13 +58,14 @@ class HSDAnalyzer:
 
 class HybridTaggerAnalyzer:
 
-    def __init__(self, host="http:/dev.texta.ee:8000", project=1, tagger_group=1, auth_token="", lemmatize=True, use_ner=True):
+    def __init__(self, host="http://rest-dev.texta.ee", project=1, tagger_group=1, auth_token="", lemmatize=True, use_ner=True, ssl_verify=True):
         self.host = host
         self.health = urljoin(host, "api/v1/health")
         self.url = urljoin(host, f"api/v1/projects/{project}/tagger_groups/{tagger_group}/tag_text/")
         self.headers = {"Authorization": f"Token {auth_token}"}
         self.lemmatize = lemmatize
         self.use_ner = use_ner
+        self.ssl_verify = ssl_verify
 
     def _process_input(self, text):
         payload = {"text": text, "lemmatize": self.lemmatize, "use_ner": self.use_ner}
@@ -76,22 +78,23 @@ class HybridTaggerAnalyzer:
     @check_connection
     def process(self, text):
         payload = self._process_input(text)
-        response = requests.post(self.url, data=payload, headers=self.headers)
+        response = requests.post(self.url, data=payload, headers=self.headers, verify=self.ssl_verify)
         if response.status_code != 200:
-            raise exceptions.ServiceFailedError(f"Service sent non-200 response. Please check service url and input. Exception: {response.text}")
+            raise exceptions.ServiceFailedError(f"Service sent non-200 response. Please check service url and input. Exception: {response.text.encode()}")
         response_json = response.json()
         return self._process_output(response_json)
 
 
 class MultiTagAnalyzer:
 
-    def __init__(self, host="http:/dev.texta.ee:8000", project=1, auth_token="", lemmatize=True, hide_false=False):
+    def __init__(self, host="http://rest-dev.texta.ee", project=1, auth_token="", lemmatize=True, hide_false=False, ssl_verify=True):
         self.host = host
         self.health = urljoin(host, "api/v1/health")
         self.url = urljoin(host, f"api/v1/projects/{project}/multitag_text/")
         self.headers = {"Authorization": f"Token {auth_token}"}
         self.lemmatize = lemmatize
         self.hide_false = hide_false
+        self.ssl_verify = ssl_verify
 
     def _process_input(self, text):
         payload = {"text": text, "hide_false": self.hide_false, "lemmatize": self.lemmatize}
@@ -104,9 +107,9 @@ class MultiTagAnalyzer:
     @check_connection
     def process(self, text):
         payload = self._process_input(text)
-        response = requests.post(self.url, data=payload, headers=self.headers)
+        response = requests.post(self.url, data=payload, headers=self.headers, verify=self.ssl_verify)
         if response.status_code != 200:
-            raise exceptions.ServiceFailedError(f"Service sent non-200 response. Please check service url and input. Exception: {response.text}")
+            raise exceptions.ServiceFailedError(f"Service sent non-200 response. Please check service url and input. Exception: {response.text.encode()}")
         response_json = response.json()
         return self._process_output(response_json)
 

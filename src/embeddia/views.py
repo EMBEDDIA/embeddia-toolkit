@@ -28,7 +28,7 @@ class EMBEDDIARootView(generics.GenericAPIView):
 
 class EMBEDDIAAnalyzersView(generics.GenericAPIView):
     """
-    View for analyzing a single piece of text.
+    EMBEDDIA Analyzers view.
     """
     serializer_class = EMBEDDIATextSerializer
 
@@ -38,14 +38,17 @@ class EMBEDDIAAnalyzersView(generics.GenericAPIView):
             return Response({"error": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
         text = serializer.validated_data["text"]
         analyzers = list(serializer.validated_data["analyzers"])
-        try:
-            processed = EMBEDDIA_ANALYZER_OBJECT.process(text, analyzers=analyzers)
-        except Exception as e:
-            raise ServiceFailedException(e)        
+        #try:
+        processed = EMBEDDIA_ANALYZER_OBJECT.process(text, analyzers=analyzers)
+        #except Exception as e:
+        #    raise ServiceFailedException(e)        
         return Response(processed, status=status.HTTP_200_OK)
 
 
 class EMBEDDIAGeneratorsView(generics.GenericAPIView):
+    """
+    EMBEDDIA Generators view.
+    """
     serializer_class = EMBEDDIAGenerateTextSerializer
 
     def post(self, request):
@@ -55,8 +58,8 @@ class EMBEDDIAGeneratorsView(generics.GenericAPIView):
         language = serializer.validated_data["language"]
         dataset = serializer.validated_data["dataset"]
         location = serializer.validated_data["location"]
-        try:
-            processed = EMBEDDIA_EU_GENERATOR.process(dataset, language, location)
-        except Exception as e:
-            raise ServiceFailedException(e)
+        #try:
+        processed = EMBEDDIA_EU_GENERATOR.process(dataset, language, location)
+        #except Exception as e:
+        #    raise ServiceFailedException(e)
         return Response(processed, status=status.HTTP_200_OK)

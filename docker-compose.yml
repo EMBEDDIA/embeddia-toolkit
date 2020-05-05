@@ -20,7 +20,7 @@ services:
       context: ./modules/embeddia-hsd/services/web
       dockerfile: Dockerfile
     ports:
-      - "5001:5000"
+      - "5000"
     command: python manage.py run -h 0.0.0.0
     volumes:
       - ./data/:/usr/src/app/project/models
@@ -71,7 +71,7 @@ services:
       context: ./src
       dockerfile: Dockerfile
     ports:
-      - "8080:80"
+      - "9000:80"
     env_file:
       - ./env.embeddia
     volumes:
