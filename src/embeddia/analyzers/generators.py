@@ -9,19 +9,20 @@ from . import exceptions
 
 class NLGenerator:
 
-    def __init__(self, host="http://localhost:5000"):
+    def __init__(self, host="http://localhost:5000", ssl_verify=True):
         self.host = host
         self.health = urljoin(host, "datasets")
         self.url = urljoin(host, "eunlg")
+        self.ssl_verify = ssl_verify
 
     @check_connection
     def get_datasets(self):
-        response = requests.get(urljoin(self.host, "datasets"))
+        response = requests.get(urljoin(self.host, "datasets"), verify=self.ssl_verify)
         return response.json()["datasets"]
 
     @check_connection
     def get_languages(self):
-        response = requests.get(urljoin(self.host, "languages"))
+        response = requests.get(urljoin(self.host, "languages"), verify=self.ssl_verify)
         return response.json()["languages"]
 
     @check_connection
@@ -29,7 +30,7 @@ class NLGenerator:
         locations = []
         for dataset in self.get_datasets():
             payload = {"dataset": dataset}
-            response = requests.post(urljoin(self.host, "locations"), json=payload)
+            response = requests.post(urljoin(self.host, "locations"), json=payload, verify=self.ssl_verify)
             locations = locations + response.json()["locations"]
         return locations
 
@@ -40,7 +41,7 @@ class NLGenerator:
             "dataset": dataset,
             "location": location
         }
-        response = requests.post(self.url, json=payload)
+        response = requests.post(self.url, json=payload, verify=self.ssl_verify)
         if response.status_code != 200:
             raise exceptions.ServiceFailedError(f"Service sent non-200 response. Please check service url and input. Exception: {response.text}")
         response_json = response.json()

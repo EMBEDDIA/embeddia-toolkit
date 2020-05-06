@@ -2,28 +2,32 @@ version: '3'
 
 services:
 
-  # embeddia-postgres:
-  #   image: postgres:12-alpine
-  #   volumes:
-  #     - ./data/postgres/:/var/lib/postgresql/data/
-  #   env_file:
-  #     - ./env.hatespeech
+  # embeddia-redis:
+  #   container_name: embeddia-redis
+  #   image: redis:latest
 
-  # embeddia-hsd:
-  #   container_name: embeddia-hsd
-  #   image: docker.texta.ee/texta/embeddia-toolkit/embeddia-hsd:latest
-  #   build:
-  #     context: ./modules/embeddia-hsd/services/web
-  #     dockerfile: Dockerfile
-  #   ports:
-  #     - "5000"
-  #   command: python manage.py run -h 0.0.0.0
-  #   volumes:
-  #     - ./data/:/data/
-  #   env_file:
-  #     - ./env.hatespeech
-  #   depends_on:
-  #     - embeddia-postgres
+  embeddia-postgres:
+    image: postgres:12-alpine
+    volumes:
+      - ./data/postgres/:/var/lib/postgresql/data/
+    env_file:
+      - ./env.hatespeech
+
+  embeddia-hsd:
+    container_name: embeddia-hsd
+    image: docker.texta.ee/texta/embeddia-toolkit/embeddia-hsd:latest
+    build:
+      context: ./modules/embeddia-hsd/services/web
+      dockerfile: Dockerfile
+    ports:
+      - "5000"
+    command: python manage.py run -h 0.0.0.0
+    volumes:
+      - ./data/:/usr/src/app/project/models
+    env_file:
+      - ./env.hatespeech
+    depends_on:
+      - embeddia-postgres
 
   embeddia-nlg:
     container_name: embeddia-nlg
@@ -48,6 +52,18 @@ services:
       - ./env.keyword
     command: python -u manage.py run -h 0.0.0.0
 
+  # embeddia-ner:
+  #   container_name: embeddia-ner
+  #   image: docker.texta.ee/texta/embeddia-toolkit/embeddia-ner:latest
+  #   build:
+  #     context: ./modules/embeddia-ner/services/web
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - "5004:5000"
+  #   env_file:
+  #     - ./env.ner
+  #   command: python -u manage.py run -h 0.0.0.0
+
   embeddia-rest:
     container_name: embeddia-rest
     image: docker.texta.ee/texta/embeddia-toolkit/embeddia-rest:latest
@@ -55,7 +71,7 @@ services:
       context: ./src
       dockerfile: Dockerfile
     ports:
-      - "8080:80"
+      - "9000:80"
     env_file:
       - ./env.embeddia
     volumes:
@@ -63,4 +79,4 @@ services:
     depends_on:
       - embeddia-kwe
       - embeddia-nlg
-      #- embeddia-hsd
+      - embeddia-hsd

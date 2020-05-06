@@ -41,6 +41,12 @@ CELERY_ACCEPT_CONTENT = ["application/json"]
 CELERY_TASK_SERIALIZER = "json"
 CELERY_RESULT_SERIALIZER = "json"
 
+TEXTA_HT_PROJECT = int(os.getenv("EMBEDDIA_TEXTA_HT_PROJECT", 1))
+TEXTA_HS_PROJECT = int(os.getenv("EMBEDDIA_TEXTA_HS_PROJECT", 2))
+
+# SSL verification
+SSL_VERIFY = bool(os.getenv("EMBEDDIA_TEXTA_SSL_VERIFY", False))
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
@@ -164,10 +170,11 @@ CORS_ALLOW_HEADERS = list(default_headers) + ["x-xsrf-token"]
 # DECLARE EMBEDDIA ANALYZERS & GENERATORS
 MLP_LANGS = os.getenv("EMBEDDIA_MLP_LANGS", "et,en,ru").split(",")
 EMBEDDIA_ANALYZERS = {
-    "Keyword Extractor": KWEAnalyzer(host=KWE_HOST),
-    #"BERT Hatespeech Detector": HSDAnalyzer(host=HSD_HOST),
-    "TEXTA Hybrid Tagger": HybridTaggerAnalyzer(host=TEXTA_HOST, auth_token=TEXTA_TOKEN, project=8, tagger_group=1, use_ner=True, lemmatize=True),
-    "TEXTA Hatespeech Tagger": MultiTagAnalyzer(host=TEXTA_HOST, auth_token=TEXTA_TOKEN, project=6, lemmatize=True),
+    "JSI Keyword Extractor": KWEAnalyzer(host=KWE_HOST, ssl_verify=SSL_VERIFY),
+    "QMUL Hatespeech Detector": HSDAnalyzer(host=HSD_HOST, ssl_verify=SSL_VERIFY),
+    "TEXTA Hybrid Tagger": HybridTaggerAnalyzer(host=TEXTA_HOST, auth_token=TEXTA_TOKEN, project=TEXTA_HT_PROJECT, tagger_group=5, use_ner=True, lemmatize=True, ssl_verify=SSL_VERIFY),
+    "TEXTA Hatespeech Tagger": MultiTagAnalyzer(host=TEXTA_HOST, auth_token=TEXTA_TOKEN, project=TEXTA_HS_PROJECT, lemmatize=True, ssl_verify=SSL_VERIFY),
     "TEXTA MLP": MLP(language_codes=MLP_LANGS, resource_dir=os.path.join(BASE_DIR, "data"))
 }
-EMBEDDIA_EU_GENERATOR = NLGenerator(host=NLG_HOST)
+
+EMBEDDIA_EU_GENERATOR = NLGenerator(host=NLG_HOST, ssl_verify=SSL_VERIFY)

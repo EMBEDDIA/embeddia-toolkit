@@ -31,3 +31,5 @@ docker-compose push
 * https://gitlab.com/matej.martinc/tnt_kid_app.git
 
 * https://github.com/shekharRavi/flask-rest-docker.git
+
+* https://github.com/EMBEDDIA/ULR_NER_REST

@@ -6,4 +6,7 @@
 	url = https://gitlab.com/matej.martinc/tnt_kid_app.git
 [submodule "embeddia-hsd"]
 	path = modules/embeddia-hsd
-	url = https://github.com/shekharRavi/flask-rest-docker.git
+	url = https://github.com/mpurver/comment-filter.git
+[submodule "embeddia-ner"]
+	path = modules/embeddia-ner
+	url = https://github.com/EMBEDDIA/ULR_NER_REST.git
