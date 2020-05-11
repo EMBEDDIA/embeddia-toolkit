@@ -2,9 +2,9 @@ version: '3'
 
 services:
 
-  # embeddia-redis:
-  #   container_name: embeddia-redis
-  #   image: redis:latest
+  embeddia-redis:
+    container_name: embeddia-redis
+    image: redis:latest
 
   embeddia-postgres:
     image: postgres:12-alpine
@@ -36,7 +36,7 @@ services:
       context: ./modules/embeddia-nlg
       dockerfile: Dockerfile
     ports:
-      - "5000:8080"
+      - "8080"
     volumes:
       - ./data:/app/data
 
@@ -47,7 +47,7 @@ services:
       context: ./modules/embeddia-kwe/services/web
       dockerfile: Dockerfile
     ports:
-      - "5003:5000"
+      - "5000"
     env_file:
       - ./env.keyword
     command: python -u manage.py run -h 0.0.0.0
@@ -71,7 +71,7 @@ services:
       context: ./src
       dockerfile: Dockerfile
     ports:
-      - "9000:80"
+      - "8090:80"
     env_file:
       - ./env.embeddia
     volumes:
@@ -80,3 +80,4 @@ services:
       - embeddia-kwe
       - embeddia-nlg
       - embeddia-hsd
+      - embeddia-redis
