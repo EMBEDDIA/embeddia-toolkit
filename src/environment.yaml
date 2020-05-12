@@ -11,11 +11,11 @@ dependencies:
   - pip
   - supervisor
   - uwsgi
+  - psutil
   - pip:
     - django==2.1.*
     - django-cors-headers
     - djangorestframework==3.9.*
     - requests
     - whitenoise
-    - psutil
     - git+https://mlp:KdP4zzGu2dz9WMtKYozv@git.texta.ee/texta/texta-mlp-python

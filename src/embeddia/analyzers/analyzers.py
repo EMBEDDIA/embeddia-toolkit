@@ -21,7 +21,7 @@ class KWEAnalyzer:
 
     @staticmethod
     def _process_output(response_json):
-        return response_json["keywords"]
+        return [{"tag": keyword} for keyword in response_json["keywords"]]
 
     @check_connection
     def check_health(self):
@@ -53,6 +53,12 @@ class HSDAnalyzer:
         payload = {"text": text}
         return payload
 
+    @staticmethod
+    def _process_output(response_json):
+        translations = {"OFF": "OFFENSIVE",
+                        "NOT": "NOT OFFENSIVE"}
+        return {"tag": translations[response_json["label"]], "probability": response_json["probability"]}
+
     @check_connection
     def check_health(self):
         """
@@ -67,7 +73,7 @@ class HSDAnalyzer:
         if response.status_code != 200:
             raise exceptions.ServiceFailedError(f"Service sent non-200 response. Please check service url and input. Exception: {response.text}")
         response_json = response.json()
-        return response_json
+        return self._process_output(response_json)
 
 
 class HybridTaggerAnalyzer:
@@ -119,7 +125,11 @@ class MultiTagAnalyzer:
 
     @staticmethod
     def _process_output(response_json):
-        return [{"tag": a["tag"], "probability": a["probability"], "result": a["result"]} for a in response_json]
+        translations = {
+            "delete": "VERY OFFENSIVE",
+            "moderate": "OFFENSIVE"
+        }
+        return [{"tag": translations[a["tag"]], "probability": a["probability"], "result": a["result"]} for a in response_json]
 
     @check_connection
     def check_health(self):
