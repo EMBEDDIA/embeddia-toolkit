@@ -11,22 +11,25 @@ RUN set -x \
     && find /opt/conda/ -follow -type f -name '*.js.map' -delete
 
 # Copy project files
-COPY . /var/embeddia-rest
+#COPY . /var/embeddia-rest
+
+RUN mkdir /var/embeddia-rest
+COPY ./entrypoint.sh /var/embeddia-rest/entrypoint.sh
 
 # create data dir for MLP
 RUN mkdir /var/embeddia-rest/data
 
 # Ownership to www-data and entrypoint
 RUN chown -R www-data:www-data /var/embeddia-rest \
-    && chmod 775 -R /var/embeddia-rest \
-    && chmod 777 -R /opt/conda/envs/embeddia-rest \
+    #&& chmod 775 -R /var/embeddia-rest \
+    #&& chmod 777 -R /opt/conda/envs/embeddia-rest \
     && chmod +x /var/embeddia-rest/entrypoint.sh \
-    && rm -rf /var/embeddia-rest/.git \
+    #&& rm -rf /var/embeddia-rest/.git \
     && rm -rf /root/.cache
 
 # System configuration files
-COPY supervisord.conf /opt/conda/envs/embeddia-rest/etc/supervisord/conf.d/supervisord.conf
-ENV UWSGI_INI /var/embeddia-rest/embeddia-rest.ini
+COPY ./supervisord.conf /opt/conda/envs/embeddia-rest/etc/supervisord/conf.d/supervisord.conf
+ENV UWSGI_INI /var/embeddia-rest/src/embeddia-rest.ini
 
 # Set environment variables
 ENV PYTHONIOENCODING=UTF-8
@@ -39,6 +42,6 @@ EXPOSE 8000
 EXPOSE 8001
 
 # Ignition!
-WORKDIR /var/embeddia-rest
+WORKDIR /var/embeddia-rest/src
 ENTRYPOINT ["/var/embeddia-rest/entrypoint.sh"]
 CMD ["supervisord", "-n"]

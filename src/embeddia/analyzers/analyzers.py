@@ -55,9 +55,10 @@ class HSDAnalyzer:
 
     @staticmethod
     def _process_output(response_json):
-        translations = {"OFF": "OFFENSIVE",
-                        "NOT": "NOT OFFENSIVE"}
-        return {"tag": translations[response_json["label"]], "probability": response_json["probability"]}
+        if response_json["label"] == "OFF":
+            return [{"tag": "OFFENSIVE", "probability": response_json["confidence"]}]
+        else:
+            return []
 
     @check_connection
     def check_health(self):
@@ -114,13 +115,12 @@ class HybridTaggerAnalyzer:
 
 class MultiTagAnalyzer:
 
-    def __init__(self, host="http://rest-dev.texta.ee", project=1, auth_token="", lemmatize=True, hide_false=False, ssl_verify=True):
+    def __init__(self, host="http://rest-dev.texta.ee", project=1, auth_token="", lemmatize=True, ssl_verify=True):
         self.host = host
         self.health = urljoin(host, "api/v1/health")
         self.url = urljoin(host, f"api/v1/projects/{project}/multitag_text/")
         self.headers = {"Authorization": f"Token {auth_token}"}
         self.lemmatize = lemmatize
-        self.hide_false = hide_false
         self.ssl_verify = ssl_verify
 
     @staticmethod
@@ -129,7 +129,7 @@ class MultiTagAnalyzer:
             "delete": "VERY OFFENSIVE",
             "moderate": "OFFENSIVE"
         }
-        return [{"tag": translations[a["tag"]], "probability": a["probability"], "result": a["result"]} for a in response_json]
+        return [{"tag": translations[a["tag"]], "probability": a["probability"]} for a in response_json]
 
     @check_connection
     def check_health(self):
@@ -139,7 +139,7 @@ class MultiTagAnalyzer:
         return True
 
     def _process_input(self, text):
-        payload = {"text": text, "hide_false": self.hide_false, "lemmatize": self.lemmatize}
+        payload = {"text": text, "lemmatize": self.lemmatize, "hide_false": True}
         return payload
 
     @check_connection

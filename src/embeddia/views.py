@@ -114,3 +114,7 @@ class EMBEDDIAGeneratorsView(generics.GenericAPIView):
         #except Exception as e:
         #    raise ServiceFailedException(e)
         return Response(processed, status=status.HTTP_200_OK)
+
+
+#class EMBEDDIADashboardView(generics.GenericAPIView):
+

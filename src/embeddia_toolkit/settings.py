@@ -25,6 +25,9 @@ from embeddia.analyzers.generators import NLGenerator
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+# data dir is located next to base dir
+DATA_DIR = os.path.join(os.path.dirname(BASE_DIR), "data")
+
 
 # EMBEDDIA SERVICE HOSTNAMES & OTHER PARAMS
 HSD_HOST = os.getenv("EMBEDDIA_HSD_HOST", "http://localhost:5001")
@@ -107,7 +110,7 @@ WSGI_APPLICATION = 'embeddia_toolkit.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'NAME': os.path.join(DATA_DIR, 'db.sqlite3'),
     }
 }
 
@@ -149,7 +152,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = "/static/"
-STATIC_ROOT = os.path.join(BASE_DIR, "static")
+STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static")
 
 
 # For corsheaders/external frontend
@@ -168,7 +171,7 @@ EMBEDDIA_ANALYZERS = {
     "QMUL Hatespeech Detector": HSDAnalyzer(host=HSD_HOST, ssl_verify=SSL_VERIFY),
     "TEXTA Hybrid Tagger": HybridTaggerAnalyzer(host=TEXTA_HOST, auth_token=TEXTA_TOKEN, project=TEXTA_HT_PROJECT, tagger_group=5, use_ner=True, lemmatize=True, ssl_verify=SSL_VERIFY),
     "TEXTA Hatespeech Tagger": MultiTagAnalyzer(host=TEXTA_HOST, auth_token=TEXTA_TOKEN, project=TEXTA_HS_PROJECT, lemmatize=True, ssl_verify=SSL_VERIFY),
-    "TEXTA MLP": MLP(language_codes=MLP_LANGS, resource_dir=os.path.join(BASE_DIR, "data"))
+    "TEXTA MLP": MLP(language_codes=MLP_LANGS, resource_dir=DATA_DIR)
 }
 
 EMBEDDIA_GENERATORS = {

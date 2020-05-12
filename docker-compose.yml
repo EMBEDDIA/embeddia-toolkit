@@ -2,9 +2,9 @@ version: '3'
 
 services:
 
-  embeddia-redis:
-    container_name: embeddia-redis
-    image: redis:latest
+  # embeddia-redis:
+  #   container_name: embeddia-redis
+  #   image: redis:latest
 
   embeddia-postgres:
     image: postgres:12-alpine
@@ -91,6 +91,7 @@ services:
       - ./env.embeddia
     volumes:
       - ./data:/var/embeddia-rest/data
+      - ./src:/var/embeddia-rest/src
     depends_on:
       - embeddia-kwe
       - embeddia-nlg
