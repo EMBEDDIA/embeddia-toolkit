@@ -171,4 +171,6 @@ EMBEDDIA_ANALYZERS = {
     "TEXTA MLP": MLP(language_codes=MLP_LANGS, resource_dir=os.path.join(BASE_DIR, "data"))
 }
 
-EMBEDDIA_EU_GENERATOR = NLGenerator(host=NLG_HOST, ssl_verify=SSL_VERIFY)
+EMBEDDIA_GENERATORS = {
+    "UH EU Generator": NLGenerator(host=NLG_HOST, ssl_verify=SSL_VERIFY)
+}

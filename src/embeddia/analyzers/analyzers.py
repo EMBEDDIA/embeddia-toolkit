@@ -24,6 +24,13 @@ class KWEAnalyzer:
         return response_json["keywords"]
 
     @check_connection
+    def check_health(self):
+        """
+        A method to check if service is alive. Throws ServiceNotAvailableException if not.
+        """
+        return True
+
+    @check_connection
     def process(self, text):
         payload = self._process_input(text)
         response = requests.post(self.url, json=payload, verify=self.ssl_verify)
@@ -47,6 +54,13 @@ class HSDAnalyzer:
         return payload
 
     @check_connection
+    def check_health(self):
+        """
+        A method to check if service is alive. Throws ServiceNotAvailableException if not.
+        """
+        return True
+
+    @check_connection
     def process(self, text):
         payload = self._process_input(text)
         response = requests.post(self.url, json=payload, verify=self.ssl_verify)
@@ -67,13 +81,20 @@ class HybridTaggerAnalyzer:
         self.use_ner = use_ner
         self.ssl_verify = ssl_verify
 
+    @staticmethod
+    def _process_output(response_json):
+        return [{"tag": a["tag"], "probability": a["probability"]} for a in response_json]
+
     def _process_input(self, text):
         payload = {"text": text, "lemmatize": self.lemmatize, "use_ner": self.use_ner}
         return payload
 
-    @staticmethod
-    def _process_output(response_json):
-        return [{"tag": a["tag"], "probability": a["probability"]} for a in response_json]
+    @check_connection
+    def check_health(self):
+        """
+        A method to check if service is alive. Throws ServiceNotAvailableException if not.
+        """
+        return True
 
     @check_connection
     def process(self, text):
@@ -96,13 +117,20 @@ class MultiTagAnalyzer:
         self.hide_false = hide_false
         self.ssl_verify = ssl_verify
 
-    def _process_input(self, text):
-        payload = {"text": text, "hide_false": self.hide_false, "lemmatize": self.lemmatize}
-        return payload
-
     @staticmethod
     def _process_output(response_json):
         return [{"tag": a["tag"], "probability": a["probability"], "result": a["result"]} for a in response_json]
+
+    @check_connection
+    def check_health(self):
+        """
+        A method to check if service is alive. Throws ServiceNotAvailableException if not.
+        """
+        return True
+
+    def _process_input(self, text):
+        payload = {"text": text, "hide_false": self.hide_false, "lemmatize": self.lemmatize}
+        return payload
 
     @check_connection
     def process(self, text):

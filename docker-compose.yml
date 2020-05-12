@@ -2,9 +2,9 @@ version: '3'
 
 services:
 
-  # embeddia-redis:
-  #   container_name: embeddia-redis
-  #   image: redis:latest
+  embeddia-redis:
+    container_name: embeddia-redis
+    image: redis:latest
 
   embeddia-postgres:
     image: postgres:12-alpine
@@ -63,6 +63,21 @@ services:
   #   env_file:
   #     - ./env.ner
   #   command: python -u manage.py run -h 0.0.0.0
+  #   depends_on:
+  #     - embeddia-ner-worker
+
+  # embeddia-ner-worker:
+  #   build:
+  #     context: ./modules/embeddia-ner/services/celery-queue
+  #     dockerfile: Dockerfile
+  #   env_file:
+  #     - ./env.ner
+  #   ports:
+  #    - "5555:5555"
+  #   volumes:
+  #     - celery-flower_data:/persistent
+  #   depends_on:
+  #     - embeddia-redis
 
   embeddia-rest:
     container_name: embeddia-rest
@@ -80,3 +95,6 @@ services:
       - embeddia-kwe
       - embeddia-nlg
       - embeddia-hsd
+
+# volumes:
+#   celery-flower_data:

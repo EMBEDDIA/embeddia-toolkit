@@ -16,6 +16,13 @@ class NLGenerator:
         self.ssl_verify = ssl_verify
 
     @check_connection
+    def check_health(self):
+        """
+        A method to check if service is alive. Throws ServiceNotAvailableException if not.
+        """
+        return True
+
+    @check_connection
     def get_datasets(self):
         response = requests.get(urljoin(self.host, "datasets"), verify=self.ssl_verify)
         return response.json()["datasets"]
