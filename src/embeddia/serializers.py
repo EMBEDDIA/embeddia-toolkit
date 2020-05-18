@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from .choices import (
-    get_analyzer_choices,
+    #get_analyzer_choices,
     get_generator_dataset_choices,
     get_generator_language_choices,
     get_generator_location_choices
@@ -9,13 +9,13 @@ from .choices import (
 
 class EMBEDDIATextSerializer(serializers.Serializer):
     text = serializers.CharField()
-    analyzers = serializers.MultipleChoiceField(choices=get_analyzer_choices(), required=False)
+    #analyzers = serializers.MultipleChoiceField(choices=get_analyzer_choices(), required=False)
 
-    def validate(self, data):
-        analyzer = data["analyzers"]
-        if not analyzer:
-            data["analyzers"] = [a[0] for a in get_analyzer_choices()]
-        return data
+    #def validate(self, data):
+    #    analyzer = data["analyzers"]
+    #    if not analyzer:
+    #        data["analyzers"] = [a[0] for a in get_analyzer_choices()]
+    #    return data
 
 
 class EMBEDDIAGenerateTextSerializer(serializers.Serializer):

@@ -14,11 +14,16 @@ from utils import parse_list_env_headers
 from texta_mlp.mlp import MLP
 import os
 
-from embeddia.analyzers.analyzers import (
-    HSDAnalyzer,
+from embeddia.analyzers.article_analyzer import (
     KWEAnalyzer,
     HybridTaggerAnalyzer,
+    NERAnalyzer,
+    ArticleAnalyzer
+)
+from embeddia.analyzers.comment_analyzer import (
+    QMULAnalyzer,
     MultiTagAnalyzer,
+    CommentAnalyzer
 )
 from embeddia.analyzers.generators import NLGenerator
 
@@ -33,9 +38,10 @@ DATA_DIR = os.path.join(os.path.dirname(BASE_DIR), "data")
 HSD_HOST = os.getenv("EMBEDDIA_HSD_HOST", "http://localhost:5001")
 KWE_HOST = os.getenv("EMBEDDIA_KWE_HOST", "http://localhost:5003")
 NLG_HOST = os.getenv("EMBEDDIA_NLG_HOST", "http://localhost:5000")
+NER_HOST = os.getenv("EMBEDDIA_NER_HOST", "http://localhost:5004")
 
-TEXTA_HOST = os.getenv("EMBEDDIA_TEXTA_HOST", "https://rest.texta.ee")
-TEXTA_TOKEN = os.getenv("EMBEDDIA_TEXTA_TOKEN", "b33bd1dad422a3b9065f7c6704f8ca3083eafda4")
+TEXTA_HOST = os.getenv("EMBEDDIA_TEXTA_HOST", "https://rest-dev.texta.ee")
+TEXTA_TOKEN = os.getenv("EMBEDDIA_TEXTA_TOKEN", "d44736b2d645eaeb8979b9aaff85c00ce90cd86b")
 
 TEXTA_HT_PROJECT = int(os.getenv("EMBEDDIA_TEXTA_HT_PROJECT", 1))
 TEXTA_HS_PROJECT = int(os.getenv("EMBEDDIA_TEXTA_HS_PROJECT", 2))
@@ -162,18 +168,37 @@ CSRF_COOKIE_NAME = "XSRF-TOKEN"
 CORS_ORIGIN_WHITELIST = parse_list_env_headers("TEXTA_CORS_ORIGIN_WHITELIST", ["http://localhost:4200"])
 CORS_ALLOW_HEADERS = list(default_headers) + ["x-xsrf-token"]
 
-
-
 # DECLARE EMBEDDIA ANALYZERS & GENERATORS
 MLP_LANGS = os.getenv("EMBEDDIA_MLP_LANGS", "et,en,ru").split(",")
-EMBEDDIA_ANALYZERS = {
-    "JSI Keyword Extractor": KWEAnalyzer(host=KWE_HOST, ssl_verify=SSL_VERIFY),
-    "QMUL Hatespeech Detector": HSDAnalyzer(host=HSD_HOST, ssl_verify=SSL_VERIFY),
-    "TEXTA Hybrid Tagger": HybridTaggerAnalyzer(host=TEXTA_HOST, auth_token=TEXTA_TOKEN, project=TEXTA_HT_PROJECT, tagger_group=5, use_ner=True, lemmatize=True, ssl_verify=SSL_VERIFY),
-    "TEXTA Hatespeech Tagger": MultiTagAnalyzer(host=TEXTA_HOST, auth_token=TEXTA_TOKEN, project=TEXTA_HS_PROJECT, lemmatize=True, ssl_verify=SSL_VERIFY),
-    "TEXTA MLP": MLP(language_codes=MLP_LANGS, resource_dir=DATA_DIR)
-}
 
-EMBEDDIA_GENERATORS = {
-    "UH EU Generator": NLGenerator(host=NLG_HOST, ssl_verify=SSL_VERIFY)
-}
+mlp_analyzer = MLP(language_codes=MLP_LANGS, resource_dir=DATA_DIR)
+#ner_analyzer = NERAnalyzer(host=NER_HOST, ssl_verify=SSL_VERIFY)
+kwe_analyzer = KWEAnalyzer(host=KWE_HOST, ssl_verify=SSL_VERIFY)
+hybrid_tagger_analyzer = HybridTaggerAnalyzer(
+    host=TEXTA_HOST,
+    auth_token=TEXTA_TOKEN,
+    project=TEXTA_HT_PROJECT,
+    tagger_group=5,
+    use_ner=True,
+    lemmatize=False,
+    ssl_verify=SSL_VERIFY
+)
+qmul_analyzer = QMULAnalyzer(host=HSD_HOST, ssl_verify=SSL_VERIFY)
+mtag_analyzer = MultiTagAnalyzer(host=TEXTA_HOST, auth_token=TEXTA_TOKEN, project=TEXTA_HS_PROJECT, lemmatize=True, ssl_verify=SSL_VERIFY)
+
+
+EMBEDDIA_ARTICLE_ANALYZER = ArticleAnalyzer(
+    mlp_analyzer,
+    {
+        "TEXTA Hybrid Tagger": hybrid_tagger_analyzer,
+        "JSI Keyword Analyzer": kwe_analyzer
+    }
+)
+EMBEDDIA_COMMENT_ANALYZER = CommentAnalyzer(
+    {
+        "QMUL Comment Analyzer": qmul_analyzer,
+        "TEXTA Comment Analyzer": mtag_analyzer
+    }
+)
+
+EMBEDDIA_GENERATOR = NLGenerator(host=NLG_HOST, ssl_verify=SSL_VERIFY)
