@@ -90,13 +90,15 @@ services:
   #   expose:
   #     - "18861"
 
-  embeddia-front:
-    container_name: embeddia-front
+  embeddia-rest-front:
+    container_name: embeddia-rest-front
     image: docker.texta.ee/texta/embeddia-toolkit/embeddia-front:latest
     ports:
-      - "4200:80"
+      - "80:80"
     env_file:
       - ./env.embeddia
+    depends_on:
+      - embeddia-rest
 
   embeddia-rest:
     container_name: embeddia-rest
