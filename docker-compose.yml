@@ -90,7 +90,7 @@ services:
   #   expose:
   #     - "18861"
 
-  embneddia-front:
+  embeddia-front:
     container_name: embeddia-front
     image: docker.texta.ee/texta/embeddia-toolkit/embeddia-front:latest
     ports:
