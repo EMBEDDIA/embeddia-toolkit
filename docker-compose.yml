@@ -2,9 +2,9 @@ version: '3'
 
 services:
 
-  # embeddia-redis:
-  #   container_name: embeddia-redis
-  #   image: redis:latest
+  embeddia-redis:
+    container_name: embeddia-redis
+    image: redis:latest
 
   embeddia-postgres:
     image: postgres:12-alpine
@@ -75,9 +75,28 @@ services:
   #   ports:
   #    - "5555:5555"
   #   volumes:
-  #     - celery-flower_data:/persistent
+  #     - ./data/celery-flower_data:/persistent
   #   depends_on:
   #     - embeddia-redis
+
+  # ner:
+  #   build:
+  #       context: ./modules/embeddia-ner/services/ner-service
+  #       dockerfile: Dockerfile
+  #   env_file:
+  #     - ./env.ner
+  #   volumes:
+  #     - ./data/ner-data:/data
+  #   expose:
+  #     - "18861"
+
+  embneddia-front:
+    container_name: embeddia-front
+    image: docker.texta.ee/texta/embeddia-toolkit/embeddia-front:latest
+    ports:
+      - "4200:80"
+    env_file:
+      - ./env.embeddia
 
   embeddia-rest:
     container_name: embeddia-rest
@@ -86,7 +105,7 @@ services:
       context: ./src
       dockerfile: Dockerfile
     ports:
-      - "9000:80"
+      - "8090:80"
     env_file:
       - ./env.embeddia
     volumes:
@@ -96,6 +115,3 @@ services:
       - embeddia-kwe
       - embeddia-nlg
       - embeddia-hsd
-
-# volumes:
-#   celery-flower_data:
