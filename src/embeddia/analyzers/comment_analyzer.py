@@ -97,4 +97,4 @@ class CommentAnalyzer:
             for t in analyzer_output:
                 t["source"] = name
                 tags.append(t)
-        return {"tags": tags, "text": text, "analyzers": list(self.analyzers.keys()}
+        return {"tags": tags, "text": text, "analyzers": list(self.analyzers.keys())}
