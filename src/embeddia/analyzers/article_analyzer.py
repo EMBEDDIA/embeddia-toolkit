@@ -143,6 +143,6 @@ class ArticleAnalyzer:
             "tags": tags,
             "entities": entities,
             "language": language,
-            "analyzers": list(self.analyzers.keys())
+            "analyzers": list(self.analyzers.keys())+["TEXTA MLP"]
         }
         return output
