@@ -44,6 +44,7 @@ TEXTA_HOST = os.getenv("EMBEDDIA_TEXTA_HOST", "https://rest-dev.texta.ee")
 TEXTA_TOKEN = os.getenv("EMBEDDIA_TEXTA_TOKEN", "d44736b2d645eaeb8979b9aaff85c00ce90cd86b")
 
 TEXTA_HT_PROJECT = int(os.getenv("EMBEDDIA_TEXTA_HT_PROJECT", 1))
+TEXTA_HT_TAGGER = int(os.getenv("EMBEDDIA_TEXTA_HT_PROJECT", 5))
 TEXTA_HS_PROJECT = int(os.getenv("EMBEDDIA_TEXTA_HS_PROJECT", 2))
 
 # SSL verification
@@ -178,7 +179,7 @@ hybrid_tagger_analyzer = HybridTaggerAnalyzer(
     host=TEXTA_HOST,
     auth_token=TEXTA_TOKEN,
     project=TEXTA_HT_PROJECT,
-    tagger_group=5,
+    tagger_group=TEXTA_HT_TAGGER,
     use_ner=True,
     lemmatize=False,
     ssl_verify=SSL_VERIFY
