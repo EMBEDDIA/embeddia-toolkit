@@ -118,8 +118,9 @@ class KWEAnalyzer:
 
 class ArticleAnalyzer:
 
-    def __init__(self, mlp, analyzers):
+    def __init__(self, mlp, analyzers, mlp_name="TEXTA MLP"):
         self.mlp = mlp
+        self.mlp_name = mlp_name
         self.analyzers = analyzers
 
     def process(self, text, analyzers=[]):
@@ -129,7 +130,7 @@ class ArticleAnalyzer:
         tokenized_text = mlp_analysis["text"]["text"]
         language = mlp_analysis["text"]["lang"]
         lemmas = mlp_analysis["text"]["lemmas"]
-        entities = [{"entity": e["str_val"], "type": e["fact"], "source": "MLP"} for e in mlp_analysis["texta_facts"]]
+        entities = [{"entity": e["str_val"], "type": e["fact"], "source": self.mlp_name} for e in mlp_analysis["texta_facts"]]
         # use analyzers
         tags = []
         for name, analyzer in self.analyzers.items():
@@ -143,6 +144,6 @@ class ArticleAnalyzer:
             "tags": tags,
             "entities": entities,
             "language": language,
-            "analyzers": list(self.analyzers.keys())+["TEXTA MLP"]
+            "analyzers": list(self.analyzers.keys())+[self.mlp_name]
         }
         return output
