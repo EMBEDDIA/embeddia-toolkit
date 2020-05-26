@@ -142,6 +142,7 @@ class ArticleAnalyzer:
             "text": tokenized_text,
             "tags": tags,
             "entities": entities,
-            "language": language
+            "language": language,
+            "analyzers": list(self.analyzers.keys())
         }
         return output
