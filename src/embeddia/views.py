@@ -56,7 +56,7 @@ class EMBEDDIAHealthView(generics.GenericAPIView):
         }
 
         # check health of services
-        services = {**EMBEDDIA_ANALYZERS, **EMBEDDIA_GENERATORS}
+        services = {**EMBEDDIA_ARTICLE_ANALYZER.analyzers, **EMBEDDIA_COMMENT_ANALYZER.analyzers}
         for service_name, service_class in services.items():
             try:
                 service_status = service_class.check_health()
