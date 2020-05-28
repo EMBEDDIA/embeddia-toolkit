@@ -10,11 +10,12 @@ RUN set -x \
     && find /opt/conda/ -follow -type f -name '*.pyc' -delete \
     && find /opt/conda/ -follow -type f -name '*.js.map' -delete
 
-# Copy project files
-#COPY . /var/embeddia-rest
-
+# create project dir
 RUN mkdir /var/embeddia-rest
+# copy entrypoint
 COPY ./entrypoint.sh /var/embeddia-rest/entrypoint.sh
+# copy source
+COPY . /var/embeddia-rest/src
 
 # create data dir for MLP
 RUN mkdir /var/embeddia-rest/data
@@ -24,7 +25,7 @@ RUN chown -R www-data:www-data /var/embeddia-rest \
     #&& chmod 775 -R /var/embeddia-rest \
     #&& chmod 777 -R /opt/conda/envs/embeddia-rest \
     && chmod +x /var/embeddia-rest/entrypoint.sh \
-    #&& rm -rf /var/embeddia-rest/.git \
+    && rm -rf /var/embeddia-rest/src/.git \
     && rm -rf /root/.cache
 
 # System configuration files
