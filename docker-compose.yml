@@ -23,7 +23,7 @@ services:
       - "5000"
     command: python manage.py run -h 0.0.0.0
     volumes:
-      - ./data/:/usr/src/app/project/models
+      - ./data/:/models/
     env_file:
       - ./env.hatespeech
     depends_on:
