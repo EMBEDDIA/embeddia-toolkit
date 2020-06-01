@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+
+  toolkit-front:
+    container_name: embeddia-front
+    image: embeddia-front:latest
+    ports:
+      - 4200:80
+    env_file:
+      - ./docker/env

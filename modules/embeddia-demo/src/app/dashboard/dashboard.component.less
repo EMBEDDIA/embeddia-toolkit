@@ -1,0 +1,57 @@
+@font-size: calc(14px + 6 * ((100vw - 320px) / 680));
+
+nz-select {
+  overflow: hidden;
+
+  ::ng-deep nz-select-top-control {
+    max-height: 32px;
+  }
+}
+
+span {
+  font-size: 0.5em;
+  margin-top: 5px;
+}
+
+h1 {
+  font-size: @font-size;
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
+
+.blocked-by-model {
+  align-items: center;
+  height: 100%;
+}
+
+.entities-actions {
+  justify-content: flex-end;
+
+  .fact-select {
+    width: 250px;
+    align-self: flex-end;
+    margin-right: 15px;
+  }
+
+}
+
+.progress {
+  margin-top: auto;
+}
+
+.container {
+  .content {
+    display: grid;
+
+    .container {
+      overflow: hidden;
+
+      h1 {
+        margin: 0;
+      }
+
+      padding: 20px;
+    }
+  }
+}

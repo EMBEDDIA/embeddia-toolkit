@@ -1,0 +1,29 @@
+@font-size: calc(14px + 5 * ((100vw - 320px) / 680));
+.content {
+  .tag-wrapper {
+    flex-wrap: wrap;
+
+    nz-tag {
+      margin: 5px;
+    }
+  }
+
+  .legend {
+    padding: 0 5%;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-items: center;
+    nz-tag {
+      margin: 5px;
+    }
+  }
+
+  .container > div {
+    margin-top: 5%;
+  }
+
+  h1 {
+    font-size: @font-size;
+  }
+}

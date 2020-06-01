@@ -1,0 +1,101 @@
+<div class="container">
+
+  <div class="sidebar">
+    <form #dashboardForm="ngForm" (ngSubmit)="submitForm()" class="mw" nz-form nzLayout="vertical">
+      <nz-form-item>
+        <nz-form-control nzErrorTip="This field is required">
+          <nz-form-label nzRequired>Dataset</nz-form-label>
+          <nz-select
+            [(ngModel)]="selectedDataset"
+            class="mw"
+            name="selectedDataset"
+            required>
+            <nz-option *ngFor="let item of dataset" [nzLabel]="item.display_name"
+                       [nzValue]="item.value"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-control nzErrorTip="This field is required">
+          <nz-form-label nzRequired>Time frame</nz-form-label>
+          <nz-range-picker
+            [(ngModel)]="selectedRange" class="mw"
+            name="selectedRange" required></nz-range-picker>
+        </nz-form-control>
+      </nz-form-item>
+
+      <button [disabled]="!dashboardForm.form.valid" [nzLoading]="isLoading" class="mw" nz-button nzType="primary">
+        Dashboard
+      </button>
+    </form>
+
+    <nz-space *ngIf="graphData.length>0" class="flex-col progress" nzDirection="vertical" nzSize="small">
+      <nz-space-item class="flex-col overall-health align-center">
+        <h1>Overall Health</h1>
+        <nz-progress [nzFormat]="formatComments" [nzPercent]="81" [nzStrokeLinecap]="strokeCap"
+                     [nzStrokeWidth]="strokeWidth" [nzWidth]="commentsOkProgressWidth" nzStatus="normal"
+                     nzStrokeColor="green" nzType="dashboard"></nz-progress>
+        <ng-template #formatComments let-number>
+          <div class="flex-col">{{number}}%<span>Comments OK</span></div>
+        </ng-template>
+      </nz-space-item>
+      <div class="flex-col blocked-by-model align-center">
+        <h1>Blocked by Model</h1>
+        <nz-space [nzDirection]="'horizontal'"
+                  class="flex-row wrap-space-evenly" nzSize="small">
+          <nz-space-item>
+            <nz-progress [nzFormat]="moderate" [nzPercent]="5" [nzStrokeLinecap]="strokeCap"
+                         [nzStrokeWidth]="strokeWidth" [nzWidth]="blockedByModelProgressWidth" nzStatus="normal"
+                         nzType="dashboard"></nz-progress>
+            <ng-template #moderate let-number>
+              <div class="flex-col">{{number}}%<span>TEXTA Moderate</span></div>
+            </ng-template>
+          </nz-space-item>
+          <nz-space-item>
+            <nz-progress [nzFormat]="Tdelete" [nzPercent]="4" [nzStrokeLinecap]="strokeCap"
+                         [nzStrokeWidth]="strokeWidth" [nzWidth]="blockedByModelProgressWidth" nzStatus="normal"
+                         nzType="dashboard"></nz-progress>
+            <ng-template #Tdelete let-number>
+              <div class="flex-col">{{number}}%<span>TEXTA Delete</span></div>
+            </ng-template>
+          </nz-space-item>
+          <nz-space-item>
+            <nz-progress [nzFormat]="QMUL" [nzPercent]="10" [nzStrokeLinecap]="strokeCap"
+                         [nzStrokeWidth]="strokeWidth" [nzWidth]="blockedByModelProgressWidth" nzStatus="normal"
+                         nzType="dashboard"></nz-progress>
+            <ng-template #QMUL let-number>
+              <div class="flex-col">{{number}}%<span>QMUL</span></div>
+            </ng-template>
+          </nz-space-item>
+        </nz-space>
+      </div>
+    </nz-space>
+  </div>
+  <div class="content">
+    <div class="container">
+      <h1>Trending Entities & Keywords in Articles</h1>
+      <div class="flex-row mw entities-actions">
+        <nz-select (ngModelChange)="factSelectionChanged($event)" [(ngModel)]="selectedFact"
+                   class="fact-select"
+                   nzMaxTagCount="2"
+                   nzMode="multiple" nzPlaceHolder="Choose">
+          <nz-option *ngFor="let key of this.tagsKeys" nzLabel="{{key}}" nzValue="{{key}}"></nz-option>
+        </nz-select>
+      </div>
+      <div *ngIf="!isLoading && this.graphData.length > 0" class="flex-col mh mw dark">
+        <ngx-charts-bar-horizontal
+          [customColors]="customColors"
+          [results]="graphData"
+          [roundEdges]="false"
+          [showXAxisLabel]="showXAxisLabel"
+          [showYAxisLabel]="showYAxisLabel"
+          [xAxisLabel]="xAxisLabel"
+          [xAxis]="showXAxis"
+          [yAxisLabel]="yAxisLabel"
+          [yAxisTickFormatting]="formatYAxisTicks"
+          [yAxis]="showYAxis">
+        </ngx-charts-bar-horizontal>
+      </div>
+    </div>
+  </div>
+</div>
