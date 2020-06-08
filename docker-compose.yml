@@ -93,6 +93,9 @@ services:
   embeddia-rest-front:
     container_name: embeddia-rest-front
     image: docker.texta.ee/texta/embeddia-toolkit/embeddia-front:latest
+    build:
+      context: ./modules/embeddia-demo
+      dockerfile: ./docker/Dockerfile
     ports:
       - "4200:80"
     env_file:
