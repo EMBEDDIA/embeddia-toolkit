@@ -25,7 +25,6 @@ from embeddia.analyzers.comment_analyzer import (
     MultiTagAnalyzer,
     CommentAnalyzer
 )
-from embeddia.analyzers.generators import NLGenerator
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -197,9 +196,7 @@ EMBEDDIA_ARTICLE_ANALYZER = ArticleAnalyzer(
 )
 EMBEDDIA_COMMENT_ANALYZER = CommentAnalyzer(
     {
-        "QMUL Comment Analyzer": qmul_analyzer,
-        "TEXTA Comment Analyzer": mtag_analyzer
+        "Cross-lingual Comment Analyzer": qmul_analyzer,
+        "Monolingual Comment Analyzer": mtag_analyzer
     }
 )
-
-EMBEDDIA_GENERATOR = NLGenerator(host=NLG_HOST, ssl_verify=SSL_VERIFY)

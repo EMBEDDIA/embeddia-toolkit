@@ -4,8 +4,8 @@ import shutil
 import psutil
 import re
 
-from embeddia.serializers import EMBEDDIATextSerializer, EMBEDDIAGenerateTextSerializer
-from embeddia_toolkit.settings import EMBEDDIA_ARTICLE_ANALYZER, EMBEDDIA_GENERATOR, EMBEDDIA_COMMENT_ANALYZER
+from embeddia.serializers import EMBEDDIATextSerializer
+from embeddia_toolkit.settings import EMBEDDIA_ARTICLE_ANALYZER, EMBEDDIA_COMMENT_ANALYZER
 from embeddia.exceptions import ServiceFailedException
 from embeddia.analyzers.exceptions import ServiceNotAvailableError
 
@@ -20,7 +20,6 @@ class EMBEDDIARootView(generics.GenericAPIView):
         mlp_info = {
             "Article Analyzer": request.build_absolute_uri(f"{path}/article_analyzer/"),
             "Comment Analyzer": request.build_absolute_uri(f"{path}/comment_analyzer/"),
-            "Article Generator": request.build_absolute_uri(f"{path}/article_generator/"),
             "Health": request.build_absolute_uri(f"{path}/health/"),
         }
         return Response(mlp_info, status=status.HTTP_200_OK)
@@ -108,27 +107,3 @@ class EMBEDDIACommentAnalyzerView(generics.GenericAPIView):
         #except Exception as e:
         #    raise ServiceFailedException(e)        
         return Response(processed, status=status.HTTP_200_OK)
-
-
-class EMBEDDIAGeneratorsView(generics.GenericAPIView):
-    """
-    EMBEDDIA Generators view.
-    """
-    serializer_class = EMBEDDIAGenerateTextSerializer
-
-    def post(self, request):
-        serializer = EMBEDDIAGenerateTextSerializer(data=request.data)
-        if not serializer.is_valid():
-            return Response({"error": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
-        language = serializer.validated_data["language"]
-        dataset = serializer.validated_data["dataset"]
-        location = serializer.validated_data["location"]
-        #try:
-        processed = EMBEDDIA_GENERATOR.process(dataset, language, location)
-        #except Exception as e:
-        #    raise ServiceFailedException(e)
-        return Response(processed, status=status.HTTP_200_OK)
-
-
-#class EMBEDDIADashboardView(generics.GenericAPIView):
-
