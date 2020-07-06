@@ -191,12 +191,12 @@ EMBEDDIA_ARTICLE_ANALYZER = ArticleAnalyzer(
     mlp_analyzer,
     {
         "TEXTA Hybrid Tagger": hybrid_tagger_analyzer,
-        "JSI Keyword Analyzer": kwe_analyzer
+        "TNT-KID Analyzer": kwe_analyzer
     }
 )
 EMBEDDIA_COMMENT_ANALYZER = CommentAnalyzer(
     {
-        "Cross-lingual Comment Analyzer": qmul_analyzer,
-        "Monolingual Comment Analyzer": mtag_analyzer
+        "EMBEDDIA Cross-lingual Comment Model": qmul_analyzer,
+        "Monolingual Comment Model": mtag_analyzer
     }
 )

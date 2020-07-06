@@ -14,7 +14,7 @@ class QMULAnalyzer:
         self.health = host
         self.url = urljoin(host, "comments_api/hate_speech/")
         self.ssl_verify = ssl_verify
-        self.name = "QMUL Analyzer"
+        self.name = "EMBEDDIA Multilingual Comment Model"
 
     @staticmethod
     def _process_input(text):
@@ -54,7 +54,7 @@ class MultiTagAnalyzer:
         self.headers = {"Authorization": f"Token {auth_token}"}
         self.lemmatize = lemmatize
         self.ssl_verify = ssl_verify
-        self.name = "MultiTag Analyzer"
+        self.name = "Monolingual Comment Model"
 
     @staticmethod
     def _process_output(response_json):
