@@ -62,7 +62,7 @@ class MultiTagAnalyzer:
             "delete": "VERY OFFENSIVE",
             "moderate": "OFFENSIVE"
         }
-        return [{"tag": translations[a["tag"]], "probability": a["probability"]} for a in response_json]
+        return [{"tag": translations[a["tag"]], "probability": a["probability"]} for a in response_json if a["tag"] in translations]
 
     @check_connection
     def check_health(self):
