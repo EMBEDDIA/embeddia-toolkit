@@ -34,9 +34,10 @@ DATA_DIR = os.path.join(os.path.dirname(BASE_DIR), "data")
 
 
 # EMBEDDIA SERVICE HOSTNAMES & OTHER PARAMS
-HSD_HOST = os.getenv("EMBEDDIA_HSD_HOST", "http://localhost:5001")
-KWE_HOST = os.getenv("EMBEDDIA_KWE_HOST", "http://localhost:5003")
 NLG_HOST = os.getenv("EMBEDDIA_NLG_HOST", "http://localhost:5000")
+HSD_HOST = os.getenv("EMBEDDIA_HSD_HOST", "http://localhost:5001")
+KWE_ET_HOST = os.getenv("EMBEDDIA_KWE_ET_HOST", "http://localhost:5002")
+KWE_HR_HOST = os.getenv("EMBEDDIA_KWE_HR_HOST", "http://localhost:5003")
 NER_HOST = os.getenv("EMBEDDIA_NER_HOST", "http://localhost:5004")
 
 TEXTA_HOST = os.getenv("EMBEDDIA_TEXTA_HOST", "https://rest-dev.texta.ee")
@@ -173,7 +174,8 @@ MLP_LANGS = os.getenv("EMBEDDIA_MLP_LANGS", "et,en,ru").split(",")
 
 mlp_analyzer = MLP(language_codes=MLP_LANGS, resource_dir=DATA_DIR)
 #ner_analyzer = NERAnalyzer(host=NER_HOST, ssl_verify=SSL_VERIFY)
-kwe_analyzer = KWEAnalyzer(host=KWE_HOST, ssl_verify=SSL_VERIFY)
+kwe_et_analyzer = KWEAnalyzer(host=KWE_ET_HOST, ssl_verify=SSL_VERIFY)
+kwe_hr_analyzer = KWEAnalyzer(host=KWE_HR_HOST, ssl_verify=SSL_VERIFY)
 hybrid_tagger_analyzer = HybridTaggerAnalyzer(
     host=TEXTA_HOST,
     auth_token=TEXTA_TOKEN,
@@ -190,8 +192,9 @@ mtag_analyzer = MultiTagAnalyzer(host=TEXTA_HOST, auth_token=TEXTA_TOKEN, projec
 EMBEDDIA_ARTICLE_ANALYZER = ArticleAnalyzer(
     mlp_analyzer,
     {
-        "TEXTA Hybrid Tagger": hybrid_tagger_analyzer,
-        "TNT-KID Analyzer": kwe_analyzer
+        "Hybrid Tagger Analyzer": hybrid_tagger_analyzer,
+        "TNT-KID ET Analyzer": kwe_et_analyzer,
+        "TNT-KID HR Analyzer": kwe_hr_analyzer
     }
 )
 EMBEDDIA_COMMENT_ANALYZER = CommentAnalyzer(

@@ -2,16 +2,23 @@ version: '3'
 
 services:
 
-  embeddia-redis:
-    container_name: embeddia-redis
-    image: redis:latest
-
   embeddia-postgres:
     image: postgres:12-alpine
     volumes:
       - ./data/postgres/:/var/lib/postgresql/data/
     env_file:
       - ./env.hatespeech
+
+  # embeddia-nlg:
+  #   container_name: embeddia-nlg
+  #   image: docker.texta.ee/texta/embeddia-toolkit/embeddia-nlg:latest
+  #   build:
+  #     context: ./modules/embeddia-nlg
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - "8080"
+  #   volumes:
+  #     - ./data:/app/data
 
   embeddia-hsd:
     container_name: embeddia-hsd
@@ -20,7 +27,7 @@ services:
       context: ./modules/embeddia-hsd/services/web
       dockerfile: Dockerfile
     ports:
-      - "5000"
+      - 5000
     command: python manage.py run -h 0.0.0.0
     volumes:
       - ./data/:/models/
@@ -29,25 +36,26 @@ services:
     depends_on:
       - embeddia-postgres
 
-  embeddia-nlg:
-    container_name: embeddia-nlg
-    image: docker.texta.ee/texta/embeddia-toolkit/embeddia-nlg:latest
+  embeddia-kwe-et:
+    container_name: embeddia-kwe-et
+    image: docker.texta.ee/texta/embeddia-toolkit/embeddia-kwe-et:latest
     build:
-      context: ./modules/embeddia-nlg
+      context: ./modules/embeddia-kwe-et/services/web
       dockerfile: Dockerfile
     ports:
-      - "8080"
-    volumes:
-      - ./data:/app/data
+      - 5000
+    env_file:
+      - ./env.keyword
+    command: python -u manage.py run -h 0.0.0.0
 
-  embeddia-kwe:
-    container_name: embeddia-kwe
-    image: docker.texta.ee/texta/embeddia-toolkit/embeddia-kwe:latest
+  embeddia-kwe-hr:
+    container_name: embeddia-kwe-hr
+    image: docker.texta.ee/texta/embeddia-toolkit/embeddia-kwe-hr:latest
     build:
-      context: ./modules/embeddia-kwe/services/web
+      context: ./modules/embeddia-kwe-hr/services/web
       dockerfile: Dockerfile
     ports:
-      - "5000"
+      - 5000
     env_file:
       - ./env.keyword
     command: python -u manage.py run -h 0.0.0.0
@@ -59,7 +67,7 @@ services:
   #     context: ./modules/embeddia-ner/services/web
   #     dockerfile: Dockerfile
   #   ports:
-  #     - "5004:5000"
+  #     - 5000
   #   env_file:
   #     - ./env.ner
   #   command: python -u manage.py run -h 0.0.0.0
@@ -73,7 +81,7 @@ services:
   #   env_file:
   #     - ./env.ner
   #   ports:
-  #    - "5555:5555"
+  #    - 5555
   #   volumes:
   #     - ./data/celery-flower_data:/persistent
   #   depends_on:
@@ -90,18 +98,18 @@ services:
   #   expose:
   #     - "18861"
 
-  embeddia-rest-front:
-    container_name: embeddia-rest-front
-    image: docker.texta.ee/texta/embeddia-toolkit/embeddia-front:latest
-    build:
-      context: ./modules/embeddia-demo
-      dockerfile: ./docker/Dockerfile
-    ports:
-      - "4200:80"
-    env_file:
-      - ./env.embeddia
-    depends_on:
-      - embeddia-rest
+  # embeddia-rest-front:
+  #   container_name: embeddia-rest-front
+  #   image: docker.texta.ee/texta/embeddia-toolkit/embeddia-front:latest
+  #   build:
+  #     context: ./modules/embeddia-demo
+  #     dockerfile: ./docker/Dockerfile
+  #   ports:
+  #     - "4200:80"
+  #   env_file:
+  #     - ./env.embeddia
+  #   depends_on:
+  #     - embeddia-rest
 
   embeddia-rest:
     container_name: embeddia-rest
@@ -117,6 +125,7 @@ services:
       - ./data:/var/embeddia-rest/data
       - ./src:/var/embeddia-rest/src
     depends_on:
-      - embeddia-kwe
-      - embeddia-nlg
+      - embeddia-kwe-hr
+      - embeddia-kwe-et
+      #- embeddia-nlg
       - embeddia-hsd
