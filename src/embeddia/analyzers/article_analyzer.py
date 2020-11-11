@@ -26,12 +26,16 @@ class NERAnalyzer:
         out = []
         data = response_json["data"]["result"]["0"]
         current_tag = []
+        seen_tags = []
         for i, tag in enumerate(data["tags"]):
             if tag.startswith("B-") or tag.startswith("I-"):
                 current_tag.append(data["tokens"][i])
             elif current_tag:
-                out.append({"tag": " ".join(current_tag)})
-                current_tag = []
+                tag = " ".join(current_tag)
+                if tag not in seen_tags:
+                    seen_tags.append(tag)
+                    out.append({"tag": tag})
+                    current_tag = []
         return out
 
     @check_connection
@@ -133,9 +137,14 @@ class ArticleAnalyzer:
         self.mlp_name = mlp_name
         self.analyzers = analyzers
 
-    def process(self, text, analyzers=[]):
+    def process(self, text, analyzer_names=[]):
         # process with MLP
         mlp_analysis = self.mlp.process(text)
+        # select analyzers
+        if analyzer_names:
+            analyzers = {k:v for k,v in self.analyzers.items() if k in analyzer_names}
+        else:
+            analyzers = self.analyzers
         # extract stuff from MLP output
         tokenized_text = mlp_analysis["text"]["text"]
         language = mlp_analysis["text"]["lang"]
@@ -143,7 +152,7 @@ class ArticleAnalyzer:
         entities = [{"entity": e["str_val"], "type": e["fact"], "source": self.mlp_name} for e in mlp_analysis["texta_facts"]]
         # use analyzers
         tags = []
-        for name, analyzer in self.analyzers.items():
+        for name, analyzer in analyzers.items():
             predicted_tags = analyzer.process(lemmas)
             for tag in predicted_tags:
                 tag["source"] = name

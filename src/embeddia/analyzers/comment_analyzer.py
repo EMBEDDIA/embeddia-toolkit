@@ -90,8 +90,13 @@ class CommentAnalyzer:
     def __init__(self, analyzers):
         self.analyzers = analyzers
 
-    def process(self, text):
+    def process(self, text, analyzer_names=[]):
         tags = []
+        # select analyzers
+        if analyzer_names:
+            analyzers = {k:v for k,v in self.analyzers.items() if k in analyzer_names}
+        else:
+            analyzers = self.analyzers
         for name, analyzer in self.analyzers.items():
             analyzer_output = analyzer.process(text)
             for t in analyzer_output:

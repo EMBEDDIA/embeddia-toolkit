@@ -4,7 +4,7 @@ import shutil
 import psutil
 import re
 
-from embeddia.serializers import EMBEDDIATextSerializer
+from embeddia.serializers import EMBEDDIAArticleSerializer, EMBEDDIACommentSerializer
 from embeddia_toolkit.settings import EMBEDDIA_ARTICLE_ANALYZER, EMBEDDIA_COMMENT_ANALYZER
 from embeddia.exceptions import ServiceFailedException
 from embeddia.analyzers.exceptions import ServiceNotAvailableError
@@ -75,16 +75,17 @@ class EMBEDDIAArticleAnalyzerView(generics.GenericAPIView):
     """
     EMBEDDIA Article Analyzer view.
     """
-    serializer_class = EMBEDDIATextSerializer
+    serializer_class = EMBEDDIAArticleSerializer
 
     def post(self, request):
-        serializer = EMBEDDIATextSerializer(data=request.data)
+        serializer = EMBEDDIAArticleSerializer(data=request.data)
         if not serializer.is_valid():
             return Response({"error": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
         text = serializer.validated_data["text"]
+        analyzers = serializer.validated_data["analyzers"]
 
         #try:
-        processed = EMBEDDIA_ARTICLE_ANALYZER.process(text)
+        processed = EMBEDDIA_ARTICLE_ANALYZER.process(text, analyzer_names=analyzers)
         #except Exception as e:
         #    raise ServiceFailedException(e)        
         return Response(processed, status=status.HTTP_200_OK)
@@ -94,16 +95,17 @@ class EMBEDDIACommentAnalyzerView(generics.GenericAPIView):
     """
     EMBEDDIA Article Analyzer view.
     """
-    serializer_class = EMBEDDIATextSerializer
+    serializer_class = EMBEDDIACommentSerializer
 
     def post(self, request):
-        serializer = EMBEDDIATextSerializer(data=request.data)
+        serializer = EMBEDDIACommentSerializer(data=request.data)
         if not serializer.is_valid():
             return Response({"error": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
         text = serializer.validated_data["text"]
+        analyzers = serializer.validated_data["analyzers"]
 
         #try:
-        processed = EMBEDDIA_COMMENT_ANALYZER.process(text)
+        processed = EMBEDDIA_COMMENT_ANALYZER.process(text, analyzer_names=analyzers)
         #except Exception as e:
         #    raise ServiceFailedException(e)        
         return Response(processed, status=status.HTTP_200_OK)
