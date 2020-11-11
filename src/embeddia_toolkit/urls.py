@@ -1,18 +1,8 @@
-from django.conf.urls import url
-from django.urls import path
-from django.views.static import serve
-
-from embeddia.views import (
-    EMBEDDIAArticleAnalyzerView,
-    EMBEDDIACommentAnalyzerView,
-    EMBEDDIARootView,
-    EMBEDDIAHealthView
-)
+from django.urls import include, path
+from django.views.generic.base import RedirectView
 
 
 urlpatterns = [
-    url(r"^$", EMBEDDIARootView.as_view(), name="embeddia_root"),
-    path("article_analyzer/", EMBEDDIAArticleAnalyzerView.as_view(), name="embeddia_article_analyzer"),
-    path("comment_analyzer/", EMBEDDIACommentAnalyzerView.as_view(), name="embeddia_comment_analyzer"),
-    path("health/", EMBEDDIAHealthView.as_view(), name="embeddia_health"),  
+    path('', RedirectView.as_view(url='api/v1/', permanent=False), name='index'),
+    path('api/v1/', include(('embeddia_toolkit.urls_v1', 'embeddia_v1'), namespace='v1')),
 ]

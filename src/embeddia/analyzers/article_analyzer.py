@@ -9,20 +9,30 @@ from . import exceptions
 
 class NERAnalyzer:
 
-    def __init__(self, host="http://localhost:5004", ssl_verify=True):
+    def __init__(self, host="http://localhost:5004", ssl_verify=True, language="hr"):
         self.host = host
         self.health = host
-        self.url = urljoin(host, "ner/predictRawText/")
+        self.url = urljoin(host, f"ner/predictRawText/{language}/")
         self.ssl_verify = ssl_verify
-
+    
     @staticmethod
-    def _process_input(text, language):
-        payload = {"text": text, "language": language}
+    def _process_input(text):
+        payload = {"text": text}
         return payload
 
     @staticmethod
     def _process_output(response_json):
-        return response_json
+        # This API output is HORRIBLE!
+        out = []
+        data = response_json["data"]["result"]["0"]
+        current_tag = []
+        for i, tag in enumerate(data["tags"]):
+            if tag.startswith("B-") or tag.startswith("I-"):
+                current_tag.append(data["tokens"][i])
+            elif current_tag:
+                out.append({"tag": " ".join(current_tag)})
+                current_tag = []
+        return out
 
     @check_connection
     def get_languages(self):
@@ -37,8 +47,8 @@ class NERAnalyzer:
         return True
 
     @check_connection
-    def process(self, text, language):
-        payload = self._process_input(text, language)
+    def process(self, text):
+        payload = self._process_input(text)
         response = requests.post(self.url, json=payload, verify=self.ssl_verify)
         if response.status_code != 200:
             raise exceptions.ServiceFailedError(f"Service sent non-200 response. Please check service url and input. Exception: {response.text}")

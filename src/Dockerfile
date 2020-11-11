@@ -17,6 +17,12 @@ COPY ./entrypoint.sh /var/embeddia-rest/entrypoint.sh
 # copy source
 COPY . /var/embeddia-rest/src
 
+# Retrieve pre-built front
+RUN wget https://packages.texta.ee/embeddia-front/embeddia-front-latest.tar.gz \
+    && tar -zxvf embeddia-front-latest.tar.gz \
+    && cp -r dist/embeddia-front /var/embeddia-rest/front \
+    && rm embeddia-front-latest.tar.gz && rm -R dist
+
 # create data dir for MLP
 RUN mkdir /var/embeddia-rest/data
 
@@ -30,6 +36,7 @@ RUN chown -R www-data:www-data /var/embeddia-rest \
 
 # System configuration files
 COPY ./supervisord.conf /opt/conda/envs/embeddia-rest/etc/supervisord/conf.d/supervisord.conf
+COPY ./nginx.conf /opt/conda/envs/embeddia-rest/etc/nginx/sites.d/default-site.conf
 ENV UWSGI_INI /var/embeddia-rest/src/embeddia-rest.ini
 
 # Set environment variables

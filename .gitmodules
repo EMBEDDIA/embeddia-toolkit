@@ -10,9 +10,6 @@
 [submodule "embeddia-ner"]
 	path = modules/embeddia-ner
 	url = https://github.com/EMBEDDIA/ULR_NER_REST.git
-[submodule "embeddia-demo"]
-	path = modules/embeddia-demo
-	url = https://git.texta.ee/texta/embeddia-demo.git
 [submodule "embeddia-kwe-hr"]
 	path = modules/embeddia-kwe-hr
 	url = https://gitlab.com/boshko.koloski/tnt_kid_app_hr.git

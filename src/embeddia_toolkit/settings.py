@@ -173,7 +173,7 @@ CORS_ALLOW_HEADERS = list(default_headers) + ["x-xsrf-token"]
 MLP_LANGS = os.getenv("EMBEDDIA_MLP_LANGS", "et,en,ru").split(",")
 
 mlp_analyzer = MLP(language_codes=MLP_LANGS, resource_dir=DATA_DIR)
-#ner_analyzer = NERAnalyzer(host=NER_HOST, ssl_verify=SSL_VERIFY)
+ner_hr_analyzer = NERAnalyzer(host=NER_HOST, ssl_verify=SSL_VERIFY, language="hr")
 kwe_et_analyzer = KWEAnalyzer(host=KWE_ET_HOST, ssl_verify=SSL_VERIFY)
 kwe_hr_analyzer = KWEAnalyzer(host=KWE_HR_HOST, ssl_verify=SSL_VERIFY)
 hybrid_tagger_analyzer = HybridTaggerAnalyzer(
@@ -194,7 +194,8 @@ EMBEDDIA_ARTICLE_ANALYZER = ArticleAnalyzer(
     {
         "Hybrid Tagger Analyzer": hybrid_tagger_analyzer,
         "TNT-KID ET Analyzer": kwe_et_analyzer,
-        "TNT-KID HR Analyzer": kwe_hr_analyzer
+        "TNT-KID HR Analyzer": kwe_hr_analyzer,
+        "NER HR Analyzer": ner_hr_analyzer,
     }
 )
 EMBEDDIA_COMMENT_ANALYZER = CommentAnalyzer(
