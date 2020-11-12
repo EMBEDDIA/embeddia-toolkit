@@ -10,12 +10,12 @@ class EMBEDDIAArticleSerializer(serializers.Serializer):
     text = serializers.CharField()
     analyzers = serializers.MultipleChoiceField(
         choices=ARTICLE_ANALYZERS,
-        #default=["all"]
+        default=[]
     )
 
 class EMBEDDIACommentSerializer(serializers.Serializer):
     text = serializers.CharField()
     analyzers = serializers.MultipleChoiceField(
         choices=COMMENT_ANALYZERS,
-        #default=["all"]
+        default=[]
     )
