@@ -184,10 +184,10 @@ CSRF_COOKIE_NAME = "XSRF-TOKEN"
 #CORS_ORIGIN_WHITELIST = parse_list_env_headers("TEXTA_CORS_ORIGIN_WHITELIST", ["http://localhost:4200"])
 CORS_ALLOW_HEADERS = list(default_headers) + ["x-xsrf-token"]
 
-# DECLARE EMBEDDIA ANALYZERS & GENERATORS
+# set MLP languages
 MLP_LANGS = os.getenv("EMBEDDIA_MLP_LANGS", "et,en,ru").split(",")
 
-
+# DECLARE EMBEDDIA ANALYZERS
 ner_hr_analyzer = NERAnalyzer(host=NER_HOST, ssl_verify=SSL_VERIFY, language="hr")
 kwe_et_analyzer = KWEAnalyzer(host=KWE_ET_HOST, ssl_verify=SSL_VERIFY)
 kwe_hr_analyzer = KWEAnalyzer(host=KWE_HR_HOST, ssl_verify=SSL_VERIFY)
@@ -201,7 +201,13 @@ hybrid_tagger_analyzer = HybridTaggerAnalyzer(
     ssl_verify=SSL_VERIFY
 )
 qmul_analyzer = QMULAnalyzer(host=HSD_HOST, ssl_verify=SSL_VERIFY)
-mtag_analyzer = MultiTagAnalyzer(host=TEXTA_HOST, auth_token=TEXTA_TOKEN, project=TEXTA_HS_PROJECT, lemmatize=True, ssl_verify=SSL_VERIFY)
+mtag_analyzer = MultiTagAnalyzer(
+    host=TEXTA_HOST,
+    auth_token=TEXTA_TOKEN,
+    project=TEXTA_HS_PROJECT,
+    lemmatize=True,
+    ssl_verify=SSL_VERIFY
+)
 
 
 ARTICLE_ANALYZERS = {
