@@ -1,5 +1,5 @@
 #modules
-src/static
+src/embeddia_toolkit/static
 data
 *.sqlite3
 *.pyc

@@ -2,7 +2,7 @@ from django.conf.urls import url
 from django.urls import path
 from django.views.static import serve
 
-from embeddia.views import (
+from embeddia_toolkit.embeddia.views import (
     EMBEDDIAArticleAnalyzerView,
     EMBEDDIACommentAnalyzerView,
     EMBEDDIARootView,

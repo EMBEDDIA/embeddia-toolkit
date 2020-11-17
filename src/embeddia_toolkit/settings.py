@@ -10,20 +10,20 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 from corsheaders.defaults import default_headers
-from utils import parse_list_env_headers
-from texta_mlp.mlp import MLP
+from kombu import Exchange, Queue
+#from utils import parse_list_env_headers
 import os
 
-from embeddia.analyzers.article_analyzer import (
+from embeddia_toolkit.embeddia.analyzers.article_analyzer import (
     KWEAnalyzer,
     HybridTaggerAnalyzer,
     NERAnalyzer,
-    ArticleAnalyzer
+    #ArticleAnalyzer
 )
-from embeddia.analyzers.comment_analyzer import (
+from embeddia_toolkit.embeddia.analyzers.comment_analyzer import (
     QMULAnalyzer,
     MultiTagAnalyzer,
-    CommentAnalyzer
+    #CommentAnalyzer
 )
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -73,7 +73,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'corsheaders',
-    'embeddia'
+    'embeddia_toolkit.embeddia'
 ]
 
 MIDDLEWARE = [
@@ -154,6 +154,21 @@ USE_L10N = True
 
 USE_TZ = True
 
+# CELERY OPTIONS
+BROKER_URL = os.getenv("EMBEDDIA_REDIS_URL", "redis://localhost:6379/1")
+CELERY_RESULT_BACKEND = BROKER_URL
+CELERY_ACCEPT_CONTENT = ["application/json"]
+CELERY_ALWAYS_EAGER = False if os.getenv("DOCPARSER_CELERY_ALWAYS_EAGER", "false").lower() == "false" else True
+CELERY_TASK_SERIALIZER = "json"
+CELERY_RESULT_SERIALIZER = "json"
+CELERY_TIMEZONE = TIME_ZONE
+CELERY_TASK_QUEUE = "embeddia_queue"
+CELERY_QUEUES = (
+    Queue(CELERY_TASK_QUEUE, exchange=CELERY_TASK_QUEUE, routing_key=CELERY_TASK_QUEUE),
+)
+CELERY_DEFAULT_QUEUE = CELERY_TASK_QUEUE
+CELERY_DEFAULT_EXCHANGE = CELERY_TASK_QUEUE
+CELERY_DEFAULT_ROUTING_KEY = CELERY_TASK_QUEUE
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
@@ -166,13 +181,13 @@ STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static")
 CSRF_HEADER_NAME = "HTTP_X_XSRF_TOKEN"
 CSRF_COOKIE_NAME = "XSRF-TOKEN"
 # For accessing a live backend server locally.
-CORS_ORIGIN_WHITELIST = parse_list_env_headers("TEXTA_CORS_ORIGIN_WHITELIST", ["http://localhost:4200"])
+#CORS_ORIGIN_WHITELIST = parse_list_env_headers("TEXTA_CORS_ORIGIN_WHITELIST", ["http://localhost:4200"])
 CORS_ALLOW_HEADERS = list(default_headers) + ["x-xsrf-token"]
 
 # DECLARE EMBEDDIA ANALYZERS & GENERATORS
 MLP_LANGS = os.getenv("EMBEDDIA_MLP_LANGS", "et,en,ru").split(",")
 
-mlp_analyzer = MLP(language_codes=MLP_LANGS, resource_dir=DATA_DIR)
+
 ner_hr_analyzer = NERAnalyzer(host=NER_HOST, ssl_verify=SSL_VERIFY, language="hr")
 kwe_et_analyzer = KWEAnalyzer(host=KWE_ET_HOST, ssl_verify=SSL_VERIFY)
 kwe_hr_analyzer = KWEAnalyzer(host=KWE_HR_HOST, ssl_verify=SSL_VERIFY)
@@ -189,18 +204,14 @@ qmul_analyzer = QMULAnalyzer(host=HSD_HOST, ssl_verify=SSL_VERIFY)
 mtag_analyzer = MultiTagAnalyzer(host=TEXTA_HOST, auth_token=TEXTA_TOKEN, project=TEXTA_HS_PROJECT, lemmatize=True, ssl_verify=SSL_VERIFY)
 
 
-EMBEDDIA_ARTICLE_ANALYZER = ArticleAnalyzer(
-    mlp_analyzer,
-    {
-        "Hybrid Tagger Analyzer": hybrid_tagger_analyzer,
-        "TNT-KID ET Analyzer": kwe_et_analyzer,
-        "TNT-KID HR Analyzer": kwe_hr_analyzer,
-        "NER HR Analyzer": ner_hr_analyzer,
-    }
-)
-EMBEDDIA_COMMENT_ANALYZER = CommentAnalyzer(
-    {
-        "EMBEDDIA Cross-lingual Comment Model": qmul_analyzer,
-        "Monolingual Comment Model": mtag_analyzer
-    }
-)
+ARTICLE_ANALYZERS = {
+    "Hybrid Tagger Analyzer": hybrid_tagger_analyzer,
+    "TNT-KID ET Analyzer": kwe_et_analyzer,
+    "TNT-KID HR Analyzer": kwe_hr_analyzer,
+    "NER HR Analyzer": ner_hr_analyzer,
+}
+
+COMMENT_ANALYZERS = {
+    "EMBEDDIA Cross-lingual Comment Model": qmul_analyzer,
+    "Monolingual Comment Model": mtag_analyzer
+}

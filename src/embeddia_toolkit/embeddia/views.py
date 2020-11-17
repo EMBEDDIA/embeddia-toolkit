@@ -1,13 +1,79 @@
 from rest_framework import generics, status, views
 from rest_framework.response import Response
+from celery import group
+from texta_mlp.mlp import MLP
 import shutil
 import psutil
 import re
 
-from embeddia.serializers import EMBEDDIAArticleSerializer, EMBEDDIACommentSerializer
-from embeddia_toolkit.settings import EMBEDDIA_ARTICLE_ANALYZER, EMBEDDIA_COMMENT_ANALYZER
-from embeddia.exceptions import ServiceFailedException
-from embeddia.analyzers.exceptions import ServiceNotAvailableError
+from .serializers import EMBEDDIAArticleSerializer, EMBEDDIACommentSerializer
+from .exceptions import ServiceFailedException
+from .analyzers.exceptions import ServiceNotAvailableError
+from . import exceptions
+
+from embeddia_toolkit.taskman import apply_single_analyzer
+from embeddia_toolkit.settings import DATA_DIR, MLP_LANGS, ARTICLE_ANALYZERS, COMMENT_ANALYZERS
+
+mlp = MLP(language_codes=MLP_LANGS, resource_dir=DATA_DIR)
+
+
+def analyze_article(analyzer_names, text, mlp_name="TEXTA MLP"):
+    mlp_analysis = mlp.process(text)
+    # default to all analyzers
+    if not analyzer_names:
+        analyzer_names = list(ARTICLE_ANALYZERS.keys())
+    else:
+        analyzer_names = list(analyzer_names)
+    # extract stuff from MLP output
+    tokenized_text = mlp_analysis["text"]["text"]
+    language = mlp_analysis["text"]["lang"]
+    lemmas = mlp_analysis["text"]["lemmas"]
+    entities = [{"entity": e["str_val"], "type": e["fact"], "source": mlp_name} for e in mlp_analysis["texta_facts"]]
+    # use analyzers
+    tags = []
+    group_task = group([apply_single_analyzer.s(analyzer_name, lemmas) for analyzer_name in analyzer_names])
+    group_results = group_task.apply_async()
+    # get tags
+    tags = []
+    for i,analyzer_tags in enumerate(group_results.get()):
+        for tag in analyzer_tags:
+            tag["source"] = analyzer_names[i]
+            tags.append(tag)
+    # prepare output
+    output = {
+        "text": tokenized_text,
+        "tags": tags,
+        "entities": entities,
+        "language": language,
+        "analyzers": analyzer_names+[mlp_name]
+    }
+    return output
+
+
+def analyze_comment(analyzer_names, text):
+    tags = []
+    # select analyzers
+    # default to all analyzers
+    if not analyzer_names:
+        analyzer_names = list(COMMENT_ANALYZERS.keys())
+    else:
+        analyzer_names = list(analyzer_names)
+    # use analyzers
+    tags = []
+    group_task = group([apply_single_analyzer.s(analyzer_name, text) for analyzer_name in analyzer_names])
+    group_results = group_task.apply_async()
+    # get tags
+    tags = []
+    for i,analyzer_tags in enumerate(group_results.get()):
+        for tag in analyzer_tags:
+            tag["source"] = analyzer_names[i]
+            tags.append(tag)
+    # prepare output
+    output = {
+        "tags": tags,
+        "text": text,
+        "analyzers": analyzer_names}
+    return output
 
 
 class EMBEDDIARootView(generics.GenericAPIView):
@@ -55,7 +121,7 @@ class EMBEDDIAHealthView(generics.GenericAPIView):
         }
 
         # check health of services
-        services = {**EMBEDDIA_ARTICLE_ANALYZER.analyzers, **EMBEDDIA_COMMENT_ANALYZER.analyzers}
+        services = {**ARTICLE_ANALYZERS, **COMMENT_ANALYZERS}
         for service_name, service_class in services.items():
             try:
                 service_status = service_class.check_health()
@@ -82,12 +148,8 @@ class EMBEDDIAArticleAnalyzerView(generics.GenericAPIView):
         if not serializer.is_valid():
             return Response({"error": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
         text = serializer.validated_data["text"]
-        analyzers = serializer.validated_data["analyzers"]
-
-        #try:
-        processed = EMBEDDIA_ARTICLE_ANALYZER.process(text, analyzer_names=analyzers)
-        #except Exception as e:
-        #    raise ServiceFailedException(e)        
+        analyzer_names = serializer.validated_data["analyzers"]
+        processed = analyze_article(analyzer_names, text)    
         return Response(processed, status=status.HTTP_200_OK)
 
 
@@ -102,10 +164,6 @@ class EMBEDDIACommentAnalyzerView(generics.GenericAPIView):
         if not serializer.is_valid():
             return Response({"error": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
         text = serializer.validated_data["text"]
-        analyzers = serializer.validated_data["analyzers"]
-
-        #try:
-        processed = EMBEDDIA_COMMENT_ANALYZER.process(text, analyzer_names=analyzers)
-        #except Exception as e:
-        #    raise ServiceFailedException(e)        
+        analyzer_names = serializer.validated_data["analyzers"]
+        processed = analyze_comment(analyzer_names, text)
         return Response(processed, status=status.HTTP_200_OK)

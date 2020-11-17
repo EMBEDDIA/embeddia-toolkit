@@ -3,6 +3,8 @@
 export EMBEDDIA_API_URL="${EMBEDDIA_API_URL:-http://localhost/api/v1}"
 export NLG_API_URL="${NLG_API_URL:-http://localhost:8080}"
 
+export EMBEDDIA_TASK_WORKERS="${EMBEDDIA_TASK_WORKERS:-5}"
+
 # REST API LOCATION
 sed -i "s#REST_API_URL_REPLACE#$EMBEDDIA_API_URL#g" /var/embeddia-rest/front/main*.js
 # NLG API LOCATION

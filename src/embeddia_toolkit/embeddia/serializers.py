@@ -1,9 +1,9 @@
 from rest_framework import serializers
-from embeddia_toolkit.settings import EMBEDDIA_ARTICLE_ANALYZER, EMBEDDIA_COMMENT_ANALYZER
+from embeddia_toolkit.settings import ARTICLE_ANALYZERS, COMMENT_ANALYZERS
 
 
-ARTICLE_ANALYZERS = [(a, a) for a in EMBEDDIA_ARTICLE_ANALYZER.analyzers.keys()]
-COMMENT_ANALYZERS = [(a, a) for a in EMBEDDIA_COMMENT_ANALYZER.analyzers.keys()]
+ARTICLE_ANALYZERS = [(a, a) for a in ARTICLE_ANALYZERS]
+COMMENT_ANALYZERS = [(a, a) for a in COMMENT_ANALYZERS]
 
 
 class EMBEDDIAArticleSerializer(serializers.Serializer):
