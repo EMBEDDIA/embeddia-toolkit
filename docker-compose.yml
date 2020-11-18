@@ -23,7 +23,7 @@ services:
       context: ./modules/embeddia-nlg
       dockerfile: Dockerfile
     ports:
-      - 8080
+      - 5555:8080
     volumes:
       - ./data:/app/data
 
@@ -104,6 +104,7 @@ services:
       - ./env.ner
     volumes:
       - ./data/ner-data:/data
+    #  - ./data/ner-model-data:/ner_service/NER/models
     expose:
       - 18861
 
@@ -123,5 +124,6 @@ services:
     depends_on:
       - embeddia-kwe-hr
       - embeddia-kwe
-      #- embeddia-nlg
-      #- embeddia-hsd
+      - embeddia-hsd
+      - embeddia-ner
+      - embeddia-redis
