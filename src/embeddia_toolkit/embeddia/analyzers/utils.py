@@ -15,6 +15,6 @@ def check_connection(func):
             if not response.ok:
                 raise exceptions.ServiceNotAvailableError(error)
             return func(*args, **kwargs)
-        except (requests.exceptions.ConnectTimeout, requests.exceptions.ConnectionError) as e:
+        except (requests.exceptions.ConnectTimeout, requests.exceptions.ConnectionError, requests.exceptions.ReadTimeout) as e:
             raise exceptions.ServiceNotAvailableError(error)
     return func_wrapper
