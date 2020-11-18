@@ -48,7 +48,7 @@ TEXTA_HT_TAGGER = int(os.getenv("EMBEDDIA_TEXTA_HT_TAGGER", 5))
 TEXTA_HS_PROJECT = int(os.getenv("EMBEDDIA_TEXTA_HS_PROJECT", 2))
 
 # SSL verification
-SSL_VERIFY = bool(os.getenv("EMBEDDIA_TEXTA_SSL_VERIFY", False))
+SSL_VERIFY = True if os.getenv("EMBEDDIA_TEXTA_SSL_VERIFY", "True") == "True" else False
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
