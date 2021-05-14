@@ -45,6 +45,44 @@ class QMULAnalyzer:
         return self._process_output(response_json)
 
 
+class BERTTaggerAnalyzer:
+
+    def __init__(self, host="https://rest-dev.texta.ee", project=310, tagger=71, auth_token="", ssl_verify=True):
+        self.host = host
+        self.health = urljoin(host, "api/v1/health")
+        self.url = urljoin(host, f"api/v1/projects/{project}/bert_taggers/{tagger}/tag_text/")
+        self.headers = {"Authorization": f"Token {auth_token}"}
+        self.ssl_verify = ssl_verify
+        self.name = "TEXTA BERT Comment Model"
+
+    @staticmethod
+    def _process_output(response_json):
+        if response_json["result"] == "true":
+            return [{"tag": "OFFENSIVE", "probability": response_json["probability"]}]
+        else:
+            return []
+
+    @check_connection
+    def check_health(self):
+        """
+        A method to check if service is alive. Throws ServiceNotAvailableException if not.
+        """
+        return True
+
+    def _process_input(self, text):
+        payload = {"text": text}
+        return payload
+
+    @check_connection
+    def process(self, text):
+        payload = self._process_input(text)
+        response = requests.post(self.url, data=payload, headers=self.headers, verify=self.ssl_verify)
+        if response.status_code != 200:
+            raise exceptions.ServiceFailedError(f"Service sent non-200 response. Please check service url and input. Exception: {response.text.encode()}")
+        response_json = response.json()
+        return self._process_output(response_json)
+
+
 class MultiTagAnalyzer:
 
     def __init__(self, host="http://rest-dev.texta.ee", project=1, auth_token="", lemmatize=True, ssl_verify=True):
