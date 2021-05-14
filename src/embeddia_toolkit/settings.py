@@ -17,13 +17,12 @@ import os
 from embeddia_toolkit.embeddia.analyzers.article_analyzer import (
     KWEAnalyzer,
     HybridTaggerAnalyzer,
-    NERAnalyzer,
-    #ArticleAnalyzer
+    NERAnalyzer
 )
 from embeddia_toolkit.embeddia.analyzers.comment_analyzer import (
     QMULAnalyzer,
     MultiTagAnalyzer,
-    #CommentAnalyzer
+    BERTTaggerAnalyzer
 )
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -46,6 +45,7 @@ TEXTA_TOKEN = os.getenv("EMBEDDIA_TEXTA_TOKEN", "d44736b2d645eaeb8979b9aaff85c00
 TEXTA_HT_PROJECT = int(os.getenv("EMBEDDIA_TEXTA_HT_PROJECT", 1))
 TEXTA_HT_TAGGER = int(os.getenv("EMBEDDIA_TEXTA_HT_TAGGER", 5))
 TEXTA_HS_PROJECT = int(os.getenv("EMBEDDIA_TEXTA_HS_PROJECT", 2))
+TEXTA_BERT_PROJECT = int(os.getenv("EMBEDDIA_TEXTA_BERT_PROJECT", 310))
 
 # SSL verification
 SSL_VERIFY = True if os.getenv("EMBEDDIA_TEXTA_SSL_VERIFY", "True") == "True" else False
@@ -191,27 +191,33 @@ MLP_LANGS = os.getenv("EMBEDDIA_MLP_LANGS", "et,en,ru").split(",")
 ner_hr_analyzer = NERAnalyzer(host=NER_HOST, ssl_verify=SSL_VERIFY, language="hr")
 kwe_et_analyzer = KWEAnalyzer(host=KWE_ET_HOST, ssl_verify=SSL_VERIFY)
 kwe_hr_analyzer = KWEAnalyzer(host=KWE_HR_HOST, ssl_verify=SSL_VERIFY)
-hybrid_tagger_analyzer = HybridTaggerAnalyzer(
-    host=TEXTA_HOST,
-    auth_token=TEXTA_TOKEN,
-    project=TEXTA_HT_PROJECT,
-    tagger_group=TEXTA_HT_TAGGER,
-    use_ner=True,
-    lemmatize=False,
-    ssl_verify=SSL_VERIFY
-)
+#hybrid_tagger_analyzer = HybridTaggerAnalyzer(
+#    host=TEXTA_HOST,
+#    auth_token=TEXTA_TOKEN,
+#    project=TEXTA_HT_PROJECT,
+#    tagger_group=TEXTA_HT_TAGGER,
+#    use_ner=True,
+#    lemmatize=False,
+#    ssl_verify=SSL_VERIFY
+#)
 qmul_analyzer = QMULAnalyzer(host=HSD_HOST, ssl_verify=SSL_VERIFY)
-mtag_analyzer = MultiTagAnalyzer(
+#mtag_analyzer = MultiTagAnalyzer(
+#    host=TEXTA_HOST,
+#    auth_token=TEXTA_TOKEN,
+#    project=TEXTA_HS_PROJECT,
+#    lemmatize=True,
+#    ssl_verify=SSL_VERIFY
+#)
+bert_analyzer = BERTTaggerAnalyzer(
     host=TEXTA_HOST,
     auth_token=TEXTA_TOKEN,
-    project=TEXTA_HS_PROJECT,
-    lemmatize=True,
+    project=TEXTA_BERT_PROJECT,
     ssl_verify=SSL_VERIFY
 )
 
 
 ARTICLE_ANALYZERS = {
-    "Hybrid Tagger Analyzer": hybrid_tagger_analyzer,
+    #"Hybrid Tagger Analyzer": hybrid_tagger_analyzer,
     "TNT-KID ET Analyzer": kwe_et_analyzer,
     "TNT-KID HR Analyzer": kwe_hr_analyzer,
     "NER HR Analyzer": ner_hr_analyzer,
@@ -219,5 +225,6 @@ ARTICLE_ANALYZERS = {
 
 COMMENT_ANALYZERS = {
     "EMBEDDIA Cross-lingual Comment Model": qmul_analyzer,
-    "Monolingual Comment Model": mtag_analyzer
+    #"Monolingual Comment Model": mtag_analyzer
+    "TEXTA Bert Comment Model": bert_analyzer
 }

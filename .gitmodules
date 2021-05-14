@@ -13,3 +13,6 @@
 [submodule "embeddia-kwe-hr"]
 	path = modules/embeddia-kwe-hr
 	url = https://gitlab.com/boshko.koloski/tnt_kid_app_hr.git
+[submodule "embeddia-kwe-hr"]
+	path = modules/embeddia-kwe-lv
+	url = https://gitlab.com/boshko.koloski/tnt_kid_app_lv.git
