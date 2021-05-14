@@ -37,10 +37,11 @@ NLG_HOST = os.getenv("EMBEDDIA_NLG_HOST", "http://localhost:5000")
 HSD_HOST = os.getenv("EMBEDDIA_HSD_HOST", "http://localhost:5001")
 KWE_ET_HOST = os.getenv("EMBEDDIA_KWE_ET_HOST", "http://localhost:5002")
 KWE_HR_HOST = os.getenv("EMBEDDIA_KWE_HR_HOST", "http://localhost:5003")
-NER_HOST = os.getenv("EMBEDDIA_NER_HOST", "http://localhost:5004")
+KWE_LV_HOST = os.getenv("EMBEDDIA_KWE_LV_HOST", "http://localhost:5004")
+NER_HOST = os.getenv("EMBEDDIA_NER_HOST", "http://localhost:5005")
 
 TEXTA_HOST = os.getenv("EMBEDDIA_TEXTA_HOST", "https://rest-dev.texta.ee")
-TEXTA_TOKEN = os.getenv("EMBEDDIA_TEXTA_TOKEN", "d44736b2d645eaeb8979b9aaff85c00ce90cd86b")
+TEXTA_TOKEN = os.getenv("EMBEDDIA_TEXTA_TOKEN", "")
 
 TEXTA_HT_PROJECT = int(os.getenv("EMBEDDIA_TEXTA_HT_PROJECT", 1))
 TEXTA_HT_TAGGER = int(os.getenv("EMBEDDIA_TEXTA_HT_TAGGER", 5))
@@ -188,43 +189,14 @@ CORS_ALLOW_HEADERS = list(default_headers) + ["x-xsrf-token"]
 MLP_LANGS = os.getenv("EMBEDDIA_MLP_LANGS", "et,en,ru").split(",")
 
 # DECLARE EMBEDDIA ANALYZERS
-ner_hr_analyzer = NERAnalyzer(host=NER_HOST, ssl_verify=SSL_VERIFY, language="hr")
-kwe_et_analyzer = KWEAnalyzer(host=KWE_ET_HOST, ssl_verify=SSL_VERIFY)
-kwe_hr_analyzer = KWEAnalyzer(host=KWE_HR_HOST, ssl_verify=SSL_VERIFY)
-#hybrid_tagger_analyzer = HybridTaggerAnalyzer(
-#    host=TEXTA_HOST,
-#    auth_token=TEXTA_TOKEN,
-#    project=TEXTA_HT_PROJECT,
-#    tagger_group=TEXTA_HT_TAGGER,
-#    use_ner=True,
-#    lemmatize=False,
-#    ssl_verify=SSL_VERIFY
-#)
-qmul_analyzer = QMULAnalyzer(host=HSD_HOST, ssl_verify=SSL_VERIFY)
-#mtag_analyzer = MultiTagAnalyzer(
-#    host=TEXTA_HOST,
-#    auth_token=TEXTA_TOKEN,
-#    project=TEXTA_HS_PROJECT,
-#    lemmatize=True,
-#    ssl_verify=SSL_VERIFY
-#)
-bert_analyzer = BERTTaggerAnalyzer(
-    host=TEXTA_HOST,
-    auth_token=TEXTA_TOKEN,
-    project=TEXTA_BERT_PROJECT,
-    ssl_verify=SSL_VERIFY
-)
-
-
 ARTICLE_ANALYZERS = {
-    #"Hybrid Tagger Analyzer": hybrid_tagger_analyzer,
-    "TNT-KID ET Analyzer": kwe_et_analyzer,
-    "TNT-KID HR Analyzer": kwe_hr_analyzer,
-    "NER HR Analyzer": ner_hr_analyzer,
+    "TNT-KID ET Analyzer": KWEAnalyzer(host=KWE_ET_HOST, ssl_verify=SSL_VERIFY),
+    "TNT-KID HR Analyzer": KWEAnalyzer(host=KWE_HR_HOST, ssl_verify=SSL_VERIFY),
+    "TNT-KID LV Analyzer": KWEAnalyzer(host=KWE_LV_HOST, ssl_verify=SSL_VERIFY),
+    "NER HR Analyzer": NERAnalyzer(host=NER_HOST, ssl_verify=SSL_VERIFY, language="hr"),
 }
 
 COMMENT_ANALYZERS = {
-    "EMBEDDIA Cross-lingual Comment Model": qmul_analyzer,
-    #"Monolingual Comment Model": mtag_analyzer
-    "TEXTA Bert Comment Model": bert_analyzer
+    "EMBEDDIA Cross-lingual Comment Model": QMULAnalyzer(host=HSD_HOST, ssl_verify=SSL_VERIFY),
+    "TEXTA Monolongual BERT Comment Model": BERTTaggerAnalyzer(host=TEXTA_HOST, auth_token=TEXTA_TOKEN, project=TEXTA_BERT_PROJECT, ssl_verify=SSL_VERIFY)
 }
