@@ -19,6 +19,6 @@ dependencies:
     - djangorestframework==3.9.*
     - requests
     - whitenoise
-    - texta-mlp==1.5.*
+    - texta-mlp==1.11.*
     - celery==4.*
     - redis==3.*
