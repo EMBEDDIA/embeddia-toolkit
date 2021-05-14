@@ -1,8 +1,8 @@
 [submodule "embeddia-nlg"]
 	path = modules/embeddia-nlg
 	url = https://github.com/ljleppan/eu-nlg-prod.git
-[submodule "embeddia-kwe"]
-	path = modules/embeddia-kwe
+[submodule "embeddia-kwe-et"]
+	path = modules/embeddia-kwe-et
 	url = https://gitlab.com/matej.martinc/tnt_kid_app.git
 [submodule "embeddia-hsd"]
 	path = modules/embeddia-hsd
