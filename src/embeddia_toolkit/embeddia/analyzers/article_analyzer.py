@@ -111,7 +111,8 @@ class KWEAnalyzer:
 
     @staticmethod
     def _process_output(response_json):
-        return [{"tag": keyword} for keyword in response_json["keywords"]]
+        keywords_combined = [j for sub in response_json.values() for j in sub]
+        return [{"tag": keyword} for keyword in keywords_combined]
 
     @check_connection
     def check_health(self):

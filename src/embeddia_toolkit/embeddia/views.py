@@ -26,7 +26,7 @@ def analyze_article(analyzer_names, text, mlp_name="TEXTA MLP"):
         analyzer_names = list(analyzer_names)
     # extract stuff from MLP output
     tokenized_text = mlp_analysis["text"]["text"]
-    language = mlp_analysis["text"]["lang"]
+    language = mlp_analysis["text"]["language"]["analysis"]
     lemmas = mlp_analysis["text"]["lemmas"]
     entities = [{"entity": e["str_val"], "type": e["fact"], "source": mlp_name} for e in mlp_analysis["texta_facts"]]
     # use analyzers
