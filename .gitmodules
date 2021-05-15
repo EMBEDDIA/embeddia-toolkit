@@ -16,3 +16,6 @@
 [submodule "embeddia-kwe-lv"]
 	path = modules/embeddia-kwe-lv
 	url = https://gitlab.com/boshko.koloski/tnt_kid_app_lv.git
+[submodule "embeddia-kwe-rakun"]
+	path = modules/embeddia-kwe-rakun
+	url = https://gitlab.com/skblaz/rakun-app-docker.git
