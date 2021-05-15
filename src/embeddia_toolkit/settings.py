@@ -38,7 +38,8 @@ HSD_HOST = os.getenv("EMBEDDIA_HSD_HOST", "http://localhost:5001")
 KWE_ET_HOST = os.getenv("EMBEDDIA_KWE_ET_HOST", "http://localhost:5002")
 KWE_HR_HOST = os.getenv("EMBEDDIA_KWE_HR_HOST", "http://localhost:5003")
 KWE_LV_HOST = os.getenv("EMBEDDIA_KWE_LV_HOST", "http://localhost:5004")
-NER_HOST = os.getenv("EMBEDDIA_NER_HOST", "http://localhost:5005")
+KWE_RAKUN_HOST = os.getenv("EMBEDDIA_KWE_RAKUN_HOST", "http://localhost:5005")
+NER_HOST = os.getenv("EMBEDDIA_NER_HOST", "http://localhost:5006")
 
 TEXTA_HOST = os.getenv("EMBEDDIA_TEXTA_HOST", "https://rest-dev.texta.ee")
 TEXTA_TOKEN = os.getenv("EMBEDDIA_TEXTA_TOKEN", "")
@@ -193,6 +194,7 @@ ARTICLE_ANALYZERS = {
     "TNT-KID ET Analyzer": KWEAnalyzer(host=KWE_ET_HOST, ssl_verify=SSL_VERIFY),
     "TNT-KID HR Analyzer": KWEAnalyzer(host=KWE_HR_HOST, ssl_verify=SSL_VERIFY),
     "TNT-KID LV Analyzer": KWEAnalyzer(host=KWE_LV_HOST, ssl_verify=SSL_VERIFY),
+    "Rakun Multilingual Analyzer": KWEAnalyzer(host=KWE_RAKUN_HOST, ssl_verify=SSL_VERIFY),
     "NER HR Analyzer": NERAnalyzer(host=NER_HOST, ssl_verify=SSL_VERIFY, language="hr"),
 }
 
