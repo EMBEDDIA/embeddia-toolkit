@@ -123,5 +123,6 @@ services:
       - embeddia-redis
       - embeddia-kwe-hr
       - embeddia-kwe-et
+      - embeddia-kwe-lv
       - embeddia-hsd
       - embeddia-ner
