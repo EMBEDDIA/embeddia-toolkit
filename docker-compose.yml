@@ -118,7 +118,7 @@ services:
      - ./env.embeddia
     volumes:
       - ./data:/var/embeddia-rest/data
-      - ./src:/var/embeddia-rest/src
+      #- ./src:/var/embeddia-rest/src
     depends_on:
       - embeddia-redis
       - embeddia-kwe-hr
