@@ -29,4 +29,4 @@ docker-compose push
 
 **Submodules**
 
-All submodules used in EMBEDDIA Toolkit are listed here: https://git.texta.ee/texta/embeddia-toolkit/-/tree/master/modules.
+All submodules (EMBEDDIA services) used in EMBEDDIA Toolkit are listed here: https://git.texta.ee/texta/embeddia-toolkit/-/tree/master/modules.
