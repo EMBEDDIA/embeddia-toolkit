@@ -5,7 +5,7 @@ Running EMBEDDIA Toolkit requires Docker, check https://docs.docker.com/get-dock
 
 All EMBEDDIA Toolkit components are packaged as Docker images available in our registry.
 
-Following files must be downloaded to run EMBEDDIA Toolkit:
+Following files from the root directory of this repository are required to run EMBEDDIA Toolkit:
 * docker-compose.yml
 * env.embeddia
 * env.hatespeech
