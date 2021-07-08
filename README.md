@@ -23,4 +23,4 @@ After downloading all the required models the EMBEDDIA Toolkit becomes accessibl
 * and API deployed at http://localhost:8090/api/v1/.
 
 ## TEXTA Toolkit
-Some components of the EMBEDDIA Toolkit require a running instance of TEXTA Toolkit with pretrained models.
+Some components of the EMBEDDIA Toolkit require a running instance of TEXTA Toolkit with pretrained models. Information about running TEXTA Toolkit can be found at https://docs.texta.ee.
