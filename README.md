@@ -21,3 +21,6 @@ After downloading all the required models the EMBEDDIA Toolkit becomes accessibl
 
 * GUI which is by default deployed at http://localhost:8090,
 * and API deployed at http://localhost:8090/api/v1/.
+
+## TEXTA Toolkit
+Some components of the EMBEDDIA Toolkit require a running instance of TEXTA Toolkit with pretrained models.
