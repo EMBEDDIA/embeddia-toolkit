@@ -69,6 +69,16 @@ services:
       - ./env.keyword
     command: python -u manage.py run -h 0.0.0.0
 
+  embeddia-kwe-rakun:
+    container_name: embeddia-kwe-rakun
+    image: docker.texta.ee/texta/embeddia-toolkit/embeddia-kwe-rakun:latest
+    build:
+      context: ./modules/embeddia-kwe-rakun/services/web
+      dockerfile: Dockerfile
+    env_file:
+      - ./env.keyword
+    command: python -u manage.py run -h 0.0.0.0
+
   embeddia-ner:
     container_name: embeddia-ner
     image: docker.texta.ee/texta/embeddia-toolkit/embeddia-ner:latest
