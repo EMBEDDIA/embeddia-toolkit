@@ -23,4 +23,15 @@ After downloading all the required models the EMBEDDIA Toolkit becomes accessibl
 * and API deployed at http://localhost:8090/api/v1/.
 
 ## TEXTA Toolkit
-Some components of the EMBEDDIA Toolkit require a running instance of TEXTA Toolkit with pretrained models. Information about running TEXTA Toolkit can be found at https://docs.texta.ee.
+Some components of the EMBEDDIA Toolkit require a running instance of TEXTA Toolkit (also packaged in Docker) with pretrained models. Information about running TEXTA Toolkit can be found at https://docs.texta.ee.
+
+The information regarding TEXTA Toolkit is defined in file **env.embeddia** with following environment variables:
+* Host & token for TEXTA TK:
+** EMBEDDIA_TEXTA_HOST
+** EMBEDDIA_TEXTA_TOKEN
+* Project ID for Dashboard:
+** EMBEDDIA_TEXTA_DASHBOARD_PROJECT
+* Project IDs for TEXTA Hate Speech Tagger:
+** EMBEDDIA_TEXTA_BERT_PROJECT
+** EMBEDDIA_TEXTA_BERT_TAGGER
+
