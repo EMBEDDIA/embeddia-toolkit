@@ -26,13 +26,3 @@ docker-compose build
 
 docker-compose push
 ```
-
-# Submodules
-
-* https://github.com/ljleppan/eu-nlg-prod.git
- 
-* https://gitlab.com/matej.martinc/tnt_kid_app.git
-
-* https://github.com/shekharRavi/flask-rest-docker.git
-
-* https://github.com/EMBEDDIA/ULR_NER_REST
