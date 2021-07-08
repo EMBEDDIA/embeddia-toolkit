@@ -1,7 +1,7 @@
 EMBEDDIA Toolkit API wrapping EMBEDDIA API-based Services
 
 # Running the Docker
-For running EMBEDDIA Toolkit Docker is required. See https://docs.docker.com/get-docker/ for installation instructions. All EMBEDDIA Toolkit components are packaged as Docker images. For downloading and running the images following commands must be executed:
+Running EMBEDDIA Toolkit requires Docker, check https://docs.docker.com/get-docker/ for installation instructions. All EMBEDDIA Toolkit components are packaged as Docker images. For downloading and running the images following commands must be executed:
 
 ```
 docker-compose pull
