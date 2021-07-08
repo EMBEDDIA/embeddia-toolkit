@@ -8,6 +8,9 @@ docker-compose pull
 docker-compose up
 ```
 
+# Container Registry
+https://git.texta.ee/texta/embeddia-toolkit/container_registry
+
 # Dev Setup
 
 **Clone with EMBEDDIA Submodules**
