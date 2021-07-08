@@ -1,6 +1,6 @@
-EMBEDDIA Toolkit API wrapping EMBEDDIA API-based Services
+# EMBEDDIA Toolkit
 
-# Running the Docker
+## Running the Toolkit
 Running EMBEDDIA Toolkit requires Docker, check https://docs.docker.com/get-docker/ for installation instructions.
 
 All EMBEDDIA Toolkit components are packaged as Docker images available in our registry (https://git.texta.ee/texta/embeddia-toolkit/container_registry).
@@ -22,23 +22,3 @@ After downloading all the required models the EMBEDDIA Toolkit becomes accessibl
 
 * GUI which is by default deployed at http://localhost:8090,
 * and API deployed at http://localhost:8090/api/v1/.
-
-# Dev Setup
-
-**Clone with EMBEDDIA Submodules**
-
-```
-git clone --recursive https://git.texta.ee/texta/embeddia-toolkit.git
-```
-
-**Building & Pushing Images**
-
-```
-docker-compose build
-
-docker-compose push
-```
-
-**Submodules**
-
-All submodules (EMBEDDIA services) used in EMBEDDIA Toolkit are listed here: https://git.texta.ee/texta/embeddia-toolkit/-/tree/master/modules.
