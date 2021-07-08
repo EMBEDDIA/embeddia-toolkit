@@ -18,7 +18,7 @@ File **docker-compose.yml** contains all the necessary instructions to execute t
 docker-compose pull
 docker-compose up
 ```
-After downloading all the required models the Toolkit becomes accessable.
+After downloading all the required models the EMBEDDIA Toolkit becomes accessable via HTTP.
 
 # Accessing the EMBEDDIA Toolkit
 EMBEDDIA Toolkit is usable via GUI which is by default deployed at http://localhost:8090. The API of the toolkit is accessible at http://localhost:8090/api/v1/.
