@@ -12,7 +12,7 @@ Following files from the root directory of this repository are required to run E
 * env.keyword
 * env.ner
 
-File **docker-compose.yml** contains all the necessary instructions to execute the toolkit. For downloading and running the images following commands must be executed:
+File **docker-compose.yml** contains all the necessary instructions to execute the toolkit. For downloading and running the images following commands must be executed in the directory containing **docker-compose.yml**:
 
 ```
 docker-compose pull
