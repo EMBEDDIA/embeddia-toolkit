@@ -8,6 +8,10 @@ docker-compose pull
 docker-compose up
 ```
 
+# Accessing the EMBEDDIA Toolkit
+EMBEDDIA Toolkit is usable via GUI which is by default deployed at http://localhost:8090. The API of the toolkit is accessible at http://localhost:8090/api/v1/.
+
+
 # Container Registry
 https://git.texta.ee/texta/embeddia-toolkit/container_registry
 
