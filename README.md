@@ -1,6 +1,5 @@
 # EMBEDDIA Toolkit
 
-## Running the Toolkit
 Running EMBEDDIA Toolkit requires Docker, check https://docs.docker.com/get-docker/ for installation instructions.
 
 All EMBEDDIA Toolkit components are packaged as Docker images available in our registry (https://git.texta.ee/texta/embeddia-toolkit/container_registry).
