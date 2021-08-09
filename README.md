@@ -1,7 +1,8 @@
 # EMBEDDIA Toolkit
 
 ## Components
-EMBEDDIA_TEXTA_DASHBOARD_PROJECT
+TODO
+
 ## Running
 
 Running EMBEDDIA Toolkit requires Docker, check https://docs.docker.com/get-docker/ for installation instructions.
