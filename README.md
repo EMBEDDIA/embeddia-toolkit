@@ -1,16 +1,7 @@
 # EMBEDDIA Toolkit
 
 ## Components
-
-Analyzer Name	Media Type	Analyzer Type	Description	Available Languages	Github link
-TNT-KID Analyzer	articles	keyword extraction	A supervised method for keyword extraction using a sequence labelling approach. For training  system for new language or domain, a user needs a larger unlabelled corpus, and at least a small training corpus;	Estonian, Croatian, Latvian	https://gitlab.com/matej.martinc/tnt_kid_app https://gitlab.com/boshko.koloski/tnt_kid_app_hr https://gitlab.com/boshko.koloski/tnt_kid_app_lv
-Rakun Multilingual Analyzer	articles	keyword extraction	An unsupervised method for graph-based keyword detection.	English, Slovenian	https://gitlab.com/skblaz/rakun-app-docker
-TEXTA Monolongual BERT Comment Model	comments	comment filtering	A supervised method for classifying texts using BERT models.	Estonian	https://git.texta.ee/texta/texta-bert-tagger-python
-EMBEDDIA Cross-lingual Comment Model	comments	comment filtering			https://github.com/mpurver/comment-filter
-TEXTA MLP	articles	article processing	TEXTA MLP (Multilingual Processor) is an additional module of TEXTA created for processing and enriching textual data. Capable of processing multiple languages, it’s features include the lemmatization of text, Named Entity extraction, entity linking and more.	English, Estonian, Croatian, Lithuanian, Finnish	https://git.texta.ee/texta/texta-mlp-python
-NER Analyzer	articles	named entity recognition	API for NER system based on a BiLSTM with multiple types of embeddings (BERT, FastText and character)	Croatian,Slovene, Finnish, Russian, Swedish, Latvian, Lithuanian, Estonian	https://github.com/EMBEDDIA/ULR_NER_REST
-Article Generator	articles	news generation			https://github.com/ljleppan/eu-nlg-prod
-
+EMBEDDIA_TEXTA_DASHBOARD_PROJECT
 ## Running
 
 Running EMBEDDIA Toolkit requires Docker, check https://docs.docker.com/get-docker/ for installation instructions.
