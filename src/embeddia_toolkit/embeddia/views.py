@@ -103,15 +103,15 @@ class EMBEDDIAHealthView(generics.GenericAPIView):
         embeddia_health = {
             "service": "EMBEDDIA Toolkit API",
             "disk": {
-                "free": disk_free / (2 ** 30),
-                "total": disk_total / (2 ** 30),
-                "used": disk_used / (2 ** 30),
+                "free": round(disk_free / (2 ** 30),3),
+                "total": round(disk_total / (2 ** 30),3),
+                "used": round(disk_used / (2 ** 30),3),
                 "unit": "GB"
             },
             "memory": {
-                "free": memory.available / (2 ** 30),
-                "total": memory.total / (2 ** 30),
-                "used": memory.used / (2 ** 30),
+                "free": round(memory.available / (2 ** 30),3),
+                "total": round(memory.total / (2 ** 30),3),
+                "used": round(memory.used / (2 ** 30),3),
                 "unit": "GB"
             },
             "cpu": {
