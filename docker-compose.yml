@@ -12,8 +12,6 @@ services:
   embeddia-redis:
     container_name: embeddia-redis
     image: redis
-    ports:
-      - 6379
     restart: always
 
   embeddia-nlg:
@@ -33,8 +31,6 @@ services:
     build:
       context: ./modules/embeddia-hsd/services/web
       dockerfile: Dockerfile
-    ports:
-      - 5000
     command: python manage.py run -h 0.0.0.0
     volumes:
       - ./data/:/usr/src/app/project/models
@@ -49,8 +45,6 @@ services:
     build:
       context: ./modules/embeddia-kwe-et/services/web
       dockerfile: Dockerfile
-    ports:
-      - 5000
     env_file:
       - ./env.keyword
     command: python -u manage.py run -h 0.0.0.0
@@ -61,8 +55,6 @@ services:
     build:
       context: ./modules/embeddia-kwe-hr/services/web
       dockerfile: Dockerfile
-    ports:
-      - 5000
     env_file:
       - ./env.keyword
     command: python -u manage.py run -h 0.0.0.0
@@ -73,8 +65,16 @@ services:
     build:
       context: ./modules/embeddia-kwe-lv/services/web
       dockerfile: Dockerfile
-    ports:
-      - 5000
+    env_file:
+      - ./env.keyword
+    command: python -u manage.py run -h 0.0.0.0
+
+  embeddia-kwe-rakun:
+    container_name: embeddia-kwe-rakun
+    image: docker.texta.ee/texta/embeddia-toolkit/embeddia-kwe-rakun:latest
+    build:
+      context: ./modules/embeddia-kwe-rakun/services/web
+      dockerfile: Dockerfile
     env_file:
       - ./env.keyword
     command: python -u manage.py run -h 0.0.0.0
@@ -85,8 +85,6 @@ services:
     build:
       context: ./modules/embeddia-ner/services/web
       dockerfile: Dockerfile
-    ports:
-      - 5000
     env_file:
       - ./env.ner
     command: python -u manage.py run -h 0.0.0.0
@@ -100,8 +98,6 @@ services:
       dockerfile: Dockerfile
     env_file:
       - ./env.ner
-    ports:
-     - 5555
     volumes:
       - ./data/celery-flower_data:/persistent
     depends_on:
@@ -132,10 +128,11 @@ services:
      - ./env.embeddia
     volumes:
       - ./data:/var/embeddia-rest/data
-      - ./src:/var/embeddia-rest/src
+      #- ./src:/var/embeddia-rest/src
     depends_on:
       - embeddia-redis
       - embeddia-kwe-hr
       - embeddia-kwe-et
+      - embeddia-kwe-lv
       - embeddia-hsd
       - embeddia-ner
