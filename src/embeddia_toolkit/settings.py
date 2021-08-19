@@ -48,6 +48,7 @@ TEXTA_HT_PROJECT = int(os.getenv("EMBEDDIA_TEXTA_HT_PROJECT", 1))
 TEXTA_HT_TAGGER = int(os.getenv("EMBEDDIA_TEXTA_HT_TAGGER", 5))
 TEXTA_HS_PROJECT = int(os.getenv("EMBEDDIA_TEXTA_HS_PROJECT", 2))
 TEXTA_BERT_PROJECT = int(os.getenv("EMBEDDIA_TEXTA_BERT_PROJECT", 310))
+TEXTA_BERT_TAGGER = int(os.getenv("EMBEDDIA_TEXTA_BERT_TAGGER", 310))
 
 # SSL verification
 SSL_VERIFY = True if os.getenv("EMBEDDIA_TEXTA_SSL_VERIFY", "True") == "True" else False
@@ -204,5 +205,5 @@ ARTICLE_ANALYZERS = {
 
 COMMENT_ANALYZERS = {
     "EMBEDDIA Cross-lingual Comment Model": QMULAnalyzer(host=HSD_HOST, ssl_verify=SSL_VERIFY),
-    "TEXTA Monolongual BERT Comment Model": BERTTaggerAnalyzer(host=TEXTA_HOST, auth_token=TEXTA_TOKEN, project=TEXTA_BERT_PROJECT, ssl_verify=SSL_VERIFY)
+    "TEXTA Monolongual BERT Comment Model": BERTTaggerAnalyzer(host=TEXTA_HOST, auth_token=TEXTA_TOKEN, project=TEXTA_BERT_PROJECT, tagger=TEXTA_BERT_TAGGER, ssl_verify=SSL_VERIFY)
 }
