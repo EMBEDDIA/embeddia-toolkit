@@ -23,7 +23,7 @@ class QMULAnalyzer:
 
     @staticmethod
     def _process_output(response_json):
-        if response_json["label"] == "OFF":
+        if response_json["label"].startswith("Blocked"):
             return [{"tag": "OFFENSIVE", "probability": response_json["confidence"]}]
         else:
             return []
