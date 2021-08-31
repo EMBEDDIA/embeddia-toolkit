@@ -1,5 +1,6 @@
 from rest_framework import generics, status, views
 from rest_framework.response import Response
+from rest_framework.throttling import AnonRateThrottle
 from celery import group
 from texta_mlp.mlp import MLP
 import shutil
@@ -13,6 +14,7 @@ from . import exceptions
 
 from embeddia_toolkit.taskman import apply_single_analyzer
 from embeddia_toolkit.settings import DATA_DIR, MLP_LANGS, ARTICLE_ANALYZERS, COMMENT_ANALYZERS
+
 
 mlp = MLP(language_codes=MLP_LANGS, resource_dir=DATA_DIR)
 
@@ -142,6 +144,7 @@ class EMBEDDIAArticleAnalyzerView(generics.GenericAPIView):
     EMBEDDIA Article Analyzer view.
     """
     serializer_class = EMBEDDIAArticleSerializer
+    throttle_classes = [AnonRateThrottle]
 
     def post(self, request):
         serializer = EMBEDDIAArticleSerializer(data=request.data)
@@ -158,6 +161,7 @@ class EMBEDDIACommentAnalyzerView(generics.GenericAPIView):
     EMBEDDIA Article Analyzer view.
     """
     serializer_class = EMBEDDIACommentSerializer
+    throttle_classes = [AnonRateThrottle]
 
     def post(self, request):
         serializer = EMBEDDIACommentSerializer(data=request.data)
