@@ -52,6 +52,8 @@ TEXTA_HS_PROJECT = int(os.getenv("EMBEDDIA_TEXTA_HS_PROJECT", 2))
 TEXTA_BERT_PROJECT = int(os.getenv("EMBEDDIA_TEXTA_BERT_PROJECT", 310))
 TEXTA_BERT_TAGGER = int(os.getenv("EMBEDDIA_TEXTA_BERT_TAGGER", 310))
 
+REQUEST_THROTTLE = os.getenv("EMBEDDIA_REQUEST_THROTTLE", "100/day")
+
 # SSL verification
 SSL_VERIFY = True if os.getenv("EMBEDDIA_TEXTA_SSL_VERIFY", "True") == "True" else False
 
@@ -99,7 +101,7 @@ REST_FRAMEWORK = {
         'rest_framework.throttling.AnonRateThrottle'
     ],
     'DEFAULT_THROTTLE_RATES': {
-        'anon': '100/day'
+        'anon': REQUEST_THROTTLE
     }
 }
 
