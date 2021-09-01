@@ -70,7 +70,7 @@ class BERTTaggerAnalyzer:
         return True
 
     def _process_input(self, text):
-        payload = {"text": text}
+        payload = {"text": text, "persistent": True}
         return payload
 
     @check_connection
