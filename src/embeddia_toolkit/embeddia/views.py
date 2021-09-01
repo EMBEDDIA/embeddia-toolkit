@@ -2,7 +2,6 @@ from rest_framework import generics, status, views
 from rest_framework.response import Response
 from rest_framework.throttling import AnonRateThrottle
 from celery import group
-from texta_mlp.mlp import MLP
 import shutil
 import psutil
 import re
@@ -16,11 +15,19 @@ from embeddia_toolkit.taskman import apply_single_analyzer
 from embeddia_toolkit.settings import DATA_DIR, MLP_LANGS, ARTICLE_ANALYZERS, COMMENT_ANALYZERS
 
 
-mlp = MLP(language_codes=MLP_LANGS, resource_dir=DATA_DIR)
+MLP_ANALYZERS = [
+    "lemmas",
+    "ner",
+    "addresses",
+    "emails",
+    "entities"
+]
 
 
 def analyze_article(analyzer_names, text, mlp_name="TEXTA MLP"):
-    mlp_analysis = mlp.process(text)
+    # apply mlp
+    mlp = ARTICLE_ANALYZERS[mlp_name]
+    mlp_analysis = mlp.process(text, analyzers=MLP_ANALYZERS)
     # default to all analyzers
     if not analyzer_names:
         analyzer_names = list(ARTICLE_ANALYZERS.keys())
@@ -30,16 +37,23 @@ def analyze_article(analyzer_names, text, mlp_name="TEXTA MLP"):
     tokenized_text = mlp_analysis["text"]["text"]
     language = mlp_analysis["text"]["language"]["analysis"]
     lemmas = mlp_analysis["text"]["lemmas"]
-    entities = [{"entity": e["str_val"], "type": e["fact"], "source": mlp_name} for e in mlp_analysis["texta_facts"]]
+    # add mlp entities if asked
+    if mlp_name in analyzer_names:
+        entities = [{"entity": e["str_val"], "type": e["fact"], "source": mlp_name} for e in mlp_analysis["texta_facts"]]
+    else:
+        entities = []
     # use analyzers
     tags = []
-    group_task = group([apply_single_analyzer.s(analyzer_name, lemmas) for analyzer_name in analyzer_names])
+    analyzers_to_use = analyzer_names.copy()
+    if mlp_name in analyzers_to_use:
+        analyzers_to_use.remove(mlp_name)
+    group_task = group([apply_single_analyzer.s(analyzer_name, lemmas) for analyzer_name in analyzers_to_use])
     group_results = group_task.apply_async()
     # get tags
     tags = []
     for i,analyzer_tags in enumerate(group_results.get()):
         for tag in analyzer_tags:
-            tag["source"] = analyzer_names[i]
+            tag["source"] = analyzers_to_use[i]
             tags.append(tag)
     # prepare output
     output = {
@@ -47,7 +61,7 @@ def analyze_article(analyzer_names, text, mlp_name="TEXTA MLP"):
         "tags": tags,
         "entities": entities,
         "language": language,
-        "analyzers": analyzer_names+[mlp_name]
+        "analyzers": analyzer_names
     }
     return output
 

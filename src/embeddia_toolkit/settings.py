@@ -14,6 +14,8 @@ from kombu import Exchange, Queue
 #from utils import parse_list_env_headers
 import os
 
+from texta_mlp.mlp import MLP
+
 from embeddia_toolkit.embeddia.analyzers.article_analyzer import (
     KWEAnalyzer,
     HybridTaggerAnalyzer,
@@ -207,6 +209,7 @@ ARTICLE_ANALYZERS = {
     "TNT-KID LV Analyzer": KWEAnalyzer(host=KWE_LV_HOST, ssl_verify=SSL_VERIFY),
     "Rakun Multilingual Analyzer": KWEAnalyzer(host=KWE_RAKUN_HOST, ssl_verify=SSL_VERIFY),
     "NER HR Analyzer": NERAnalyzer(host=NER_HOST, ssl_verify=SSL_VERIFY, language="hr"),
+    "TEXTA MLP": MLP(language_codes=MLP_LANGS, resource_dir=DATA_DIR)
 }
 
 COMMENT_ANALYZERS = {
