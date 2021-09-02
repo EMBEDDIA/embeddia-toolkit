@@ -4,30 +4,37 @@
 
 ### Keyword Extractor - TNT-KID (Croatian, Estonian, Latvian)
 A supervised method for keyword extraction using a sequence labelling approach.
+
 Additional information: https://github.com/EMBEDDIA/tnt_kid
 
 ### Keyword Extractor - RaKUn (Multilingual)
 An unsupervised method keyword extraction using graph-based approach.
+
 Additional information: https://github.com/EMBEDDIA/RaKUn
 
 ### Named Entity Extractor (Croatian)
 A supervised method for Named Entity Extractor is based on a BiLSTM with multiple types of embeddings (BERT, FastText and character).
+
 Additional information: https://github.com/EMBEDDIA/bert-bilstm-cnn-crf-ner
 
 ### Named Entity Extractor - TEXTA MLP (Multilingual)
 An hybrid method incorporating rule-based and supervised solutions for general entity extraction.
+
 Additional information: https://pypi.org/project/texta-mlp https://git.texta.ee/texta/texta-mlp-python
 
 ### Comment Moderator - QMUL BERT Model (Cross-lingual)
 A supervised method for classifying texts using Cross-lingual BERT. Model trained on manually annotated Tweets in English.
+
 Additional information: XXX
 
 ### Comment Moderator - TEXTA BERT Model (Estonian)
 A supervised method for classifying texts using BERT. Model trained using manually annotated comments and Estonian BERT model.
+
 Additional information: https://pypi.org/project/texta-bert-tagger https://git.texta.ee/texta/texta-bert-tagger-python
 
 ### Article Generator
 Produces short descriptive texts about the COVID-situation and Eurostat statistics.
+
 Additional information: https://github.com/EMBEDDIA/covid-nlg https://github.com/EMBEDDIA/eurostat-nlg
 
 
