@@ -25,7 +25,7 @@ Additional information: https://pypi.org/project/texta-mlp https://git.texta.ee/
 ### Comment Moderator - QMUL BERT Model (Cross-lingual)
 A supervised method for classifying texts using Cross-lingual BERT. Model trained on manually annotated Tweets in English.
 
-Additional information: XXX
+Additional information: https://github.com/EMBEDDIA/comment-filter
 
 ### Comment Moderator - TEXTA BERT Model (Estonian)
 A supervised method for classifying texts using BERT. Model trained using manually annotated comments and Estonian BERT model.
