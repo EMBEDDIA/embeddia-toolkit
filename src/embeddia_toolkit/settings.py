@@ -206,15 +206,15 @@ MLP_LANGS = os.getenv("EMBEDDIA_MLP_LANGS", "et,en,ru").split(",")
 
 # DECLARE EMBEDDIA ANALYZERS
 ARTICLE_ANALYZERS = {
-    "TNT-KID ET Analyzer": KWEAnalyzer(host=KWE_ET_HOST, ssl_verify=SSL_VERIFY),
-    "TNT-KID HR Analyzer": KWEAnalyzer(host=KWE_HR_HOST, ssl_verify=SSL_VERIFY),
-    "TNT-KID LV Analyzer": KWEAnalyzer(host=KWE_LV_HOST, ssl_verify=SSL_VERIFY),
-    "Rakun Multilingual Analyzer": KWEAnalyzer(host=KWE_RAKUN_HOST, ssl_verify=SSL_VERIFY),
-    "NER HR Analyzer": NERAnalyzer(host=NER_HOST, ssl_verify=SSL_VERIFY, language="hr"),
-    "TEXTA MLP": MLP(language_codes=MLP_LANGS, resource_dir=DATA_DIR)
+    "Keyword Extractor - TNT-KID (Estonian)": KWEAnalyzer(host=KWE_ET_HOST, ssl_verify=SSL_VERIFY),
+    "Keyword Extractor - TNT-KID (Croatian)": KWEAnalyzer(host=KWE_HR_HOST, ssl_verify=SSL_VERIFY),
+    "Keyword Extractor - TNT-KID (Latvian)": KWEAnalyzer(host=KWE_LV_HOST, ssl_verify=SSL_VERIFY),
+    "Keyword Extractor - RaKUn (Multilingual)": KWEAnalyzer(host=KWE_RAKUN_HOST, ssl_verify=SSL_VERIFY),
+    "Named Entity Extractor - BiLSTM (Croatian)": NERAnalyzer(host=NER_HOST, ssl_verify=SSL_VERIFY, language="hr"),
+    "Named Entity Extractor - TEXTA MLP (Multilingual)": MLP(language_codes=MLP_LANGS, resource_dir=DATA_DIR)
 }
 
 COMMENT_ANALYZERS = {
-    "EMBEDDIA Cross-lingual Comment Model": QMULAnalyzer(host=HSD_HOST, ssl_verify=SSL_VERIFY),
-    "TEXTA Monolongual BERT Comment Model": BERTTaggerAnalyzer(host=TEXTA_HOST, auth_token=TEXTA_TOKEN, project=TEXTA_BERT_PROJECT, tagger=TEXTA_BERT_TAGGER, ssl_verify=SSL_VERIFY)
+    "Comment Moderator - QMUL BERT Model (Cross-lingual)": QMULAnalyzer(host=HSD_HOST, ssl_verify=SSL_VERIFY),
+    "Comment Moderator - TEXTA BERT Model (Estonian)": BERTTaggerAnalyzer(host=TEXTA_HOST, auth_token=TEXTA_TOKEN, project=TEXTA_BERT_PROJECT, tagger=TEXTA_BERT_TAGGER, ssl_verify=SSL_VERIFY)
 }
