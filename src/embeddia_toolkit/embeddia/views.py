@@ -12,7 +12,7 @@ from .analyzers.exceptions import ServiceNotAvailableError
 from . import exceptions
 
 from embeddia_toolkit.taskman import apply_single_analyzer
-from embeddia_toolkit.settings import DATA_DIR, MLP_LANGS, ARTICLE_ANALYZERS, COMMENT_ANALYZERS
+from embeddia_toolkit.settings import DATA_DIR, MLP_LANGS, ARTICLE_ANALYZERS, COMMENT_ANALYZERS, MLP_NAME
 
 
 MLP_ANALYZERS = [
@@ -24,7 +24,7 @@ MLP_ANALYZERS = [
 ]
 
 
-def analyze_article(analyzer_names, text, mlp_name="TEXTA MLP"):
+def analyze_article(analyzer_names, text, mlp_name=MLP_NAME):
     # apply mlp
     mlp = ARTICLE_ANALYZERS[mlp_name]
     mlp_analysis = mlp.process(text, analyzers=MLP_ANALYZERS)

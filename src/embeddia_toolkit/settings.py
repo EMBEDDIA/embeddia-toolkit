@@ -204,6 +204,8 @@ CORS_ALLOW_HEADERS = list(default_headers) + ["x-xsrf-token"]
 # set MLP languages
 MLP_LANGS = os.getenv("EMBEDDIA_MLP_LANGS", "et,en,ru").split(",")
 
+MLP_NAME = "Named Entity Extractor - TEXTA MLP (Multilingual)"
+
 # DECLARE EMBEDDIA ANALYZERS
 ARTICLE_ANALYZERS = {
     "Keyword Extractor - TNT-KID (Estonian)": KWEAnalyzer(host=KWE_ET_HOST, ssl_verify=SSL_VERIFY),
@@ -211,7 +213,7 @@ ARTICLE_ANALYZERS = {
     "Keyword Extractor - TNT-KID (Latvian)": KWEAnalyzer(host=KWE_LV_HOST, ssl_verify=SSL_VERIFY),
     "Keyword Extractor - RaKUn (Multilingual)": KWEAnalyzer(host=KWE_RAKUN_HOST, ssl_verify=SSL_VERIFY),
     "Named Entity Extractor - BiLSTM (Croatian)": NERAnalyzer(host=NER_HOST, ssl_verify=SSL_VERIFY, language="hr"),
-    "Named Entity Extractor - TEXTA MLP (Multilingual)": MLP(language_codes=MLP_LANGS, resource_dir=DATA_DIR)
+    MLP_NAME: MLP(language_codes=MLP_LANGS, resource_dir=DATA_DIR)
 }
 
 COMMENT_ANALYZERS = {
