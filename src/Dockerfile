@@ -18,7 +18,7 @@ COPY ./entrypoint.sh /var/embeddia-rest/entrypoint.sh
 COPY . /var/embeddia-rest/src
 
 # Retrieve pre-built front
-RUN wget https://packages.texta.ee/embeddia-front/embeddia-front-latest.tar.gz \
+RUN wget https://packages.texta.ee/embeddia-front/embeddia-front-latest.tar.gz --no-check-certificate \
     && tar -zxvf embeddia-front-latest.tar.gz \
     && cp -r dist/embeddia-front /var/embeddia-rest/front \
     && rm embeddia-front-latest.tar.gz && rm -R dist
