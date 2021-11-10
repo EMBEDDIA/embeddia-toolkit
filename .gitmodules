@@ -19,3 +19,6 @@
 [submodule "embeddia-kwe-rakun"]
 	path = modules/embeddia-kwe-rakun
 	url = https://gitlab.com/skblaz/rakun-app-docker.git
+[submodule "embeddia-kwe-en"]
+	path = modules/embeddia-kwe-en
+	url = https://gitlab.com/matej.martinc/tnt_kid_app_english.git
