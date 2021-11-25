@@ -65,7 +65,7 @@ SSL_VERIFY = True if os.getenv("EMBEDDIA_TEXTA_SSL_VERIFY", "True") == "True" el
 SECRET_KEY = 'd064bgxe^08n5@ubx80azgo7paxzj&!p251(nzoxa6q%v_*ny4'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -215,7 +215,9 @@ ARTICLE_ANALYZERS = {
     "Keyword Extractor - TNT-KID (English)": KWEAnalyzer(host=KWE_EN_HOST, ssl_verify=SSL_VERIFY),
     "Keyword Extractor - RaKUn (Multilingual)": KWEAnalyzer(host=KWE_RAKUN_HOST, ssl_verify=SSL_VERIFY),
     "Named Entity Extractor - BiLSTM (Croatian)": NERAnalyzer(host=NER_HOST, ssl_verify=SSL_VERIFY, language="hr"),
-    #"Named Entity Extractor - BiLSTM (Estonian)": NERAnalyzer(host=NER_HOST, ssl_verify=SSL_VERIFY, language="et"),
+    "Named Entity Extractor - BiLSTM (Estonian)": NERAnalyzer(host=NER_HOST, ssl_verify=SSL_VERIFY, language="et"),
+    "Named Entity Extractor - BiLSTM (Slovenian)": NERAnalyzer(host=NER_HOST, ssl_verify=SSL_VERIFY, language="sl"),
+    "Named Entity Extractor - BiLSTM (Russian)": NERAnalyzer(host=NER_HOST, ssl_verify=SSL_VERIFY, language="ru"),
     MLP_NAME: MLP(language_codes=MLP_LANGS, resource_dir=DATA_DIR)
 }
 
