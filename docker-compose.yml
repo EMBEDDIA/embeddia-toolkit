@@ -14,16 +14,16 @@ services:
     image: redis
     restart: always
 
-  embeddia-nlg:
-    container_name: embeddia-nlg
-    image: docker.texta.ee/texta/embeddia-toolkit/embeddia-nlg:latest
-    build:
-      context: ./modules/embeddia-nlg
-      dockerfile: Dockerfile
-    ports:
-      - 5555:8080
-    volumes:
-      - ./data:/app/data
+  # embeddia-nlg:
+  #   container_name: embeddia-nlg
+  #   image: docker.texta.ee/texta/embeddia-toolkit/embeddia-nlg:latest
+  #   build:
+  #     context: ./modules/embeddia-nlg
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - 5555:8080
+  #   volumes:
+  #     - ./data:/app/data
 
   embeddia-hsd:
     container_name: embeddia-hsd
@@ -39,82 +39,147 @@ services:
     depends_on:
       - embeddia-postgres
 
-  embeddia-kwe-et:
-    container_name: embeddia-kwe-et
-    image: docker.texta.ee/texta/embeddia-toolkit/embeddia-kwe-et:latest
+  embeddia-hsd-mbert:
+    container_name: embeddia-hsd-mbert
+    image: docker.texta.ee/texta/embeddia-toolkit/embeddia-hsd-mbert:latest
     build:
-      context: ./modules/embeddia-kwe-et/services/web
+      context: ./modules/embeddia-hsd-mbert/services/web
       dockerfile: Dockerfile
-    env_file:
-      - ./env.keyword
-    command: python -u manage.py run -h 0.0.0.0
-
-  embeddia-kwe-hr:
-    container_name: embeddia-kwe-hr
-    image: docker.texta.ee/texta/embeddia-toolkit/embeddia-kwe-hr:latest
-    build:
-      context: ./modules/embeddia-kwe-hr/services/web
-      dockerfile: Dockerfile
-    env_file:
-      - ./env.keyword
-    command: python -u manage.py run -h 0.0.0.0
-
-  embeddia-kwe-lv:
-    container_name: embeddia-kwe-lv
-    image: docker.texta.ee/texta/embeddia-toolkit/embeddia-kwe-lv:latest
-    build:
-      context: ./modules/embeddia-kwe-lv/services/web
-      dockerfile: Dockerfile
-    env_file:
-      - ./env.keyword
-    command: python -u manage.py run -h 0.0.0.0
-
-  embeddia-kwe-rakun:
-    container_name: embeddia-kwe-rakun
-    image: docker.texta.ee/texta/embeddia-toolkit/embeddia-kwe-rakun:latest
-    build:
-      context: ./modules/embeddia-kwe-rakun/services/web
-      dockerfile: Dockerfile
-    env_file:
-      - ./env.keyword
-    command: python -u manage.py run -h 0.0.0.0
-
-  embeddia-ner:
-    container_name: embeddia-ner
-    image: docker.texta.ee/texta/embeddia-toolkit/embeddia-ner:latest
-    build:
-      context: ./modules/embeddia-ner/services/web
-      dockerfile: Dockerfile
-    env_file:
-      - ./env.ner
-    command: python -u manage.py run -h 0.0.0.0
-    depends_on:
-      - embeddia-ner-worker
-
-  embeddia-ner-worker:
-    image: docker.texta.ee/texta/embeddia-toolkit/embeddia-ner-worker:latest
-    build:
-      context: ./modules/embeddia-ner/services/celery-queue
-      dockerfile: Dockerfile
-    env_file:
-      - ./env.ner
+    command: python manage.py run -h 0.0.0.0
     volumes:
-      - ./data/celery-flower_data:/persistent
-    depends_on:
-      - embeddia-redis
-
-  ner:
-    image: docker.texta.ee/texta/embeddia-toolkit/embeddia-ner-service:latest
-    build:
-        context: ./modules/embeddia-ner/services/ner-service
-        dockerfile: Dockerfile
+      - ./data/:/usr/src/app/project/models
     env_file:
-      - ./env.ner
+      - ./env.hatespeech
+    depends_on:
+      - embeddia-postgres
+
+  embeddia-hsd-mbert-enee:
+    container_name: embeddia-hsd-mbert-enee
+    image: docker.texta.ee/texta/embeddia-toolkit/embeddia-hsd-mbert-enee:latest
+    build:
+      context: ./modules/embeddia-hsd-mbert-enee/services/web
+      dockerfile: Dockerfile
+    command: python manage.py run -h 0.0.0.0
     volumes:
-      - ./data/ner-data:/data
-    #  - ./data/ner-model-data:/ner_service/NER/models
-    expose:
-      - 18861
+      - ./data/:/usr/src/app/project/models
+    env_file:
+      - ./env.hatespeech
+    depends_on:
+      - embeddia-postgres
+
+  embeddia-hsd-cse:
+    container_name: embeddia-hsd-cse
+    image: docker.texta.ee/texta/embeddia-toolkit/embeddia-hsd-cse:latest
+    build:
+      context: ./modules/embeddia-hsd-cse/services/web
+      dockerfile: Dockerfile
+    command: python manage.py run -h 0.0.0.0
+    volumes:
+      - ./data/:/usr/src/app/project/models
+    env_file:
+      - ./env.hatespeech
+    depends_on:
+      - embeddia-postgres
+
+  # embeddia-kwe-et:
+  #   container_name: embeddia-kwe-et
+  #   image: docker.texta.ee/texta/embeddia-toolkit/embeddia-kwe-et:latest
+  #   build:
+  #     context: ./modules/embeddia-kwe-et/services/web
+  #     dockerfile: Dockerfile
+  #   expose:
+  #     - 5000
+  #   env_file:
+  #     - ./env.keyword
+  #   command: python -u manage.py run -h 0.0.0.0
+
+  # embeddia-kwe-en:
+  #   container_name: embeddia-kwe-en
+  #   image: docker.texta.ee/texta/embeddia-toolkit/embeddia-kwe-en:latest
+  #   build:
+  #     context: ./modules/embeddia-kwe-en/services/web
+  #     dockerfile: Dockerfile
+  #   expose:
+  #     - 5000
+  #   env_file:
+  #     - ./env.keyword
+  #   command: python -u manage.py run -h 0.0.0.0
+
+  # embeddia-kwe-hr:
+  #   container_name: embeddia-kwe-hr
+  #   image: docker.texta.ee/texta/embeddia-toolkit/embeddia-kwe-hr:latest
+  #   build:
+  #     context: ./modules/embeddia-kwe-hr/services/web
+  #     dockerfile: Dockerfile
+  #   expose:
+  #     - 5000
+  #   env_file:
+  #     - ./env.keyword
+  #   command: python -u manage.py run -h 0.0.0.0
+
+  # embeddia-kwe-lv:
+  #   container_name: embeddia-kwe-lv
+  #   image: docker.texta.ee/texta/embeddia-toolkit/embeddia-kwe-lv:latest
+  #   build:
+  #     context: ./modules/embeddia-kwe-lv/services/web
+  #     dockerfile: Dockerfile
+  #   expose:
+  #     - 5000
+  #   env_file:
+  #     - ./env.keyword
+  #   command: python -u manage.py run -h 0.0.0.0
+
+  # embeddia-kwe-rakun:
+  #   container_name: embeddia-kwe-rakun
+  #   image: docker.texta.ee/texta/embeddia-toolkit/embeddia-kwe-rakun:latest
+  #   build:
+  #     context: ./modules/embeddia-kwe-rakun/services/web
+  #     dockerfile: Dockerfile
+  #   expose:
+  #     - 5000
+  #   env_file:
+  #     - ./env.keyword
+  #   command: python -u manage.py run -h 0.0.0.0
+
+  # embeddia-ner:
+  #   container_name: embeddia-ner
+  #   image: docker.texta.ee/texta/embeddia-toolkit/embeddia-ner:latest
+  #   build:
+  #     context: ./modules/embeddia-ner/services/web
+  #     dockerfile: Dockerfile
+  #   expose:
+  #     - 5000
+  #   env_file:
+  #     - ./env.ner
+  #   command: python -u manage.py run -h 0.0.0.0
+  #   depends_on:
+  #     - embeddia-ner-worker
+
+  # embeddia-ner-worker:
+  #   image: docker.texta.ee/texta/embeddia-toolkit/embeddia-ner-worker:latest
+  #   build:
+  #     context: ./modules/embeddia-ner/services/celery-queue
+  #     dockerfile: Dockerfile
+  #   env_file:
+  #     - ./env.ner
+  #   expose:
+  #    - 5555
+  #   volumes:
+  #     - ./data/ner-celery-flower:/persistent
+  #   depends_on:
+  #     - embeddia-redis
+
+  # ner:
+  #   image: docker.texta.ee/texta/embeddia-toolkit/embeddia-ner-service:latest
+  #   build:
+  #       context: ./modules/embeddia-ner/services/ner-service
+  #       dockerfile: Dockerfile
+  #   env_file:
+  #     - ./env.ner
+  #   volumes:
+  #     - ./data/ner-service:/ner_service/data
+  #   expose:
+  #     - 18861
 
   embeddia-rest:
     container_name: embeddia-rest
@@ -131,8 +196,9 @@ services:
       #- ./src:/var/embeddia-rest/src
     depends_on:
       - embeddia-redis
-      - embeddia-kwe-hr
-      - embeddia-kwe-et
-      - embeddia-kwe-lv
-      - embeddia-hsd
-      - embeddia-ner
+      #- embeddia-kwe-hr
+      #- embeddia-kwe-et
+      #- embeddia-kwe-lv
+      #- embeddia-kwe-rakun
+      #- embeddia-hsd
+      #- embeddia-ner
