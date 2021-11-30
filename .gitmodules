@@ -22,3 +22,12 @@
 [submodule "embeddia-kwe-en"]
 	path = modules/embeddia-kwe-en
 	url = https://gitlab.com/matej.martinc/tnt_kid_app_english.git
+[submodule "embeddia-hsd-mbert"]
+	path = modules/embeddia-hsd-mbert
+	url = https://github.com/EMBEDDIA/comment-filter-mbert-multi.git
+[submodule "embeddia-hsd-mbert-enee"]
+	path = modules/embeddia-hsd-mbert-enee
+	url = https://github.com/EMBEDDIA/comment-filter-finest-bert-engee.git
+[submodule "embeddia-hsd-cse"]
+	path = modules/embeddia-hsd-cse
+	url = https://github.com/EMBEDDIA/comment-filter-csebert-cse.git

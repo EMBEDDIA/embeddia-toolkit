@@ -36,7 +36,6 @@ def analyze_article(analyzer_names, text, mlp_name=MLP_NAME):
     # extract stuff from MLP output
     tokenized_text = mlp_analysis["text"]["text"]
     language = mlp_analysis["text"]["language"]["analysis"]
-    lemmas = mlp_analysis["text"]["lemmas"]
     # add mlp entities if asked
     if mlp_name in analyzer_names:
         entities = [{"entity": e["str_val"], "type": e["fact"], "source": mlp_name} for e in mlp_analysis["texta_facts"]]
@@ -47,7 +46,7 @@ def analyze_article(analyzer_names, text, mlp_name=MLP_NAME):
     analyzers_to_use = analyzer_names.copy()
     if mlp_name in analyzers_to_use:
         analyzers_to_use.remove(mlp_name)
-    group_task = group([apply_single_analyzer.s(analyzer_name, lemmas) for analyzer_name in analyzers_to_use])
+    group_task = group([apply_single_analyzer.s(analyzer_name, tokenized_text) for analyzer_name in analyzers_to_use])
     group_results = group_task.apply_async()
     # get tags
     tags = []

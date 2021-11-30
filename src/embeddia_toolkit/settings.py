@@ -36,7 +36,12 @@ DATA_DIR = os.path.join(os.path.dirname(BASE_DIR), "data")
 
 # EMBEDDIA SERVICE HOSTNAMES & OTHER PARAMS
 NLG_HOST = os.getenv("EMBEDDIA_NLG_HOST", "http://localhost:5000")
-HSD_HOST = os.getenv("EMBEDDIA_HSD_HOST", "http://localhost:5001")
+
+HSD_1_HOST = os.getenv("EMBEDDIA_HSD_HOST", "http://localhost:5001")
+HSD_2_HOST = os.getenv("EMBEDDIA_HSD_MBERT_HOST", "http://localhost:5001")
+HSD_3_HOST = os.getenv("EMBEDDIA_HSD_MBERT_ENEE_HOST", "http://localhost:5001")
+HSD_4_HOST = os.getenv("EMBEDDIA_HSD_CSE_HOST", "http://localhost:5001")
+
 KWE_ET_HOST = os.getenv("EMBEDDIA_KWE_ET_HOST", "http://localhost:5002")
 KWE_HR_HOST = os.getenv("EMBEDDIA_KWE_HR_HOST", "http://localhost:5003")
 KWE_LV_HOST = os.getenv("EMBEDDIA_KWE_LV_HOST", "http://localhost:5004")
@@ -222,6 +227,9 @@ ARTICLE_ANALYZERS = {
 }
 
 COMMENT_ANALYZERS = {
-    "Comment Moderator (Cross-lingual)": QMULAnalyzer(host=HSD_HOST, ssl_verify=SSL_VERIFY),
-    "Comment Moderator (Estonian)": BERTTaggerAnalyzer(host=TEXTA_HOST, auth_token=TEXTA_TOKEN, project=TEXTA_BERT_PROJECT, tagger=TEXTA_BERT_TAGGER, ssl_verify=SSL_VERIFY)
+    "Comment Moderator BERT (Cross-lingual)": QMULAnalyzer(host=HSD_1_HOST, ssl_verify=SSL_VERIFY),
+    "Comment Moderator MBERT (Cross-lingual)": QMULAnalyzer(host=HSD_2_HOST, ssl_verify=SSL_VERIFY),
+    "Comment Moderator MBERT (English & Estonian)": QMULAnalyzer(host=HSD_3_HOST, ssl_verify=SSL_VERIFY),
+    "Comment Moderator CSEBERT (English, Slovenian & Croatian)": QMULAnalyzer(host=HSD_4_HOST, ssl_verify=SSL_VERIFY),
+    "Comment Moderator BERT (Estonian)": BERTTaggerAnalyzer(host=TEXTA_HOST, auth_token=TEXTA_TOKEN, project=TEXTA_BERT_PROJECT, tagger=TEXTA_BERT_TAGGER, ssl_verify=SSL_VERIFY)
 }

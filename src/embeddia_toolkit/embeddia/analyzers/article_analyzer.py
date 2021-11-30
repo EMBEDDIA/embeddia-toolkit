@@ -64,7 +64,7 @@ class HybridTaggerAnalyzer:
 
     def __init__(self, host="http://rest-dev.texta.ee", project=1, tagger_group=1, auth_token="", lemmatize=True, use_ner=True, ssl_verify=True):
         self.host = host
-        self.health = urljoin(host, "api/v1/health")
+        self.health = urljoin(host, f"api/v1/projects/{project}/tagger_groups/{tagger_group}/")
         self.url = urljoin(host, f"api/v1/projects/{project}/tagger_groups/{tagger_group}/tag_text/")
         self.headers = {"Authorization": f"Token {auth_token}"}
         self.lemmatize = lemmatize
