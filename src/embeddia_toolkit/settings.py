@@ -219,11 +219,11 @@ ARTICLE_ANALYZERS = {
     "Keyword Extractor - TNT-KID (Latvian)": KWEAnalyzer(host=KWE_LV_HOST, ssl_verify=SSL_VERIFY),
     "Keyword Extractor - TNT-KID (English)": KWEAnalyzer(host=KWE_EN_HOST, ssl_verify=SSL_VERIFY),
     "Keyword Extractor - RaKUn (Multilingual)": KWEAnalyzer(host=KWE_RAKUN_HOST, ssl_verify=SSL_VERIFY),
-    "Named Entity Extractor - BiLSTM (Croatian)": NERAnalyzer(host=NER_HOST, ssl_verify=SSL_VERIFY, language="hr"),
-    "Named Entity Extractor - BiLSTM (Estonian)": NERAnalyzer(host=NER_HOST, ssl_verify=SSL_VERIFY, language="et"),
-    "Named Entity Extractor - BiLSTM (Slovenian)": NERAnalyzer(host=NER_HOST, ssl_verify=SSL_VERIFY, language="sl"),
-    "Named Entity Extractor - BiLSTM (Russian)": NERAnalyzer(host=NER_HOST, ssl_verify=SSL_VERIFY, language="ru"),
-    MLP_NAME: MLP(language_codes=MLP_LANGS, resource_dir=DATA_DIR)
+    #"Named Entity Extractor - BiLSTM (Croatian)": NERAnalyzer(host=NER_HOST, ssl_verify=SSL_VERIFY, language="hr"),
+    #"Named Entity Extractor - BiLSTM (Estonian)": NERAnalyzer(host=NER_HOST, ssl_verify=SSL_VERIFY, language="et"),
+    #"Named Entity Extractor - BiLSTM (Slovenian)": NERAnalyzer(host=NER_HOST, ssl_verify=SSL_VERIFY, language="sl"),
+    #"Named Entity Extractor - BiLSTM (Russian)": NERAnalyzer(host=NER_HOST, ssl_verify=SSL_VERIFY, language="ru"),
+    MLP_NAME: MLP(language_codes=MLP_LANGS, resource_dir=DATA_DIR, use_gpu=False)
 }
 
 COMMENT_ANALYZERS = {
