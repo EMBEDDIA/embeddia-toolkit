@@ -227,9 +227,9 @@ ARTICLE_ANALYZERS = {
 }
 
 COMMENT_ANALYZERS = {
-    "Comment Moderator BERT (Cross-lingual)": QMULAnalyzer(host=HSD_1_HOST, ssl_verify=SSL_VERIFY),
+    "Comment Moderator BERT (English)": QMULAnalyzer(host=HSD_1_HOST, ssl_verify=SSL_VERIFY),
     "Comment Moderator MBERT (Cross-lingual)": QMULAnalyzer(host=HSD_2_HOST, ssl_verify=SSL_VERIFY),
-    "Comment Moderator MBERT (English & Estonian)": QMULAnalyzer(host=HSD_3_HOST, ssl_verify=SSL_VERIFY),
-    "Comment Moderator CSEBERT (English, Slovenian & Croatian)": QMULAnalyzer(host=HSD_4_HOST, ssl_verify=SSL_VERIFY),
+    "Comment Moderator FEBERT (English, Estonian)": QMULAnalyzer(host=HSD_3_HOST, ssl_verify=SSL_VERIFY),
+    "Comment Moderator CSEBERT (English, Slovenian, Croatian)": QMULAnalyzer(host=HSD_4_HOST, ssl_verify=SSL_VERIFY),
     "Comment Moderator BERT (Estonian)": BERTTaggerAnalyzer(host=TEXTA_HOST, auth_token=TEXTA_TOKEN, project=TEXTA_BERT_PROJECT, tagger=TEXTA_BERT_TAGGER, ssl_verify=SSL_VERIFY)
 }
