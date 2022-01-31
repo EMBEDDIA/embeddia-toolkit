@@ -22,13 +22,28 @@ An hybrid method incorporating rule-based and supervised solutions for general e
 
 Additional information: https://pypi.org/project/texta-mlp https://git.texta.ee/texta/texta-mlp-python
 
-### Comment Moderator - QMUL BERT Model (Cross-lingual)
-A supervised method for classifying texts using Cross-lingual BERT. Model trained on manually annotated Tweets in English.
+### Comment Moderator - QMUL Simple BERT Model (Cross-lingual)
+A supervised method for classifying texts using Multilingual BERT, fine-tuned on manually annotated Tweets in English. Can be applied to any language (but will work best on English).
 
 Additional information: https://github.com/EMBEDDIA/comment-filter
 
+### Comment Moderator - QMUL Multilingual BERT Model (Cross-lingual)
+A supervised method for classifying texts using Multilingual BERT, fine-tuned on data in English, German, Croatian, Slovene and Estonian. Can be applied to any language (but will work best on the training languages).
+
+Additional information: https://github.com/EMBEDDIA/comment-filter-mbert-multi
+
+### Comment Moderator - QMUL CSEBERT Model (English, Slovenian, Croatian)
+A supervised method for classifying texts using CroSloEngualBERT, fine-tuned on data in English, Croatian, and Slovene. Can be applied to any of these three languages.
+
+Additional information: https://github.com/EMBEDDIA/comment-filter-csebert-cse
+
+### Comment Moderator - QMUL FEBERT Model (English, Estonian)
+A supervised method for classifying texts using FinEstBERT, fine-tuned on data in English and Estonian. Can be applied to those two languages (and Finnish although performance will be less good).
+
+Additional information: https://github.com/EMBEDDIA/comment-filter-finest-bert-engee
+
 ### Comment Moderator - TEXTA BERT Model (Estonian)
-A supervised method for classifying texts using BERT. Model trained using manually annotated comments and Estonian BERT model.
+A supervised method for classifying texts using Estonian BERT, fine-tuned on annotated comments in Estonian. Can be applied only to Estonian language data.
 
 Additional information: https://pypi.org/project/texta-bert-tagger https://git.texta.ee/texta/texta-bert-tagger-python
 
