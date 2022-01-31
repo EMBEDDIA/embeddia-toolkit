@@ -46,6 +46,7 @@ KWE_ET_HOST = os.getenv("EMBEDDIA_KWE_ET_HOST", "http://localhost:5002")
 KWE_HR_HOST = os.getenv("EMBEDDIA_KWE_HR_HOST", "http://localhost:5003")
 KWE_LV_HOST = os.getenv("EMBEDDIA_KWE_LV_HOST", "http://localhost:5004")
 KWE_EN_HOST = os.getenv("EMBEDDIA_KWE_EN_HOST", "http://localhost:5007")
+KWE_SL_HOST = os.getenv("EMBEDDIA_KWE_SL_HOST", "http://localhost:5008")
 KWE_RAKUN_HOST = os.getenv("EMBEDDIA_KWE_RAKUN_HOST", "http://localhost:5005")
 NER_HOST = os.getenv("EMBEDDIA_NER_HOST", "http://localhost:5006")
 
@@ -218,6 +219,7 @@ ARTICLE_ANALYZERS = {
     "Keyword Extractor - TNT-KID (Croatian)": KWEAnalyzer(host=KWE_HR_HOST, ssl_verify=SSL_VERIFY),
     "Keyword Extractor - TNT-KID (Latvian)": KWEAnalyzer(host=KWE_LV_HOST, ssl_verify=SSL_VERIFY),
     "Keyword Extractor - TNT-KID (English)": KWEAnalyzer(host=KWE_EN_HOST, ssl_verify=SSL_VERIFY),
+    "Keyword Extractor - TNT-KID (Slovenian)": KWEAnalyzer(host=KWE_SL_HOST, ssl_verify=SSL_VERIFY),
     "Keyword Extractor - RaKUn (Multilingual)": KWEAnalyzer(host=KWE_RAKUN_HOST, ssl_verify=SSL_VERIFY),
     #"Named Entity Extractor - BiLSTM (Croatian)": NERAnalyzer(host=NER_HOST, ssl_verify=SSL_VERIFY, language="hr"),
     #"Named Entity Extractor - BiLSTM (Estonian)": NERAnalyzer(host=NER_HOST, ssl_verify=SSL_VERIFY, language="et"),
