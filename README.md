@@ -2,23 +2,24 @@
 
 ## Components
 
-### Keyword Extractor - TNT-KID (Croatian, Estonian, Latvian)
-A supervised method for keyword extraction using a sequence labelling approach.
+### TNT-KID (Croatian, Estonian, Latvian)
+TNT-KID is a system for automatic keyword extraction. It was trained on a corpus of articles with human-assigned keywords. For Croatian the annotators were 24sata editors, for Estonian the Ekspress Meedia staff and for Latvian the Latvian Delfi staff. More info (including how to train the system on your data or language) is available HERE.
 
-Additional information: https://github.com/EMBEDDIA/tnt_kid
-
-### Keyword Extractor - RaKUn (Multilingual)
-An unsupervised method keyword extraction using graph-based approach.
+### RAKUN (any language)
+RAKUN is an automatic system for keyword extraction that does not need any training (it is unsupervised) so it can be used for any language. It detects keywords by turning text into a graph and the most important nodes in the graph mostly turn out to be the keywords.
 
 Additional information: https://github.com/EMBEDDIA/RaKUn
 
+### Named Entity Extraction
+Names of people, organizations, and locations are called named entities. These are often the most important pieces of information people search for in articles. Luckily, they can be automatically extracted from text with modern machine learning tools. Our tools use several different modern approaches to extract named entities in several languages.
+
 ### Named Entity Extractor (Croatian)
-A supervised method for Named Entity Extractor is based on a BiLSTM with multiple types of embeddings (BERT, FastText and character).
+The tool extracts named entities (people, places, organizations) using deep neural networks. It was trained on a set of labelled Croatian news articles.
 
 Additional information: https://github.com/EMBEDDIA/bert-bilstm-cnn-crf-ner
 
 ### Named Entity Extractor - TEXTA MLP (Multilingual)
-An hybrid method incorporating rule-based and supervised solutions for general entity extraction.
+This tool incorporates several approaches for extraction of named entities (people, organizations, locations) and works for several languages and different types of text.
 
 Additional information: https://pypi.org/project/texta-mlp https://git.texta.ee/texta/texta-mlp-python
 
