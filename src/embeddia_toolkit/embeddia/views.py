@@ -23,6 +23,17 @@ MLP_ANALYZERS = [
     "entities"
 ]
 
+IGNORE_FACTS = ("CARDINAL", "DATE", "NORP", "ORDINAL", "WORK_OF_ART", "TITLE")
+
+
+def rewrite_fact_name(fact_name):
+    fact_name_dict = {
+        "PERSON": "PER"
+    }
+    if fact_name in fact_name_dict:
+        fact_name = fact_name_dict[fact_name]
+    return fact_name
+
 
 def analyze_article(analyzer_names, text, mlp_name=MLP_NAME):
     # apply mlp
@@ -34,11 +45,11 @@ def analyze_article(analyzer_names, text, mlp_name=MLP_NAME):
     else:
         analyzer_names = list(analyzer_names)
     # extract stuff from MLP output
-    tokenized_text = mlp_analysis["text"]["text"]
-    language = mlp_analysis["text"]["language"]["analysis"]
+    tokenized_text = mlp_analysis["text_mlp"]["text"]
+    language = mlp_analysis["text_mlp"]["language"]["analysis"]
     # add mlp entities if asked
     if mlp_name in analyzer_names:
-        entities = [{"entity": e["str_val"], "type": e["fact"], "source": mlp_name} for e in mlp_analysis["texta_facts"]]
+        entities = [{"entity": e["str_val"], "type": rewrite_fact_name(e["fact"]), "source": mlp_name} for e in mlp_analysis["texta_facts"] if e["fact"] not in IGNORE_FACTS]
     else:
         entities = []
     # use analyzers

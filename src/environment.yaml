@@ -7,7 +7,7 @@ channels:
   - pytorch
 
 dependencies:
-  - python=3.6
+  - python=3.8
   - pip
   - supervisor
   - uwsgi
@@ -19,6 +19,6 @@ dependencies:
     - djangorestframework==3.9.*
     - requests
     - whitenoise
-    - texta-mlp==1.11.*
+    - texta-mlp==1.15.*
     - celery==4.*
     - redis==3.*
