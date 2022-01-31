@@ -10,9 +10,6 @@ RAKUN is an automatic system for keyword extraction that does not need any train
 
 Additional information: https://github.com/EMBEDDIA/RaKUn
 
-### Named Entity Extraction
-Names of people, organizations, and locations are called named entities. These are often the most important pieces of information people search for in articles. Luckily, they can be automatically extracted from text with modern machine learning tools. Our tools use several different modern approaches to extract named entities in several languages.
-
 ### Named Entity Extractor (Croatian)
 The tool extracts named entities (people, places, organizations) using deep neural networks. It was trained on a set of labelled Croatian news articles.
 
