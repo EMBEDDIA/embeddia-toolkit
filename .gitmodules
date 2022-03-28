@@ -34,3 +34,6 @@
 [submodule "embeddia-hsd-cse"]
 	path = modules/embeddia-hsd-cse
 	url = https://github.com/EMBEDDIA/comment-filter-csebert-cse.git
+[submodule "embeddia-kwe-bert"]
+	path = modules/embeddia-kwe-bert
+	url = https://gitlab.com/boshko.koloski/bert-multilingual-kws-docker.git
