@@ -49,7 +49,7 @@ class BERTTaggerAnalyzer:
 
     def __init__(self, host="https://rest-dev.texta.ee", project=310, tagger=71, auth_token="", ssl_verify=True):
         self.host = host
-        self.health = urljoin(host, "api/v1/health/")
+        self.health = host
         self.url = urljoin(host, f"api/v1/projects/{project}/bert_taggers/{tagger}/tag_text/")
         self.headers = {"Authorization": f"Token {auth_token}"}
         self.ssl_verify = ssl_verify
@@ -87,7 +87,7 @@ class MultiTagAnalyzer:
 
     def __init__(self, host="http://rest-dev.texta.ee", project=1, auth_token="", lemmatize=True, ssl_verify=True):
         self.host = host
-        self.health = urljoin(host, "api/v1/health/")
+        self.health = host
         self.url = urljoin(host, f"api/v1/projects/{project}/multitag_text/")
         self.headers = {"Authorization": f"Token {auth_token}"}
         self.lemmatize = lemmatize

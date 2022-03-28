@@ -18,6 +18,7 @@ from texta_mlp.mlp import MLP
 
 from embeddia_toolkit.embeddia.analyzers.article_analyzer import (
     KWEAnalyzer,
+    SentimentAnalyzer,
     HybridTaggerAnalyzer,
     NERAnalyzer
 )
@@ -48,6 +49,10 @@ KWE_LV_HOST = os.getenv("EMBEDDIA_KWE_LV_HOST", "http://localhost:5004")
 KWE_EN_HOST = os.getenv("EMBEDDIA_KWE_EN_HOST", "http://localhost:5007")
 KWE_SL_HOST = os.getenv("EMBEDDIA_KWE_SL_HOST", "http://localhost:5008")
 KWE_RAKUN_HOST = os.getenv("EMBEDDIA_KWE_RAKUN_HOST", "http://localhost:5005")
+KWE_BERT_HOST = os.getenv("EMBEDDIA_KWE_BERT_HOST", "http://localhost:5009")
+
+SENTIMENT_HOST = os.getenv("EMBEDDIA_SENTIMENT_HOST", "http://localhost:5010")
+
 NER_HOST = os.getenv("EMBEDDIA_NER_HOST", "http://localhost:5006")
 
 TEXTA_HOST = os.getenv("EMBEDDIA_TEXTA_HOST", "https://rest-dev.texta.ee")
@@ -71,7 +76,7 @@ SSL_VERIFY = True if os.getenv("EMBEDDIA_TEXTA_SSL_VERIFY", "True") == "True" el
 SECRET_KEY = 'd064bgxe^08n5@ubx80azgo7paxzj&!p251(nzoxa6q%v_*ny4'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -221,6 +226,8 @@ ARTICLE_ANALYZERS = {
     "Keyword Extractor - TNT-KID (English)": KWEAnalyzer(host=KWE_EN_HOST, ssl_verify=SSL_VERIFY),
     "Keyword Extractor - TNT-KID (Slovenian)": KWEAnalyzer(host=KWE_SL_HOST, ssl_verify=SSL_VERIFY),
     "Keyword Extractor - RaKUn (Multilingual)": KWEAnalyzer(host=KWE_RAKUN_HOST, ssl_verify=SSL_VERIFY),
+    "Keyword Extractor - BERT (Multilingual)": KWEAnalyzer(host=KWE_BERT_HOST, ssl_verify=SSL_VERIFY),
+    "Sentiment Analyzer - BERT (Multilingual)": SentimentAnalyzer(host=SENTIMENT_HOST, ssl_verify=SSL_VERIFY),
     #"Named Entity Extractor - BiLSTM (Croatian)": NERAnalyzer(host=NER_HOST, ssl_verify=SSL_VERIFY, language="hr"),
     #"Named Entity Extractor - BiLSTM (Estonian)": NERAnalyzer(host=NER_HOST, ssl_verify=SSL_VERIFY, language="et"),
     #"Named Entity Extractor - BiLSTM (Slovenian)": NERAnalyzer(host=NER_HOST, ssl_verify=SSL_VERIFY, language="sl"),

@@ -153,6 +153,30 @@ services:
       - ./env.keyword
     command: python -u manage.py run -h 0.0.0.0
 
+  embeddia-kwe-bert:
+    container_name: embeddia-kwe-bert
+    image: docker.texta.ee/texta/embeddia-toolkit/embeddia-kwe-bert:latest
+    build:
+      context: ./modules/embeddia-kwe-bert/services/web
+      dockerfile: Dockerfile
+    expose:
+      - 5000
+    env_file:
+      - ./env.keyword
+    command: python -u manage.py run -h 0.0.0.0
+
+  embeddia-sentiment:
+    container_name: embeddia-sentiment
+    image: docker.texta.ee/texta/embeddia-toolkit/embeddia-sentiment:latest
+    build:
+      context: ./modules/embeddia-sentiment/services/web
+      dockerfile: Dockerfile
+    expose:
+      - 5000
+    env_file:
+      - ./env.keyword
+    command: python -u manage.py run -h 0.0.0.0
+
   # embeddia-ner:
   #   container_name: embeddia-ner
   #   image: docker.texta.ee/texta/embeddia-toolkit/embeddia-ner:latest

@@ -129,3 +129,38 @@ class KWEAnalyzer:
             raise exceptions.ServiceFailedError(f"Service sent non-200 response. Please check service url and input. Exception: {response.text}")
         response_json = response.json()
         return self._process_output(response_json)
+
+
+class SentimentAnalyzer:
+
+    def __init__(self, host="http://localhost:5010", ssl_verify=True):
+        self.host = host
+        self.health = host
+        self.url = urljoin(host, "predict/")
+        self.ssl_verify = ssl_verify
+
+    @staticmethod
+    def _process_input(text):
+        payload = {"text": text}
+        return payload
+
+    @staticmethod
+    def _process_output(response_json):
+        keywords_combined = [j for sub in response_json.values() for j in sub]
+        return [{"tag": keyword} for keyword in keywords_combined]
+
+    @check_connection
+    def check_health(self):
+        """
+        A method to check if service is alive. Throws ServiceNotAvailableException if not.
+        """
+        return True
+
+    @check_connection
+    def process(self, text):
+        payload = self._process_input(text)
+        response = requests.post(self.url, json=payload, verify=self.ssl_verify)
+        if response.status_code != 200:
+            raise exceptions.ServiceFailedError(f"Service sent non-200 response. Please check service url and input. Exception: {response.text}")
+        response_json = response.json()
+        return self._process_output(response_json)

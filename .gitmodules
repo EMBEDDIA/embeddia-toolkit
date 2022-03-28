@@ -37,3 +37,6 @@
 [submodule "embeddia-kwe-bert"]
 	path = modules/embeddia-kwe-bert
 	url = https://gitlab.com/boshko.koloski/bert-multilingual-kws-docker.git
+[submodule "embeddia-sentiment"]
+	path = modules/embeddia-sentiment
+	url = https://gitlab.com/Andrazp/news_sentiment_tool_app.git
