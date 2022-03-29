@@ -145,7 +145,7 @@ services:
     container_name: embeddia-kwe-rakun
     image: docker.texta.ee/texta/embeddia-toolkit/embeddia-kwe-rakun:latest
     build:
-      context: ./modules/embeddia-kwe-rakun/services/web
+      context: ./modules/embeddia-kwe-rakun-new/services/web
       dockerfile: Dockerfile
     expose:
       - 5000
@@ -171,8 +171,8 @@ services:
     build:
       context: ./modules/embeddia-sentiment/services/web
       dockerfile: Dockerfile
-    expose:
-      - 5000
+    ports:
+      - 5000:5000
     env_file:
       - ./env.keyword
     command: python -u manage.py run -h 0.0.0.0
@@ -238,6 +238,8 @@ services:
       - embeddia-kwe-lv
       - embeddia-kwe-sl
       - embeddia-kwe-rakun
+      - embeddia-kwe-bert
+      - embeddia-sentiment
       - embeddia-hsd
       - embeddia-hsd-mbert
       - embeddia-hsd-mbert-enee
