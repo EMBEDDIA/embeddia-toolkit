@@ -37,3 +37,6 @@
 [submodule "embeddia-sentiment"]
 	path = modules/embeddia-sentiment
 	url = https://gitlab.com/Andrazp/news_sentiment_tool_app.git
+[submodule "embeddia-kwe-rakun-new"]
+	path = modules/embeddia-kwe-rakun-new
+	url = https://gitlab.com/boshko.koloski/rakun-app-docker.git

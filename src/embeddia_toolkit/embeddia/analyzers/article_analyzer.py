@@ -136,7 +136,7 @@ class SentimentAnalyzer:
     def __init__(self, host="http://localhost:5010", ssl_verify=True):
         self.host = host
         self.health = host
-        self.url = urljoin(host, "predict/")
+        self.url = urljoin(host, "rest_api/analyze_sentiment/")
         self.ssl_verify = ssl_verify
 
     @staticmethod
