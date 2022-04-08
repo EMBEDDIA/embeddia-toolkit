@@ -15,6 +15,7 @@ from kombu import Exchange, Queue
 import os
 
 from texta_mlp.mlp import MLP
+from embeddia_toolkit.utils import parse_bool
 
 from embeddia_toolkit.embeddia.analyzers.article_analyzer import (
     KWEAnalyzer,
@@ -27,6 +28,7 @@ from embeddia_toolkit.embeddia.analyzers.comment_analyzer import (
     MultiTagAnalyzer,
     BERTTaggerAnalyzer
 )
+
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -67,7 +69,7 @@ TEXTA_BERT_TAGGER = int(os.getenv("EMBEDDIA_TEXTA_BERT_TAGGER", 310))
 REQUEST_THROTTLE = os.getenv("EMBEDDIA_REQUEST_THROTTLE", "100/day")
 
 # SSL verification
-SSL_VERIFY = True if os.getenv("EMBEDDIA_TEXTA_SSL_VERIFY", "True") == "True" else False
+SSL_VERIFY = parse_bool(os.getenv("EMBEDDIA_TEXTA_SSL_VERIFY", "True"))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
@@ -76,7 +78,7 @@ SSL_VERIFY = True if os.getenv("EMBEDDIA_TEXTA_SSL_VERIFY", "True") == "True" el
 SECRET_KEY = 'd064bgxe^08n5@ubx80azgo7paxzj&!p251(nzoxa6q%v_*ny4'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = parse_bool(os.getenv("EMBEDDIA_DEBUG", "True"))
 
 ALLOWED_HOSTS = ['*']
 
@@ -187,7 +189,7 @@ USE_TZ = True
 BROKER_URL = os.getenv("EMBEDDIA_REDIS_URL", "redis://localhost:6379/1")
 CELERY_RESULT_BACKEND = BROKER_URL
 CELERY_ACCEPT_CONTENT = ["application/json"]
-CELERY_ALWAYS_EAGER = False if os.getenv("DOCPARSER_CELERY_ALWAYS_EAGER", "false").lower() == "false" else True
+CELERY_ALWAYS_EAGER = parse_bool(os.getenv("DOCPARSER_CELERY_ALWAYS_EAGER", "false"))
 CELERY_TASK_SERIALIZER = "json"
 CELERY_RESULT_SERIALIZER = "json"
 CELERY_TIMEZONE = TIME_ZONE
