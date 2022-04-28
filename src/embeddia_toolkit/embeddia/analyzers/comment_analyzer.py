@@ -49,7 +49,7 @@ class BERTTaggerAnalyzer:
 
     def __init__(self, host="https://rest-dev.texta.ee", project=310, tagger=71, auth_token="", ssl_verify=True):
         self.host = host
-        self.health = host
+        self.health = urljoin(host, "api/v1/health/")
         self.url = urljoin(host, f"api/v1/projects/{project}/bert_taggers/{tagger}/tag_text/")
         self.headers = {"Authorization": f"Token {auth_token}"}
         self.ssl_verify = ssl_verify
@@ -73,7 +73,7 @@ class BERTTaggerAnalyzer:
         payload = {"text": text, "persistent": True}
         return payload
 
-    @check_connection
+    #@check_connection
     def process(self, text):
         payload = self._process_input(text)
         response = requests.post(self.url, data=payload, headers=self.headers, verify=self.ssl_verify)
