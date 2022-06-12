@@ -47,18 +47,18 @@ class QMULAnalyzer:
 
 class BERTTaggerAnalyzer:
 
-    def __init__(self, host="https://rest-dev.texta.ee", project=310, tagger=71, auth_token="", ssl_verify=True):
+    def __init__(self, host="https://moderator.texta.ee", pipeline="bertie", auth_token="", ssl_verify=False):
         self.host = host
         self.health = urljoin(host, "api/v1/health/")
-        self.url = urljoin(host, f"api/v1/projects/{project}/bert_taggers/{tagger}/tag_text/")
+        self.url = urljoin(host, f"api/v1/pipeline/{pipeline}/execute/")
         self.headers = {"Authorization": f"Token {auth_token}"}
         self.ssl_verify = ssl_verify
         self.name = "TEXTA BERT Comment Model"
 
     @staticmethod
     def _process_output(response_json):
-        if response_json["result"] == "true":
-            return [{"tag": "OFFENSIVE", "probability": response_json["probability"]}]
+        if response_json["result"]["prediction"] == True:
+            return [{"tag": "OFFENSIVE", "probability": response_json["result"]["probability"]}]
         else:
             return []
 
@@ -70,7 +70,7 @@ class BERTTaggerAnalyzer:
         return True
 
     def _process_input(self, text):
-        payload = {"text": text, "persistent": True}
+        payload = {"text": text, "meta": '{"service": "EMBEDDIA Demo"}'}
         return payload
 
     #@check_connection

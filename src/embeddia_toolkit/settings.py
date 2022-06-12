@@ -57,14 +57,13 @@ SENTIMENT_HOST = os.getenv("EMBEDDIA_SENTIMENT_HOST", "http://localhost:5010")
 
 NER_HOST = os.getenv("EMBEDDIA_NER_HOST", "http://localhost:5006")
 
-TEXTA_HOST = os.getenv("EMBEDDIA_TEXTA_HOST", "https://rest-dev.texta.ee")
+TEXTA_HOST = os.getenv("EMBEDDIA_TEXTA_HOST", "https://moderator.texta.ee")
 TEXTA_TOKEN = os.getenv("EMBEDDIA_TEXTA_TOKEN", "")
 
 TEXTA_HT_PROJECT = int(os.getenv("EMBEDDIA_TEXTA_HT_PROJECT", 1))
 TEXTA_HT_TAGGER = int(os.getenv("EMBEDDIA_TEXTA_HT_TAGGER", 5))
 TEXTA_HS_PROJECT = int(os.getenv("EMBEDDIA_TEXTA_HS_PROJECT", 2))
-TEXTA_BERT_PROJECT = int(os.getenv("EMBEDDIA_TEXTA_BERT_PROJECT", 310))
-TEXTA_BERT_TAGGER = int(os.getenv("EMBEDDIA_TEXTA_BERT_TAGGER", 310))
+TEXTA_BERT_TAGGER = os.getenv("EMBEDDIA_TEXTA_BERT_TAGGER", "bertie")
 
 REQUEST_THROTTLE = os.getenv("EMBEDDIA_REQUEST_THROTTLE", "100/day")
 
@@ -242,5 +241,5 @@ COMMENT_ANALYZERS = {
     "Comment Moderator MBERT (Cross-lingual)": QMULAnalyzer(host=HSD_2_HOST, ssl_verify=SSL_VERIFY),
     "Comment Moderator FEBERT (English, Estonian)": QMULAnalyzer(host=HSD_3_HOST, ssl_verify=SSL_VERIFY),
     "Comment Moderator CSEBERT (English, Slovenian, Croatian)": QMULAnalyzer(host=HSD_4_HOST, ssl_verify=SSL_VERIFY),
-    "Comment Moderator BERT (Estonian)": BERTTaggerAnalyzer(host=TEXTA_HOST, auth_token=TEXTA_TOKEN, project=TEXTA_BERT_PROJECT, tagger=TEXTA_BERT_TAGGER, ssl_verify=SSL_VERIFY)
+    "Comment Moderator BERT (Estonian, English, Latvian, Litshuanian, Russian)": BERTTaggerAnalyzer(host=TEXTA_HOST, auth_token=TEXTA_TOKEN, pipeline=TEXTA_BERT_TAGGER, ssl_verify=SSL_VERIFY)
 }
