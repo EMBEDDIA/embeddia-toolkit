@@ -141,7 +141,7 @@ class SentimentAnalyzer:
 
     @staticmethod
     def _process_input(text):
-        payload = {"text": text}
+        payload = {"text": [text]}
         return payload
 
     @staticmethod
